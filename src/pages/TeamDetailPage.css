@@ -1,0 +1,64 @@
+.al-team-detail__hero {
+  position: relative;
+  min-height: 42vh;
+  display: flex;
+  align-items: flex-end;
+  color: var(--color-text-inverse);
+  overflow: hidden;
+}
+
+.al-team-detail__hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-team-detail__hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 35, 63, 0.2) 20%, rgba(6, 35, 63, 0.92) 100%);
+}
+
+.al-team-detail__hero-content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--s-16) var(--s-8);
+}
+
+.al-team-detail__hero-content h1 {
+  font-size: var(--fs-h1);
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.al-team-detail__sections {
+  display: grid;
+  gap: var(--s-8);
+  grid-template-columns: 1fr;
+}
+
+.al-team-detail__block {
+  background: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--s-6);
+}
+
+.al-team-detail__block h2 {
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+}
+
+.al-team-detail__block p {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+@media (min-width: 900px) {
+  .al-team-detail__sections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

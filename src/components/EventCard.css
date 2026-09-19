@@ -1,0 +1,54 @@
+.al-event-card {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+  background: var(--color-surface);
+  border: var(--border-hairline);
+  border-left: 4px solid var(--c-or);
+  border-radius: var(--radius-md);
+  padding: var(--s-5);
+}
+
+.al-event-card__heure {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--c-bleu);
+  min-width: 4.5ch;
+}
+
+.al-event-card__corps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.al-event-card__type {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-rouge);
+  font-weight: 600;
+}
+
+.al-event-card__titre {
+  font-size: var(--fs-h3);
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.al-event-card__lieu {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+.al-event-card__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: var(--fs-meta);
+  background: var(--c-ivoire-ombre);
+  color: var(--color-text-muted);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--radius-sm);
+  margin-top: var(--s-1);
+}

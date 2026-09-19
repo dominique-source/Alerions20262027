@@ -1,0 +1,39 @@
+.al-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  background: var(--c-bleu);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-md);
+  padding: var(--s-6);
+}
+
+.al-result-card__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-meta);
+  color: var(--color-text-muted-inverse);
+}
+
+.al-result-card__matchup {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+}
+
+.al-result-card__score {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  color: var(--c-or);
+}
+
+.al-result-card__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: var(--fs-meta);
+  border: 1px solid var(--color-border-inverse);
+  color: var(--color-text-muted-inverse);
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--radius-sm);
+}

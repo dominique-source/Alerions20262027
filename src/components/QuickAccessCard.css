@@ -1,0 +1,40 @@
+.al-qac {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  background: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--s-6);
+  box-shadow: var(--shadow-card);
+}
+
+.al-qac__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-rouge);
+  font-weight: 600;
+}
+
+.al-qac__title {
+  font-size: var(--fs-h3);
+}
+
+.al-qac__meta {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+.al-qac__link {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-bleu);
+  border-bottom: 2px solid var(--c-or);
+  padding-bottom: var(--s-1);
+}

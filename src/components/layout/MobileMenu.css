@@ -1,0 +1,78 @@
+.al-mmenu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+}
+
+.al-mmenu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 35, 63, 0.55);
+}
+
+.al-mmenu__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(340px, 88vw);
+  background: var(--c-bleu);
+  color: var(--color-text-inverse);
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-5);
+  overflow-y: auto;
+}
+
+.al-mmenu__top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--s-6);
+}
+
+.al-mmenu__close {
+  width: var(--tap-min);
+  height: var(--tap-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border-inverse);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-inverse);
+}
+
+.al-mmenu__group-title {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-or);
+  margin-bottom: var(--s-3);
+}
+
+.al-mmenu__list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--s-8);
+}
+
+.al-mmenu__list a {
+  padding: var(--s-3) 0;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-border-inverse);
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+}
+
+.al-mmenu__list--espaces a {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.al-mmenu__list a[aria-current="page"] {
+  color: var(--c-or);
+}

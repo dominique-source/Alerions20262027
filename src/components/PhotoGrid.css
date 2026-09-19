@@ -1,0 +1,71 @@
+/*
+  Composition éditoriale : grille asymétrique (pas une grille uniforme).
+  Une grande image, des images horizontales et verticales de tailles variées.
+*/
+.al-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 140px;
+  gap: var(--s-3);
+}
+
+.al-photo-grid__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.al-photo-grid__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.al-photo-grid__item:hover img {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .al-photo-grid__item:hover img {
+    transform: none;
+  }
+}
+
+/* La première photo (grande image) occupe davantage d'espace */
+.al-photo-grid__item--grande {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+.al-photo-grid__item--horizontale {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.al-photo-grid__item--verticale {
+  grid-column: span 1;
+  grid-row: span 3;
+}
+
+@media (min-width: 768px) {
+  .al-photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 160px;
+  }
+
+  .al-photo-grid__item--grande {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
+  .al-photo-grid__item--horizontale {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .al-photo-grid__item--verticale {
+    grid-column: span 1;
+    grid-row: span 3;
+  }
+}

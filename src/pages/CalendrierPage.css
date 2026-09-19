@@ -1,0 +1,163 @@
+.al-cal__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin-bottom: var(--s-8);
+}
+
+.al-cal__tabs {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.al-cal__tab {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-5);
+  border-radius: var(--radius-sm);
+  border: var(--border-hairline);
+  background: var(--color-surface);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.al-cal__tab[aria-pressed="true"] {
+  background: var(--c-bleu);
+  color: var(--color-text-inverse);
+  border-color: var(--c-bleu);
+}
+
+.al-cal__search {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.al-cal__search input {
+  flex: 1;
+  min-height: var(--tap-min);
+  padding: 0 var(--s-4);
+  border: var(--border-hairline);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+}
+
+.al-cal__filter-toggle {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-5);
+  border-radius: var(--radius-sm);
+  border: var(--border-hairline);
+  background: var(--color-surface);
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.al-cal__body {
+  display: grid;
+  gap: var(--s-8);
+  grid-template-columns: 1fr;
+}
+
+.al-cal__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  background: var(--color-surface);
+  border: var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--s-6);
+}
+
+.al-cal__filters[hidden] {
+  display: none;
+}
+
+.al-cal__filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-cal__filter-field label {
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.al-cal__filter-field select {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-3);
+  border: var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--c-ivoire);
+}
+
+/* Liste verticale par jour (mobile par défaut) */
+.al-cal__day-group {
+  margin-bottom: var(--s-8);
+}
+
+.al-cal__day-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  margin-bottom: var(--s-3);
+  text-transform: capitalize;
+}
+
+.al-cal__day-events {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* Vue hebdomadaire (ordinateur uniquement) */
+.al-cal__week {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .al-cal__body {
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+  }
+
+  .al-cal__filters {
+    position: sticky;
+    top: calc(72px + var(--s-6));
+  }
+
+  .al-cal__filters[hidden] {
+    display: flex;
+  }
+
+  .al-cal__filter-toggle {
+    display: none;
+  }
+
+  .al-cal__mobile-list {
+    display: none;
+  }
+
+  .al-cal__week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--s-3);
+  }
+
+  .al-cal__week-day {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    min-width: 0;
+  }
+
+  .al-cal__week-day-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    border-bottom: 2px solid var(--c-or);
+    padding-bottom: var(--s-2);
+  }
+}
