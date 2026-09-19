@@ -56,3 +56,25 @@ export const niveaux: { valeur: string; label: string }[] = [
   { valeur: "secondaire-1-2", label: "Secondaire 1-2" },
   { valeur: "secondaire-3-4-5", label: "Secondaire 3-4-5" },
 ];
+
+/**
+ * Composition asymétrique de la page Équipes : une grande image (programme
+ * principal) + quatre blocs secondaires. Aucune photo par sport n'existe
+ * encore : les photos de basketball servent de référence visuelle
+ * temporaire pour les programmes sans photo (marquées `photoDeReference`
+ * pour un remplacement futur), sauf le dernier bloc qui pointe vers la
+ * vraie photo de l'équipe modèle.
+ */
+export const composantsEquipesAccueil = {
+  grande: {
+    sport: "basketball" as Sport,
+    nom: "Basketball",
+    photo: "DSC_1094.jpg",
+    photoDeReference: false,
+  },
+  secondaires: [
+    { sport: "volleyball" as Sport, nom: "Volleyball", photo: "DSC_1070.jpg", photoDeReference: true },
+    { sport: "athletisme" as Sport, nom: "Athlétisme", photo: "DSC_1089.jpg", photoDeReference: true },
+    { sport: "autres" as Sport, nom: "Autres sports", photo: "DSC_0967.jpg", photoDeReference: true },
+  ],
+};

@@ -1,0 +1,113 @@
+.al-culture-intro {
+  background: var(--alerions-deep);
+  color: var(--color-text-inverse);
+  padding-block: var(--s-32) var(--s-24);
+  text-align: center;
+}
+
+.al-culture-intro h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  font-size: clamp(3rem, 9vw, 6.5rem);
+}
+
+.al-culture-intro h1 span {
+  display: block;
+}
+
+.al-culture-intro h1 span:last-child {
+  color: var(--alerions-gold);
+}
+
+/* Section principale : grand chiffre XVI + propos. */
+.al-culture-main {
+  display: grid;
+  gap: var(--s-10);
+  align-items: center;
+}
+
+.al-culture-main__num {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(6rem, 22vw, 14rem);
+  line-height: 0.8;
+  color: var(--alerions-gold);
+}
+
+.al-culture-main__body h2 {
+  font-size: var(--fs-h1);
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  margin-bottom: var(--s-5);
+}
+
+.al-culture-main__body p {
+  font-size: var(--fs-lead);
+  color: var(--color-text-muted);
+  max-width: 62ch;
+  margin-bottom: var(--s-6);
+}
+
+.al-culture-main__quote {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--fs-h2);
+  color: var(--alerions-blue);
+  border-left: 4px solid var(--alerions-gold);
+  padding-left: var(--s-5);
+  line-height: var(--lh-tight);
+}
+
+@media (min-width: 900px) {
+  .al-culture-main {
+    grid-template-columns: 1fr 1.4fr;
+  }
+}
+
+/* Ligne historique — l'ivoire n'apparaît qu'ici, comme référence historique. */
+.al-culture-timeline {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.al-culture-timeline__item {
+  padding-block: var(--s-8);
+  border-bottom: 1px solid var(--c-ivoire-ombre);
+}
+
+.al-culture-timeline__item:last-child {
+  border-bottom: none;
+}
+
+.al-culture-timeline__year {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--alerions-blue);
+}
+
+.al-culture-timeline__caption {
+  margin-top: var(--s-2);
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 900px) {
+  .al-culture-timeline {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .al-culture-timeline__item {
+    border-bottom: none;
+    border-left: 1px solid var(--c-ivoire-ombre);
+    padding-inline: var(--s-6);
+  }
+  .al-culture-timeline__item:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+}

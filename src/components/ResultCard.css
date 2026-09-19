@@ -1,39 +1,63 @@
-.al-result-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
-  background: var(--c-bleu);
-  color: var(--color-text-inverse);
-  border-radius: var(--radius-md);
-  padding: var(--s-6);
+/*
+  Liste sobre — pas de carte. Ligne bleu foncé en haut de la liste,
+  séparateurs gris entre chaque ligne, résultat en rouge, typographie forte.
+*/
+.al-results-list {
+  border-top: 3px solid var(--alerions-blue);
 }
 
-.al-result-card__meta {
-  display: flex;
-  justify-content: space-between;
+.al-result-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-1);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.al-result-row__date {
   font-size: var(--fs-meta);
-  color: var(--color-text-muted-inverse);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow);
+  color: var(--color-text-muted);
 }
 
-.al-result-card__matchup {
+.al-result-row__matchup {
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
-  font-weight: 500;
-}
-
-.al-result-card__score {
-  font-family: var(--font-display);
-  font-size: var(--fs-h1);
   font-weight: 700;
-  color: var(--c-or);
+  text-transform: uppercase;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
 }
 
-.al-result-card__badge {
-  display: inline-flex;
-  align-self: flex-start;
+.al-result-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-3);
+  align-items: baseline;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+.al-result-row__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--alerions-red);
+}
+
+.al-result-row__badge {
   font-size: var(--fs-meta);
-  border: 1px solid var(--color-border-inverse);
-  color: var(--color-text-muted-inverse);
-  padding: var(--s-1) var(--s-2);
-  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .al-result-row {
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: var(--s-6);
+  }
+
+  .al-result-row__score {
+    font-size: var(--fs-h3);
+    text-align: right;
+  }
 }

@@ -1,0 +1,54 @@
+.al-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.al-contact-info__item h3 {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--alerions-gold);
+  margin-bottom: var(--s-2);
+}
+
+.al-contact-info__item p {
+  color: var(--color-text-muted-inverse);
+}
+
+.al-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.al-contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-contact-form__field label {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.al-contact-form__field input,
+.al-contact-form__field textarea {
+  border: 1px solid var(--color-border);
+  padding: var(--s-3) var(--s-4);
+  background: var(--alerions-ice);
+  min-height: var(--tap-min);
+}
+
+.al-contact-form__field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.al-contact-form__note {
+  font-size: var(--fs-meta);
+  color: var(--color-text-muted);
+}

@@ -44,6 +44,7 @@ export interface Evenement {
 export interface Resultat {
   id: string;
   equipeSlug: string;
+  sportSlug: Sport;
   adversaire: string;
   date: string;
   score: string;

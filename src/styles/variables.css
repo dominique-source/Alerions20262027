@@ -1,43 +1,66 @@
 /*
   Alérions — jetons de conception (source de vérité)
-  Palette officielle du Collège François-de-Laval.
+  Direction visuelle validée : sportive, jeune, énergique — sur une
+  structure institutionnelle claire. Le blanc froid domine, le bleu
+  profond structure, le rouge et l'or sont des accents ponctuels.
   Toutes les couleurs, tailles et espacements de l'interface doivent
   passer par ces variables : ne jamais coder une couleur en dur ailleurs.
 */
 :root {
-  /* --- Couleurs de marque --- */
-  --c-bleu: #06233f; /* Bleu Alérions — fond institutionnel, header, footer */
-  --c-or: #cea531; /* Or — accent signature, appels à l'action, highlights */
-  --c-ivoire: #f2eee5; /* Ivoire — fond clair, cartes, respiration */
-  --c-rouge: #951f3d; /* Rouge — direct/live, alertes, accents ponctuels */
-  --c-encre: #2a2e36; /* Encre — texte, éléments sombres secondaires */
+  /* --- Palette de marque (direction validée) --- */
+  --alerions-blue: #06233f;
+  --alerions-deep: #031522; /* bleu très foncé — en-tête, sections pleine largeur */
+  --alerions-gold: #cea531;
+  --alerions-red: #951f3d;
+  --alerions-white: #ffffff;
+  --alerions-ice: #f6f8fa; /* blanc froid — fond principal (remplace l'ivoire) */
+  --alerions-line: #dce2e7;
+  --alerions-ink: #101820;
+  --alerions-muted: #607080;
+  /*
+    L'ivoire n'est plus un fond principal. Il ne doit apparaître que dans
+    certains détails de la page Culture Alérions (référence historique).
+  */
+  --alerions-ivory: #f2eee5;
 
   /* --- Nuances dérivées (usage fonctionnel uniquement) --- */
-  --c-bleu-clair: #0d3157;
-  --c-bleu-fonce: #041729;
   --c-or-clair: #e4c463;
-  --c-blanc: #ffffff;
-  --c-ivoire-ombre: #e6dfcf;
-  --c-ligne: rgba(6, 35, 63, 0.12);
-  --c-ligne-inverse: rgba(242, 238, 229, 0.18);
+  --c-bleu-clair: #0d3157;
+  --c-ligne: rgba(16, 24, 32, 0.1);
+  --c-ligne-inverse: rgba(255, 255, 255, 0.16);
 
-  /* --- Rôles sémantiques --- */
-  --color-bg: var(--c-ivoire);
-  --color-bg-inverse: var(--c-bleu);
-  --color-surface: var(--c-blanc);
-  --color-text: var(--c-encre);
-  --color-text-inverse: var(--c-ivoire);
-  --color-text-muted: #5a5f6a;
-  --color-text-muted-inverse: rgba(242, 238, 229, 0.72);
-  --color-accent: var(--c-or);
-  --color-live: var(--c-rouge);
-  --color-border: var(--c-ligne);
+  /* --- Rôles sémantiques (utilisés par tous les composants) --- */
+  --color-bg: var(--alerions-ice);
+  --color-bg-inverse: var(--alerions-blue);
+  --color-bg-deep: var(--alerions-deep);
+  --color-surface: var(--alerions-white);
+  --color-text: var(--alerions-ink);
+  --color-text-inverse: var(--alerions-white);
+  --color-text-muted: var(--alerions-muted);
+  --color-text-muted-inverse: rgba(255, 255, 255, 0.72);
+  --color-accent: var(--alerions-gold);
+  --color-live: var(--alerions-red);
+  --color-border: var(--alerions-line);
   --color-border-inverse: var(--c-ligne-inverse);
-  --color-focus: var(--c-or);
+  --color-focus: var(--alerions-gold);
+
+  /*
+    Alias historiques (V1) conservés pour ne pas réécrire chaque sélecteur :
+    ils pointent désormais vers la nouvelle palette validée.
+  */
+  --c-bleu: var(--alerions-blue);
+  --c-or: var(--alerions-gold);
+  --c-rouge: var(--alerions-red);
+  --c-encre: var(--alerions-ink);
+  --c-blanc: var(--alerions-white);
+  --c-bleu-fonce: var(--alerions-deep);
+  --c-ivoire: var(--alerions-ivory); /* réservé à la page Culture Alérions */
+  --c-ivoire-ombre: #e6dfcf;
 
   /* --- Typographie --- */
-  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-display: "Oswald", "Arial Narrow", sans-serif; /* titres — forte, sportive */
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif; /* réservée au chiffre XVI */
 
   --fs-display: clamp(2.75rem, 5vw + 1rem, 5.5rem);
   --fs-h1: clamp(2.25rem, 3.5vw + 1rem, 3.75rem);
@@ -47,12 +70,13 @@
   --fs-body: 1rem;
   --fs-small: 0.875rem;
   --fs-meta: 0.75rem;
+  --fs-stat: clamp(3.5rem, 9vw, 9rem); /* chiffres surdimensionnés */
 
-  --lh-tight: 1.05;
-  --lh-heading: 1.15;
+  --lh-tight: 1.02;
+  --lh-heading: 1.08;
   --lh-body: 1.6;
 
-  --ls-eyebrow: 0.12em;
+  --ls-eyebrow: 0.14em;
 
   /* --- Espacement (échelle 4px) --- */
   --s-1: 4px;
@@ -79,11 +103,11 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --border-hairline: 1px solid var(--color-border);
-  --border-strong: 2px solid var(--c-bleu);
+  --border-strong: 2px solid var(--alerions-blue);
 
   /* --- Ombres (discrètes, jamais décoratives) --- */
-  --shadow-card: 0 1px 2px rgba(6, 35, 63, 0.06), 0 4px 16px rgba(6, 35, 63, 0.08);
-  --shadow-raised: 0 8px 32px rgba(6, 35, 63, 0.16);
+  --shadow-card: 0 1px 2px rgba(16, 24, 32, 0.06), 0 4px 16px rgba(16, 24, 32, 0.08);
+  --shadow-raised: 0 8px 32px rgba(16, 24, 32, 0.18);
 
   /* --- Mouvement --- */
   --dur-fast: 120ms;

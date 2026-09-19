@@ -1,15 +1,7 @@
-import ResourceCard from "../components/ResourceCard";
+import { documentsExemple } from "../data/resources";
+import "./RessourcesPage.css";
 
-const rubriques = [
-  "Documents pour les parents",
-  "Documents pour les athlètes",
-  "Documents pour les entraîneurs",
-  "Formulaires",
-  "Règlements",
-  "Guides",
-];
-
-/** Ressources générales, accessibles à tous les publics. */
+/** Ressources — liste simple de documents, aucune grille de cartes. */
 export default function RessourcesPage() {
   return (
     <>
@@ -23,9 +15,23 @@ export default function RessourcesPage() {
 
       <section className="al-section al-section--blanc">
         <div className="container">
-          <div className="al-grid al-grid--3">
-            {rubriques.map((rubrique) => (
-              <ResourceCard key={rubrique} titre={rubrique} />
+          <div className="al-doc-list">
+            {documentsExemple.map((document) => (
+              <div className="al-doc-row" key={document.titre}>
+                <span className="al-doc-row__type">{document.type}</span>
+                <span className="al-doc-row__titre">{document.titre}</span>
+                <span className="al-doc-row__meta">
+                  <span>Mis à jour : {document.misAJour}</span>
+                  <button
+                    type="button"
+                    className="al-doc-row__action"
+                    disabled
+                    title="Document à venir"
+                  >
+                    Consulter
+                  </button>
+                </span>
+              </div>
             ))}
           </div>
         </div>

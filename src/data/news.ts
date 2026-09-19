@@ -7,7 +7,7 @@ export const actualitesExemple: Actualite[] = [
     titre: "Nouvelle — exemple de présentation",
     resume: "Contenu à confirmer.",
     date: "2026-09-15",
-    photo: "DSC_0899.jpg",
+    photo: "DSC_1119.jpg",
     statut: "exemple",
   },
   {
@@ -15,7 +15,7 @@ export const actualitesExemple: Actualite[] = [
     titre: "Nouvelle — exemple de présentation",
     resume: "Contenu à confirmer.",
     date: "2026-09-10",
-    photo: "DSC_0939.jpg",
+    photo: "DSC_1139.jpg",
     statut: "exemple",
   },
   {
@@ -23,7 +23,7 @@ export const actualitesExemple: Actualite[] = [
     titre: "Nouvelle — exemple de présentation",
     resume: "Contenu à confirmer.",
     date: "2026-09-02",
-    photo: "DSC_1070.jpg",
+    photo: "DSC_0806.jpg",
     statut: "exemple",
   },
 ];

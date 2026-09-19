@@ -1,0 +1,41 @@
+/*
+  Composition asymétrique : une grande image (programme principal) à
+  gauche, quatre blocs secondaires en grille 2x2 à droite. Aucune carte
+  blanche identique — uniquement des tuiles photographiques.
+*/
+.al-equipes-grid {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+
+.al-equipes-grid .al-feature {
+  min-height: 240px;
+}
+
+.al-equipes-grid__secondaires {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+
+@media (min-width: 900px) {
+  .al-equipes-grid {
+    grid-template-columns: 1.3fr 1fr;
+    grid-template-rows: 480px;
+  }
+
+  .al-equipes-grid .al-feature--big {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .al-equipes-grid__secondaires {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .al-equipes-grid__secondaires .al-feature {
+    min-height: 0;
+  }
+}

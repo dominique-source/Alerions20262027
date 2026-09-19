@@ -2,7 +2,7 @@ import ResultCard from "../components/ResultCard";
 import EmptyState from "../components/EmptyState";
 import { resultatsExemple } from "../data/results";
 
-/** Page Résultats — prête à recevoir les vrais résultats de saison. */
+/** Page Résultats — présentation sobre, en liste (pas de cartes). */
 export default function ResultatsPage() {
   return (
     <>
@@ -19,7 +19,7 @@ export default function ResultatsPage() {
           {resultatsExemple.length === 0 ? (
             <EmptyState title="Aucun résultat n'est disponible pour le moment." />
           ) : (
-            <div className="al-grid al-grid--3">
+            <div className="al-results-list">
               {resultatsExemple.map((resultat) => (
                 <ResultCard key={resultat.id} resultat={resultat} />
               ))}

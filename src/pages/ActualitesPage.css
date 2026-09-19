@@ -1,0 +1,21 @@
+.al-news-editorial {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+
+.al-news-editorial__stack {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .al-news-editorial {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .al-news-editorial .al-feature--big {
+    min-height: 100%;
+  }
+}

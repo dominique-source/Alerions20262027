@@ -14,8 +14,6 @@ const onglets: { valeur: Periode; label: string }[] = [
   { valeur: "saison", label: "Ma saison" },
 ];
 
-const joursSemaine = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
-
 function estDansPeriode(dateIso: string, periode: Periode): boolean {
   const date = new Date(`${dateIso}T00:00:00`);
   const aujourdhui = new Date();
@@ -40,7 +38,11 @@ function estDansPeriode(dateIso: string, periode: Periode): boolean {
   );
 }
 
-/** Page Calendrier : prête à recevoir de vraies données, filtres complets. */
+/**
+ * Page Calendrier — la page la plus fonctionnelle du site.
+ * Présentation par journées : colonne date (gauche) + activités (droite)
+ * sur ordinateur, liste verticale avec heure en premier sur téléphone.
+ */
 export default function CalendrierPage() {
   const [periode, setPeriode] = useState<Periode>("saison");
   const [recherche, setRecherche] = useState("");
@@ -183,46 +185,31 @@ export default function CalendrierPage() {
               {evenementsFiltres.length === 0 ? (
                 <EmptyState title="Aucun événement ne correspond à vos filtres." />
               ) : (
-                <>
-                  {/* Liste verticale par journée — vue mobile principale */}
-                  <div className="al-cal__mobile-list">
-                    {Array.from(evenementsParJour.entries()).map(([date, evenementsJour]) => (
-                      <div className="al-cal__day-group" key={date}>
-                        <h2 className="al-cal__day-title">
-                          {new Intl.DateTimeFormat("fr-CA", {
-                            weekday: "long",
-                            day: "numeric",
-                            month: "long",
-                          }).format(new Date(`${date}T00:00:00`))}
-                        </h2>
-                        <div className="al-cal__day-events">
-                          {evenementsJour.map((evenement) => (
-                            <EventCard key={evenement.id} evenement={evenement} />
-                          ))}
-                        </div>
+                Array.from(evenementsParJour.entries()).map(([date, evenementsJour]) => {
+                  const dateObj = new Date(`${date}T00:00:00`);
+                  return (
+                    <div className="al-cal__day-group" key={date}>
+                      <div className="al-cal__day-date">
+                        <span className="al-cal__day-num tnum">
+                          {new Intl.DateTimeFormat("fr-CA", { day: "numeric" }).format(dateObj)}
+                        </span>
+                        <span className="al-cal__day-label">
+                          <strong>
+                            {new Intl.DateTimeFormat("fr-CA", { weekday: "long" }).format(dateObj)}
+                          </strong>
+                          <span>
+                            {new Intl.DateTimeFormat("fr-CA", { month: "long" }).format(dateObj)}
+                          </span>
+                        </span>
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Vue hebdomadaire — ordinateur uniquement */}
-                  <div className="al-cal__week">
-                    {joursSemaine.map((jour) => (
-                      <div className="al-cal__week-day" key={jour}>
-                        <span className="al-cal__week-day-title">{jour}</span>
-                        {evenementsFiltres
-                          .filter(
-                            (e) =>
-                              joursSemaine[
-                                (new Date(`${e.date}T00:00:00`).getDay() + 6) % 7
-                              ] === jour,
-                          )
-                          .map((evenement) => (
-                            <EventCard key={evenement.id} evenement={evenement} />
-                          ))}
+                      <div className="al-cal__day-events">
+                        {evenementsJour.map((evenement) => (
+                          <EventCard key={evenement.id} evenement={evenement} />
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </>
+                    </div>
+                  );
+                })
               )}
             </div>
           </div>

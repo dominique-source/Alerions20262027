@@ -4,30 +4,24 @@ import { cheminPhoto } from "../lib/images";
 import "./LivingXVI.css";
 
 /**
- * Mur vivant XVI — ÉTAPE 1 (fondation uniquement).
+ * Mur vivant XVI — composition photographique asymétrique et énergique.
  *
- * Ce composant prépare la structure du futur « mur vivant » : 16 photos
- * d'athlètes des Alérions, une par tuile, dans une grille 4x4 fixe.
+ * Ce composant affiche les 16 photos d'athlètes des Alérions (voir
+ * src/data/livingXVI.ts) dans une masse photographique dense : formats
+ * variés, léger chevauchement, réaction discrète au survol. Ce n'est PAS
+ * une grille régulière de 16 cases identiques, et les tuiles ne sont PAS
+ * positionnées pour former les lettres « XVI ».
  *
- * Ce qui est fait ici :
- *  - le conteneur pour exactement 16 photos (voir src/data/livingXVI.ts) ;
- *  - une composition photographique statique (aucune animation) ;
- *  - le titre « XVI » et l'amorce « Seize Alérions. Une histoire en
- *    mouvement. » ;
- *  - des points d'ancrage prêts pour l'animation future : une ref sur le
- *    conteneur (`murRef`) et un `data-xvi-index` sur chaque tuile, que la
- *    future logique de défilement (ex. IntersectionObserver ou une
- *    bibliothèque de scroll-animation) pourra cibler individuellement.
+ * Prêt pour l'animation future : une ref sur le conteneur (`murRef`) et un
+ * `data-xvi-index` sur chaque tuile, que la future logique de défilement
+ * (ex. IntersectionObserver ou une bibliothèque de scroll-animation) pourra
+ * cibler individuellement. Aucune animation au défilement n'est branchée
+ * ici — volontairement, prochaine étape.
  *
- * Ce qui N'est PAS fait ici (volontairement, prochaine étape) :
- *  - aucune animation au défilement n'est branchée ;
- *  - les tuiles ne sont PAS positionnées pour former les lettres « XVI » ;
- *    la grille 4x4 actuelle est un espace réservé neutre, pas la mise en
- *    page finale.
+ * Sur téléphone, la composition devient une liste verticale simple (voir
+ * LivingXVI.css) pour rester lisible.
  */
 export default function LivingXVI() {
-  // Ref réservée à la future logique de scroll (ex. observer les tuiles
-  // visibles pour déclencher leur transition individuelle).
   const murRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -36,11 +30,19 @@ export default function LivingXVI() {
         <h2 id="xvi-titre" className="al-xvi__title">
           XVI
         </h2>
-        <p className="al-xvi__tagline">Seize Alérions. Une histoire en mouvement.</p>
+        <p className="al-xvi__tagline">
+          Seize Alérions.
+          <br />
+          Une histoire en mouvement.
+        </p>
       </div>
 
-      {/* Conteneur du mur vivant : structure prête, animation à venir. */}
-      <div className="al-xvi__mur" ref={murRef} role="list" aria-label="Seize athlètes des Alérions">
+      <div
+        className="al-xvi__mur"
+        ref={murRef}
+        role="list"
+        aria-label="Seize athlètes des Alérions"
+      >
         {photosLivingXVI.map((photo, index) => (
           <div
             key={photo.fichier}

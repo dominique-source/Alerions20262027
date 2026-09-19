@@ -5,6 +5,7 @@
   align-items: flex-end;
   color: var(--color-text-inverse);
   overflow: hidden;
+  background: var(--alerions-deep);
 }
 
 .al-hero__media {
@@ -18,17 +19,24 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
+  /* Traitement photographique plus contrasté, sans déformer l'image. */
+  filter: contrast(1.12) saturate(1.08);
 }
 
+/*
+  Dégradé ancré à gauche : le texte (colonne gauche) reste toujours lisible,
+  l'action sportive (partie droite de la photo) demeure visible.
+*/
 .al-hero__scrim {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    180deg,
-    rgba(6, 35, 63, 0.55) 0%,
-    rgba(6, 35, 63, 0.35) 40%,
-    rgba(6, 35, 63, 0.92) 100%
-  );
+      180deg,
+      rgba(3, 21, 34, 0.45) 0%,
+      rgba(3, 21, 34, 0.25) 35%,
+      rgba(3, 21, 34, 0.92) 100%
+    ),
+    linear-gradient(90deg, rgba(3, 21, 34, 0.86) 0%, rgba(3, 21, 34, 0.1) 62%);
 }
 
 .al-hero__content {
@@ -43,16 +51,17 @@
   font-size: var(--fs-meta);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--c-or);
-  font-weight: 600;
+  color: var(--alerions-gold);
+  font-weight: 700;
   margin-bottom: var(--s-4);
 }
 
 .al-hero__title {
   font-size: var(--fs-display);
   line-height: var(--lh-tight);
-  font-style: italic;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: -0.01em;
   margin-bottom: var(--s-5);
 }
 

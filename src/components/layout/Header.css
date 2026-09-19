@@ -2,39 +2,39 @@
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: var(--c-bleu);
-  border-bottom: 1px solid var(--color-border-inverse);
+  background: var(--alerions-deep);
+  border-bottom: 3px solid var(--alerions-gold);
 }
 
 .al-header__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-6);
-  min-height: 72px;
+  gap: var(--s-3);
+  min-height: 68px;
   padding-block: var(--s-3);
 }
 
 .al-header__brand {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
+  gap: var(--s-2);
+  min-width: 0;
   color: var(--color-text-inverse);
   min-height: var(--tap-min);
 }
 
 .al-header__crest {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   flex: none;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--c-or);
+  border: 2px solid var(--alerions-gold);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--c-or);
+  color: var(--alerions-gold);
   letter-spacing: 0.02em;
 }
 
@@ -42,18 +42,42 @@
   display: flex;
   flex-direction: column;
   line-height: 1.1;
+  min-width: 0;
 }
 
 .al-header__wordmark strong {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .al-header__wordmark span {
   font-size: var(--fs-meta);
   color: var(--color-text-muted-inverse);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+  Priorité mobile : le logo (crest) suffit en dessous de 400px — le nom du
+  Collège en sous-titre s'efface d'abord, puis le mot-symbole complet.
+*/
+@media (max-width: 479px) {
+  .al-header__wordmark span {
+    display: none;
+  }
+}
+
+@media (max-width: 399px) {
+  .al-header__wordmark {
+    display: none;
+  }
 }
 
 .al-header__nav {
@@ -66,7 +90,9 @@
   position: relative;
   padding-block: var(--s-2);
   font-size: var(--fs-small);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: var(--color-text-inverse);
   min-height: var(--tap-min);
   display: inline-flex;
@@ -74,7 +100,7 @@
 }
 
 .al-header__nav a[aria-current="page"] {
-  color: var(--c-or);
+  color: var(--alerions-gold);
 }
 
 .al-header__nav a::after {
@@ -84,7 +110,7 @@
   right: 0;
   bottom: 0;
   height: 2px;
-  background: var(--c-or);
+  background: var(--alerions-gold);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-base) var(--ease-out);
@@ -98,61 +124,35 @@
 .al-header__actions {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
+  gap: var(--s-2);
+  flex: none;
 }
 
-.al-header__espaces-wrap {
-  position: relative;
-  display: none;
-}
-
-.al-header__espaces-btn {
+.al-header__cta {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
-  background: transparent;
-  border: 1px solid var(--color-border-inverse);
-  color: var(--color-text-inverse);
-  padding: var(--s-2) var(--s-4);
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-small);
-  font-weight: 500;
   min-height: var(--tap-min);
-}
-
-.al-header__espaces-btn:hover {
-  border-color: var(--c-or);
-  color: var(--c-or);
-}
-
-.al-header__espaces-menu {
-  position: absolute;
-  top: calc(100% + var(--s-2));
-  right: 0;
-  min-width: 200px;
-  background: var(--color-surface);
-  border: var(--border-hairline);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-raised);
-  padding: var(--s-2);
-  display: flex;
-  flex-direction: column;
-}
-
-.al-header__espaces-menu a {
-  padding: var(--s-3) var(--s-3);
-  border-radius: var(--radius-sm);
+  padding: 0 var(--s-4);
+  background: var(--alerions-gold);
+  color: var(--alerions-deep);
+  font-weight: 700;
   font-size: var(--fs-small);
-  color: var(--color-text);
-  min-height: var(--tap-min);
-  display: flex;
-  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
-.al-header__espaces-menu a:hover,
-.al-header__espaces-menu a:focus-visible {
-  background: var(--c-ivoire);
-  color: var(--c-bleu);
+@media (min-width: 400px) {
+  .al-header__actions {
+    gap: var(--s-3);
+  }
+  .al-header__cta {
+    padding: 0 var(--s-5);
+  }
+}
+
+.al-header__cta:hover {
+  background: var(--c-or-clair);
 }
 
 .al-header__burger {
@@ -163,49 +163,42 @@
   height: var(--tap-min);
   background: transparent;
   border: 1px solid var(--color-border-inverse);
-  border-radius: var(--radius-sm);
   color: var(--color-text-inverse);
 }
 
-.al-header__mobile-quick {
-  display: flex;
-  gap: var(--s-2);
-  padding: var(--s-2) var(--gutter) var(--s-3);
-  border-top: 1px solid var(--color-border-inverse);
+/* Navigation secondaire — discrète, ordinateur uniquement */
+.al-header__secondary {
+  display: none;
+  background: rgba(0, 0, 0, 0.18);
 }
 
-.al-header__mobile-quick a {
-  flex: 1;
-  text-align: center;
-  min-height: var(--tap-min);
+.al-header__secondary-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-small);
+  gap: var(--s-6);
+  padding-block: var(--s-2);
+}
+
+.al-header__secondary-row a {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-muted-inverse);
   font-weight: 600;
-  color: var(--color-text-inverse);
-  background: rgba(242, 238, 229, 0.06);
-  border: 1px solid var(--color-border-inverse);
-  border-radius: var(--radius-sm);
 }
 
-.al-header__mobile-quick a[aria-current="page"] {
-  color: var(--c-bleu);
-  background: var(--c-or);
-  border-color: var(--c-or);
+.al-header__secondary-row a:hover,
+.al-header__secondary-row a[aria-current="page"] {
+  color: var(--alerions-gold);
 }
 
 @media (min-width: 1024px) {
   .al-header__nav {
     display: flex;
   }
-  .al-header__espaces-wrap {
-    display: block;
-  }
   .al-header__burger {
     display: none;
   }
-  .al-header__mobile-quick {
-    display: none;
+  .al-header__secondary {
+    display: block;
   }
 }

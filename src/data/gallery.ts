@@ -1,6 +1,28 @@
 import type { PhotoGalerie } from "../types";
 
 /**
+ * Sélection éditoriale pour la section « Galerie » de l'accueil :
+ * une grande photo + deux photos secondaires empilées, avec titres courts.
+ */
+export const galerieAccueil: { fichier: string; alt: string; titre: string }[] = [
+  {
+    fichier: "DSC_1153.jpg",
+    alt: "Athlètes des Alérions en pleine action durant un match",
+    titre: "L'intensité du match",
+  },
+  {
+    fichier: "DSC_1139.jpg",
+    alt: "Athlètes des Alérions réunis sur le terrain avant une rencontre",
+    titre: "L'esprit d'équipe",
+  },
+  {
+    fichier: "DSC_0806.jpg",
+    alt: "Athlète des Alérions concentré en position de jeu",
+    titre: "La préparation",
+  },
+];
+
+/**
  * Sélection de photos pour la composition éditoriale de la galerie.
  * Orientations vérifiées sur les dimensions réelles des fichiers
  * (aucune photo n'est déformée : le rendu utilise object-fit: cover).

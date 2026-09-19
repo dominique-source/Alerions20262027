@@ -14,12 +14,16 @@
   font-size: var(--fs-meta);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--c-rouge);
-  font-weight: 600;
+  color: var(--alerions-red);
+  font-weight: 700;
 }
 
 .al-section-title h2 {
   font-size: var(--fs-h2);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
 }
 
 .al-section-title p {

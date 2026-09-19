@@ -1,44 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navEspaces, navMobilePrioritaire, navPrincipale } from "../../data/navigation";
+import { navEspaces, navPrincipale } from "../../data/navigation";
 import MobileMenu from "./MobileMenu";
 import "./Header.css";
 
 /**
- * En-tête principal : logo (espace réservé), navigation principale,
- * menu « Espaces » (menu déroulant sur ordinateur) et déclencheur du
- * menu mobile. Sticky pour garder l'accès à la navigation en tout temps.
+ * En-tête principal : fond bleu très foncé, ligne or sous la navigation.
+ * Rangée haute = logo + navigation principale + bouton Calendrier.
+ * Rangée basse (ordinateur uniquement) = navigation secondaire discrète.
+ * Sur téléphone : logo + bouton Calendrier + menu regroupant tout le reste.
  */
 export default function Header() {
-  const [espacesOuvert, setEspacesOuvert] = useState(false);
   const [menuMobileOuvert, setMenuMobileOuvert] = useState(false);
-  const espacesRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function surClicExterieur(evenement: MouseEvent) {
-      if (
-        espacesRef.current &&
-        !espacesRef.current.contains(evenement.target as Node)
-      ) {
-        setEspacesOuvert(false);
-      }
-    }
-    function surEchap(evenement: KeyboardEvent) {
-      if (evenement.key === "Escape") setEspacesOuvert(false);
-    }
-    document.addEventListener("mousedown", surClicExterieur);
-    document.addEventListener("keydown", surEchap);
-    return () => {
-      document.removeEventListener("mousedown", surClicExterieur);
-      document.removeEventListener("keydown", surEchap);
-    };
-  }, []);
 
   return (
     <header className="al-header">
       <div className="container al-header__bar">
         <NavLink to="/" className="al-header__brand" aria-label="Retour à l'accueil des Alérions">
-          {/* Espace réservé pour le futur logo officiel des Alérions */}
+          {/*
+            Espace réservé au logo officiel des Alérions : aucun fichier de
+            logo transparent n'est présent dans le dépôt à ce jour (seules
+            les 40 photos DSC_*.jpg y figurent). Ce bloc typographique doit
+            être remplacé par le vrai logo dès qu'il sera fourni — ne pas le
+            laisser en place s'il s'agit d'une tentative de faux logo.
+          */}
           <span className="al-header__crest" aria-hidden="true">
             A
           </span>
@@ -57,32 +42,9 @@ export default function Header() {
         </nav>
 
         <div className="al-header__actions">
-          <div className="al-header__espaces-wrap" ref={espacesRef}>
-            <button
-              type="button"
-              className="al-header__espaces-btn"
-              aria-haspopup="true"
-              aria-expanded={espacesOuvert}
-              onClick={() => setEspacesOuvert((v) => !v)}
-            >
-              Espaces
-              <span aria-hidden="true">{espacesOuvert ? "▲" : "▼"}</span>
-            </button>
-            {espacesOuvert && (
-              <div className="al-header__espaces-menu" role="menu">
-                {navEspaces.map((lien) => (
-                  <NavLink
-                    key={lien.href}
-                    to={lien.href}
-                    role="menuitem"
-                    onClick={() => setEspacesOuvert(false)}
-                  >
-                    {lien.label}
-                  </NavLink>
-                ))}
-              </div>
-            )}
-          </div>
+          <NavLink to="/calendrier" className="al-header__cta">
+            Calendrier
+          </NavLink>
 
           <button
             type="button"
@@ -105,13 +67,15 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Accès rapide toujours visible sur téléphone, en dehors du menu replié */}
-      <nav className="al-header__mobile-quick" aria-label="Accès rapide">
-        {navMobilePrioritaire.map((lien) => (
-          <NavLink key={lien.href} to={lien.href}>
-            {lien.label}
-          </NavLink>
-        ))}
+      {/* Navigation secondaire, plus discrète — ordinateur uniquement */}
+      <nav className="al-header__secondary" aria-label="Espaces">
+        <div className="container al-header__secondary-row">
+          {navEspaces.map((lien) => (
+            <NavLink key={lien.href} to={lien.href}>
+              {lien.label}
+            </NavLink>
+          ))}
+        </div>
       </nav>
 
       <MobileMenu isOpen={menuMobileOuvert} onClose={() => setMenuMobileOuvert(false)} />

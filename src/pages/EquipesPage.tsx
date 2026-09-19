@@ -1,9 +1,13 @@
-import TeamCard from "../components/TeamCard";
+import PhotoFeature from "../components/PhotoFeature";
 import SectionTitle from "../components/SectionTitle";
-import { categoriesSports, equipes } from "../data/teams";
+import TeamSelector from "../components/TeamSelector";
+import { composantsEquipesAccueil, equipeExemple } from "../data/teams";
+import "./EquipesPage.css";
 
-/** Page générale des sports — liste les familles de sports et les équipes disponibles. */
+/** Page générale des sports — composition photographique asymétrique. */
 export default function EquipesPage() {
+  const { grande, secondaires } = composantsEquipesAccueil;
+
   return (
     <>
       <header className="al-page-header">
@@ -19,38 +23,47 @@ export default function EquipesPage() {
 
       <section className="al-section al-section--blanc">
         <div className="container">
-          <SectionTitle eyebrow="Sports" title="Nos sports" />
-          <div className="al-grid al-grid--4">
-            {categoriesSports.map((categorie) => (
-              <TeamCard
-                key={categorie.sport}
-                nom={categorie.nom}
-                sousTitre={categorie.description}
-                href="/equipes"
-              />
-            ))}
-          </div>
+          <TeamSelector />
         </div>
       </section>
 
-      <section className="al-section al-section--ivoire">
+      <section className="al-section al-section--ice">
         <div className="container">
-          <SectionTitle
-            eyebrow="Gabarit"
-            title="Équipes"
-            description="Chaque équipe disposera de sa propre page (horaire, résultats, entraîneurs, photos, vidéos, documents). Le modèle ci-dessous est un exemple de présentation."
-          />
-          <div className="al-grid al-grid--3">
-            {equipes.map((equipe) => (
-              <TeamCard
-                key={equipe.slug}
-                nom={equipe.nom}
-                sousTitre="Exemple de présentation"
-                href={`/equipes/${equipe.slug}`}
-                photo={equipe.photoPrincipale}
-                photoAlt="Athlète des Alérions représentant l'équipe exemple"
+          <SectionTitle eyebrow="Sports" title="Nos programmes" />
+          <div className="al-equipes-grid">
+            <PhotoFeature
+              image={grande.photo}
+              imageAlt={`Athlète des Alérions en action — programme ${grande.nom}`}
+              eyebrow="Programme principal"
+              title={grande.nom}
+              size="big"
+              ctaLabel="Explorer"
+              href={`/equipes/${equipeExemple.slug}`}
+              photoDeReference={grande.photoDeReference}
+            />
+            <div className="al-equipes-grid__secondaires">
+              {secondaires.map((programme) => (
+                <PhotoFeature
+                  key={programme.sport}
+                  image={programme.photo}
+                  imageAlt={`Athlète des Alérions en action — programme ${programme.nom}`}
+                  title={programme.nom}
+                  size="secondary"
+                  ctaLabel="Explorer"
+                  href={`/equipes/${equipeExemple.slug}`}
+                  photoDeReference={programme.photoDeReference}
+                />
+              ))}
+              <PhotoFeature
+                image={equipeExemple.photoPrincipale ?? "DSC_1119.jpg"}
+                imageAlt="Aperçu du modèle de page d'équipe des Alérions"
+                eyebrow="Aperçu"
+                title="Modèle de page"
+                size="secondary"
+                ctaLabel="Explorer"
+                href={`/equipes/${equipeExemple.slug}`}
               />
-            ))}
+            </div>
           </div>
         </div>
       </section>

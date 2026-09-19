@@ -1,7 +1,8 @@
 .al-footer {
-  background: var(--c-bleu);
+  background: var(--alerions-deep);
   color: var(--color-text-inverse);
   margin-top: var(--s-24);
+  border-top: 3px solid var(--alerions-gold);
 }
 
 .al-footer__top {

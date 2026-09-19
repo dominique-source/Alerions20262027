@@ -14,18 +14,19 @@
 .al-cal__tab {
   min-height: var(--tap-min);
   padding: 0 var(--s-5);
-  border-radius: var(--radius-sm);
-  border: var(--border-hairline);
+  border: 1px solid var(--color-border);
   background: var(--color-surface);
   font-size: var(--fs-small);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--color-text);
 }
 
 .al-cal__tab[aria-pressed="true"] {
-  background: var(--c-bleu);
+  background: var(--alerions-blue);
   color: var(--color-text-inverse);
-  border-color: var(--c-bleu);
+  border-color: var(--alerions-blue);
 }
 
 .al-cal__search {
@@ -38,18 +39,17 @@
   flex: 1;
   min-height: var(--tap-min);
   padding: 0 var(--s-4);
-  border: var(--border-hairline);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
   font-size: var(--fs-body);
 }
 
 .al-cal__filter-toggle {
   min-height: var(--tap-min);
   padding: 0 var(--s-5);
-  border-radius: var(--radius-sm);
-  border: var(--border-hairline);
+  border: 1px solid var(--color-border);
   background: var(--color-surface);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
   font-size: var(--fs-small);
 }
 
@@ -63,9 +63,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-5);
-  background: var(--color-surface);
-  border: var(--border-hairline);
-  border-radius: var(--radius-md);
+  background: var(--alerions-ice);
+  border: 1px solid var(--color-border);
   padding: var(--s-6);
 }
 
@@ -81,38 +80,70 @@
 
 .al-cal__filter-field label {
   font-size: var(--fs-small);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .al-cal__filter-field select {
   min-height: var(--tap-min);
   padding: 0 var(--s-3);
-  border: var(--border-hairline);
-  border-radius: var(--radius-sm);
-  background: var(--c-ivoire);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
-/* Liste verticale par jour (mobile par défaut) */
+/*
+  Présentation par journées : une colonne date (grande, stylisée) et une
+  colonne activités. Sur téléphone, la date reste visible en tête de liste.
+*/
 .al-cal__day-group {
-  margin-bottom: var(--s-8);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+  padding-block: var(--s-8);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.al-cal__day-title {
+.al-cal__day-group:first-child {
+  padding-top: 0;
+}
+
+.al-cal__day-date {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+
+.al-cal__day-date .al-cal__day-num {
   font-family: var(--font-display);
-  font-size: var(--fs-h3);
-  margin-bottom: var(--s-3);
-  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--alerions-blue);
+}
+
+.al-cal__day-date .al-cal__day-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.al-cal__day-label strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--fs-small);
+}
+
+.al-cal__day-label span {
+  font-size: var(--fs-meta);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
 }
 
 .al-cal__day-events {
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
-}
-
-/* Vue hebdomadaire (ordinateur uniquement) */
-.al-cal__week {
-  display: none;
 }
 
 @media (min-width: 1024px) {
@@ -123,7 +154,7 @@
 
   .al-cal__filters {
     position: sticky;
-    top: calc(72px + var(--s-6));
+    top: calc(68px + var(--s-6));
   }
 
   .al-cal__filters[hidden] {
@@ -134,30 +165,8 @@
     display: none;
   }
 
-  .al-cal__mobile-list {
-    display: none;
-  }
-
-  .al-cal__week {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: var(--s-3);
-  }
-
-  .al-cal__week-day {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    min-width: 0;
-  }
-
-  .al-cal__week-day-title {
-    font-family: var(--font-display);
-    font-size: var(--fs-small);
-    letter-spacing: var(--ls-eyebrow);
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    border-bottom: 2px solid var(--c-or);
-    padding-bottom: var(--s-2);
+  .al-cal__day-group {
+    grid-template-columns: 160px 1fr;
+    gap: var(--s-8);
   }
 }
