@@ -1,9 +1,5 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import EmptyState from "../components/EmptyState";
-import PhotoGrid from "../components/PhotoGrid";
-import DocumentRow from "../components/DocumentRow";
-import SectionTitle from "../components/SectionTitle";
 import { trouverSport } from "../data/sports";
 import { equipesParSport } from "../data/teams";
 import { documentsParSport } from "../data/documents";
@@ -18,7 +14,11 @@ const libellesGenre: Record<Genre, string> = {
   mixte: "Mixte",
 };
 
-/** Page d'un sport : équipes, filtre genre, calendrier filtré, documents, galerie. */
+/**
+ * Page d'un sport (/equipes/:sport) — direction V2 (noir, rouge, or),
+ * remplace l'ancien habillage bleu/ivoire. Équipes, filtre genre,
+ * calendrier filtré, documents et galerie restent fonctionnels.
+ */
 export default function SportPage() {
   const { sport: sportSlugParam } = useParams<{ sport: string }>();
   const [filtreGenre, setFiltreGenre] = useState<Genre | "">("");
@@ -31,26 +31,32 @@ export default function SportPage() {
 
   if (!sport) {
     return (
-      <section className="al-section al-section--blanc">
-        <div className="container">
-          <EmptyState
-            title="Ce sport n'existe pas."
-            description="Consultez la liste complète des sports Alérions."
-          />
+      <div className="al-sportpage">
+        <div className="al-sportpage__vide">
+          <span className="al-v2-eyebrow">Équipes</span>
+          <h1 className="al-v2-title al-sportpage__vide-titre">Ce sport n'existe pas.</h1>
+          <p>Consultez la liste complète des sports Alérions.</p>
+          <Link to="/equipes" className="al-btn-v2 al-btn-v2--red">
+            Voir tous les sports <span aria-hidden="true">→</span>
+          </Link>
         </div>
-      </section>
+      </div>
     );
   }
 
   const genresDisponibles = Array.from(new Set(equipes.map((e) => e.genre)));
-  const equipesFiltrees = filtreGenre
-    ? equipes.filter((e) => e.genre === filtreGenre)
-    : equipes;
+  const equipesFiltrees = filtreGenre ? equipes.filter((e) => e.genre === filtreGenre) : equipes;
 
   return (
-    <>
-      <section
-        className={`al-sport-hero ${sport.photoCouverture ? "al-sport-hero--photo" : "al-sport-hero--sansphoto"}`}
+    <div className="al-sportpage">
+      <nav className="al-sportpage__fil" aria-label="Fil d'Ariane">
+        <Link to="/equipes">Équipes</Link>
+        <span aria-hidden="true">›</span>
+        <span>{sport.nom}</span>
+      </nav>
+
+      <header
+        className={`al-sportpage__hero${sport.photoCouverture ? " al-sportpage__hero--photo" : ""}`}
       >
         {sport.photoCouverture && (
           <img
@@ -58,84 +64,95 @@ export default function SportPage() {
             alt={`Athlète des Alérions en action — programme ${sport.nom}`}
           />
         )}
-        <div className="container al-sport-hero__content">
-          <h1>{sport.nom}</h1>
-          <p className="al-sport-hero__meta">
+        <div className="al-sportpage__hero-texte">
+          <span className="al-v2-eyebrow">
             {equipes.length} équipe{equipes.length > 1 ? "s" : ""}
-          </p>
-          <div className="al-sport-actions">
-            <Link to={`/calendrier?sport=${sport.slug}`} className="al-btn al-btn--primary">
+          </span>
+          <h1 className="al-v2-title al-sportpage__titre">{sport.nom}</h1>
+          <div className="al-sportpage__actions">
+            <Link to={`/calendrier?sport=${sport.slug}`} className="al-btn-v2 al-btn-v2--outline">
               Calendrier {sport.nom}
             </Link>
             {documents.length > 0 && (
-              <a href="#documents" className="al-btn al-btn--outline">
+              <a href="#documents" className="al-btn-v2 al-btn-v2--gold">
                 Documents
               </a>
             )}
           </div>
         </div>
-      </section>
+      </header>
 
-      <section className="al-section al-section--blanc">
-        <div className="container">
-          {sport.filtreGenre && genresDisponibles.length > 1 && (
-            <div className="al-sport-filters" role="group" aria-label="Filtrer par genre">
+      <section className="al-sportpage__section">
+        {sport.filtreGenre && genresDisponibles.length > 1 && (
+          <div className="al-sportpage__filtres" role="group" aria-label="Filtrer par genre">
+            <button type="button" aria-pressed={filtreGenre === ""} onClick={() => setFiltreGenre("")}>
+              Toutes les équipes
+            </button>
+            {genresDisponibles.map((genre) => (
               <button
+                key={genre}
                 type="button"
-                aria-pressed={filtreGenre === ""}
-                onClick={() => setFiltreGenre("")}
+                aria-pressed={filtreGenre === genre}
+                onClick={() => setFiltreGenre(genre)}
               >
-                Toutes les équipes
+                {libellesGenre[genre]}
               </button>
-              {genresDisponibles.map((genre) => (
-                <button
-                  key={genre}
-                  type="button"
-                  aria-pressed={filtreGenre === genre}
-                  onClick={() => setFiltreGenre(genre)}
-                >
-                  {libellesGenre[genre]}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div className="al-sport-teams">
-            {equipesFiltrees.map((equipe) => (
-              <Link
-                key={equipe.slug}
-                to={`/equipes/${sport.slug}/${equipe.slug}`}
-                className="al-sport-team-row"
-              >
-                <span className="al-sport-team-row__nom">{equipe.nom}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
             ))}
           </div>
+        )}
+
+        <div className="al-sportpage__equipes">
+          {equipesFiltrees.map((equipe) => (
+            <Link key={equipe.slug} to={`/equipes/${sport.slug}/${equipe.slug}`} className="al-sportpage__equipe">
+              <span className="al-sportpage__equipe-nom">{equipe.nom}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          ))}
         </div>
       </section>
 
       {documents.length > 0 && (
-        <section className="al-section al-section--ice" id="documents">
-          <div className="container">
-            <SectionTitle eyebrow="Ressources" title="Documents" />
-            <div className="al-doc-list al-sport-docs">
-              {documents.map((document) => (
-                <DocumentRow key={document.slug} document={document} />
-              ))}
-            </div>
+        <section className="al-sportpage__section" id="documents">
+          <span className="al-v2-eyebrow">Ressources</span>
+          <h2 className="al-v2-title al-sportpage__section-titre">Documents</h2>
+          <div className="al-sportpage__docs">
+            {documents.map((document) => {
+              const href = `/documents/${document.fichier}`;
+              return (
+                <div key={document.slug} className="al-sportpage__doc">
+                  <span className="al-sportpage__doc-titre">{document.titre}</span>
+                  <span className="al-sportpage__doc-meta">
+                    {document.pages} page{document.pages > 1 ? "s" : ""}
+                    {document.groupeVersion ? ` · ${document.groupeVersion.etiquette}` : ""}
+                  </span>
+                  <span className="al-sportpage__doc-actions">
+                    <a href={href} target="_blank" rel="noopener noreferrer">
+                      Voir
+                    </a>
+                    <a href={href} download>
+                      Télécharger
+                    </a>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
 
       {photosGalerie.length > 0 && (
-        <section className="al-section al-section--blanc">
-          <div className="container">
-            <SectionTitle eyebrow="En images" title={`Galerie ${sport.nom}`} />
-            <PhotoGrid photos={photosGalerie} />
+        <section className="al-sportpage__section">
+          <span className="al-v2-eyebrow">En images</span>
+          <h2 className="al-v2-title al-sportpage__section-titre">Galerie {sport.nom}</h2>
+          <div className="al-sportpage__galerie">
+            {photosGalerie.slice(0, 8).map((photo) => (
+              <div key={photo.id} className="al-sportpage__photo">
+                <img src={cheminPublic(photo.fichier)} alt={photo.alt} loading="lazy" />
+              </div>
+            ))}
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 }
