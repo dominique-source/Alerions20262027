@@ -1,0 +1,119 @@
+.al-sport-hero {
+  position: relative;
+  min-height: 34vh;
+  display: flex;
+  align-items: flex-end;
+  color: var(--color-text-inverse);
+  overflow: hidden;
+  border-bottom: 3px solid var(--alerions-gold);
+}
+
+.al-sport-hero--photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-sport-hero--photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 21, 34, 0.2) 20%, rgba(3, 21, 34, 0.9) 100%);
+}
+
+.al-sport-hero--sansphoto {
+  background: var(--alerions-deep);
+  min-height: 26vh;
+}
+
+.al-sport-hero__content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--s-10) var(--s-8);
+}
+
+.al-sport-hero__content h1 {
+  font-size: var(--fs-h1);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.al-sport-hero__meta {
+  margin-top: var(--s-2);
+  color: var(--color-text-muted-inverse);
+}
+
+.al-sport-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.al-sport-filters {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-6);
+}
+
+.al-sport-filters button {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-5);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.al-sport-filters button[aria-pressed="true"] {
+  background: var(--alerions-blue);
+  border-color: var(--alerions-blue);
+  color: var(--color-text-inverse);
+}
+
+.al-sport-teams {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+
+@media (min-width: 640px) {
+  .al-sport-teams {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .al-sport-teams {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.al-sport-team-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  border: 1px solid var(--color-border);
+  min-height: var(--tap-min);
+}
+
+.al-sport-team-row:hover {
+  border-color: var(--alerions-blue);
+}
+
+.al-sport-team-row__nom {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.al-sport-docs {
+  display: flex;
+  flex-direction: column;
+}

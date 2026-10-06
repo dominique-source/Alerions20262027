@@ -1,0 +1,143 @@
+.al-collection {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-8) var(--v-gutter) var(--s-16);
+}
+
+.al-collection__entete {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s-6);
+  margin-bottom: var(--s-8);
+}
+
+.al-collection__titre {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: var(--s-1) 0 0;
+}
+
+.al-collection__titre-red {
+  color: var(--v-red);
+}
+
+.al-collection__progression {
+  border: 1px solid var(--v-gold);
+  padding: var(--s-4) var(--s-6);
+  min-width: 260px;
+}
+
+.al-collection__chiffre {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 2rem;
+  margin: var(--s-1) 0 var(--s-2);
+}
+
+.al-collection__chiffre span {
+  font-family: var(--v-font-body);
+  font-size: 1rem;
+  color: var(--v-text-muted);
+}
+
+.al-collection__barre {
+  display: flex;
+  gap: 3px;
+}
+
+.al-collection__barre span {
+  flex: 1;
+  height: 6px;
+  background: var(--v-line);
+}
+
+.al-collection__segment--fait {
+  background: var(--v-red) !important;
+}
+
+.al-collection__filtres {
+  display: flex;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+}
+
+.al-collection__filtre {
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-text-muted);
+  padding: var(--s-2) var(--s-5);
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: var(--tap-min);
+}
+
+.al-collection__filtre--actif {
+  background: var(--v-red);
+  border-color: var(--v-red);
+  color: var(--v-white);
+}
+
+.al-collection__grille {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4);
+}
+
+.al-collection__carte {
+  border: 1px solid var(--v-gold);
+  padding: var(--s-2);
+}
+
+.al-collection__carte--verrouillee {
+  border-color: var(--v-line-strong);
+}
+
+.al-collection__carte-image {
+  aspect-ratio: 3 / 4;
+  background: var(--v-panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: var(--s-2);
+}
+
+.al-collection__carte-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-collection__cadenas {
+  font-size: 1.75rem;
+  opacity: 0.5;
+}
+
+.al-collection__carte-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.al-collection__carte-regle {
+  font-size: 0.6875rem;
+  color: var(--v-text-faint);
+  text-align: center;
+  margin-top: var(--s-1);
+}
+
+@media (min-width: 640px) {
+  .al-collection__grille {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

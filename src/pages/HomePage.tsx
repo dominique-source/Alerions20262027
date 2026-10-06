@@ -1,118 +1,89 @@
 import { Link } from "react-router-dom";
-import Hero from "../components/Hero";
-import InfoBar from "../components/InfoBar";
-import SectionTitle from "../components/SectionTitle";
-import QuickAccessCard from "../components/QuickAccessCard";
-import LivingXVI from "../components/LivingXVI";
-import PhotoFeature from "../components/PhotoFeature";
-import { evenementsExemple } from "../data/events";
-import { actualitesExemple } from "../data/news";
-import { galerieAccueil } from "../data/gallery";
+import { prochainMatch } from "../data/events";
 import "./HomePage.css";
 
-const prochainEntrainement = evenementsExemple.find((e) => e.type === "entrainement");
-const prochainMatch = evenementsExemple.find((e) => e.type === "match");
-const derniereNouvelle = actualitesExemple[0];
+function formaterDate(date: string): string {
+  return new Intl.DateTimeFormat("fr-CA", { day: "numeric", month: "short" })
+    .format(new Date(`${date}T00:00:00`))
+    .replace(".", "")
+    .toUpperCase();
+}
 
+/**
+ * Accueil — reproduction fidèle de 01_MAQUETTES/accueil-desktop-1536x1024.png.
+ * Hero (titre + portraits), bande « Prochain rendez-vous » alimentée par le
+ * vrai prochain match, puis trois tuiles vers Le mur / Défis / Collection.
+ */
 export default function HomePage() {
-  const [grande, ...secondaires] = galerieAccueil;
+  const match = prochainMatch();
 
   return (
-    <>
-      {/* A. Hero */}
-      <Hero
-        image="DSC_1119.jpg"
-        imageAlt="Athlète des Alérions en pleine action"
-        eyebrow="Collège François-de-Laval"
-        title={
-          <>
-            PORTER
-            <br />
-            L'HISTOIRE.
-            <br />
-            ÉCRIRE LA SUITE.
-          </>
-        }
-        lead="L'identité sportive du Collège François-de-Laval."
-        actions={
-          <>
-            <Link to="/calendrier" className="al-btn al-btn--primary">
-              Voir le calendrier
-            </Link>
-            <Link to="/equipes" className="al-btn al-btn--outline">
-              Trouver mon équipe
-            </Link>
-          </>
-        }
-      />
-
-      {/* B. Bande d'information */}
-      <InfoBar />
-
-      {/* C. Cette semaine */}
-      <section className="al-section al-section--blanc">
-        <div className="container">
-          <SectionTitle eyebrow="À l'horaire" title="Cette semaine" />
-          <div className="al-week-band">
-            {prochainEntrainement && (
-              <QuickAccessCard
-                eyebrow="Prochain entraînement"
-                title={prochainEntrainement.titre}
-                meta={`${prochainEntrainement.date} · ${prochainEntrainement.heure} · ${prochainEntrainement.lieu}`}
-                href="/calendrier"
-                linkLabel="Voir le calendrier"
-              />
-            )}
-            {prochainMatch && (
-              <QuickAccessCard
-                eyebrow="Prochain match"
-                title={prochainMatch.titre}
-                meta={`${prochainMatch.date} · ${prochainMatch.heure} · ${prochainMatch.lieu}`}
-                href="/calendrier"
-                linkLabel="Voir le calendrier"
-              />
-            )}
-            {derniereNouvelle && (
-              <QuickAccessCard
-                eyebrow="Dernière nouvelle"
-                title={derniereNouvelle.titre}
-                meta={derniereNouvelle.resume}
-                href="/actualites"
-                linkLabel="Voir les actualités"
-              />
-            )}
-          </div>
+    <div className="al-accueil">
+      <section className="al-accueil__hero">
+        <div className="al-accueil__hero-text">
+          <span className="al-accueil__eyebrow">Saison 2026-2027</span>
+          <h1 className="al-accueil__title">
+            <span className="al-accueil__title-white">Alérions.</span>
+            <span className="al-accueil__title-red">À nous de jouer.</span>
+          </h1>
+          <Link to="/mon-equipe" className="al-btn-v2 al-btn-v2--red">
+            Voir mon équipe <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+        <div className="al-accueil__hero-image">
+          <img src="/images/accueil/hero-portraits.png" alt="Deux athlètes Alérions en portrait de saison" />
         </div>
       </section>
 
-      {/* D. Mur vivant XVI */}
-      <LivingXVI />
-
-      {/* E. Galerie éditoriale */}
-      <section className="al-section al-section--ice">
-        <div className="container">
-          <SectionTitle eyebrow="En images" title="Galerie" />
-          <div className="al-home-gallery">
-            <PhotoFeature
-              image={grande.fichier}
-              imageAlt={grande.alt}
-              title={grande.titre}
-              size="big"
-            />
-            <div className="al-home-gallery__stack">
-              {secondaires.map((photo) => (
-                <PhotoFeature
-                  key={photo.fichier}
-                  image={photo.fichier}
-                  imageAlt={photo.alt}
-                  title={photo.titre}
-                  size="secondary"
-                />
-              ))}
+      <section className="al-accueil__bande" aria-label="Prochain rendez-vous">
+        {match ? (
+          <>
+            <div className="al-accueil__bande-item">
+              <span className="al-accueil__bande-icon" aria-hidden="true">
+                📅
+              </span>
+              <span className="al-accueil__bande-label">Prochain rendez-vous</span>
             </div>
+            <div className="al-accueil__bande-divider" aria-hidden="true" />
+            <div className="al-accueil__bande-titre">{match.titre}</div>
+            <div className="al-accueil__bande-divider" aria-hidden="true" />
+            <div className="al-accueil__bande-item">
+              <span className="al-accueil__bande-icon" aria-hidden="true">
+                📅
+              </span>
+              <span>
+                {formaterDate(match.date)}
+                {match.heure ? ` · ${match.heure.replace(":", " h ")}` : ""}
+              </span>
+            </div>
+            <Link to="/calendrier" className="al-btn-v2 al-btn-v2--outline al-accueil__bande-cta">
+              Voir le calendrier <span aria-hidden="true">→</span>
+            </Link>
+          </>
+        ) : (
+          <div className="al-accueil__bande-item">
+            <span className="al-accueil__bande-icon" aria-hidden="true">
+              📅
+            </span>
+            <span className="al-accueil__bande-label">Aucun match à venir pour le moment</span>
+            <Link to="/calendrier" className="al-btn-v2 al-btn-v2--outline al-accueil__bande-cta">
+              Voir le calendrier <span aria-hidden="true">→</span>
+            </Link>
           </div>
-        </div>
+        )}
       </section>
-    </>
+
+      <section className="al-accueil__tuiles" aria-label="Accès rapide">
+        <Link to="/mur" className="al-accueil__tuile">
+          <img src="/images/accueil/tuile-mur.png" alt="Le mur — photos, moments forts et fierté Alérions" />
+        </Link>
+        <Link to="/defis" className="al-accueil__tuile">
+          <img src="/images/accueil/tuile-defi.png" alt="Défi de la semaine — technique, progression, esprit d'équipe" />
+        </Link>
+        <Link to="/collection" className="al-accueil__tuile">
+          <img src="/images/accueil/tuile-cartes.png" alt="Les cartes de saison — collectionne, encourage, fais partie de l'histoire" />
+        </Link>
+      </section>
+    </div>
   );
 }

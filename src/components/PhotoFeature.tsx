@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { cheminPhoto } from "../lib/images";
+import { cheminPhoto, cheminPublic } from "../lib/images";
 import "./PhotoFeature.css";
 
 interface PhotoFeatureProps {
@@ -13,12 +13,18 @@ interface PhotoFeatureProps {
   ctaLabel?: string;
   /** Signale qu'il s'agit d'une photo de référence temporaire, pas de la photo officielle du programme. */
   photoDeReference?: boolean;
+  /** true si `image` est déjà un chemin relatif complet (ex. photos de campagne), plutôt qu'un simple nom de fichier dans images/alerions/. */
+  cheminComplet?: boolean;
 }
 
 /**
  * Tuile photographique éditoriale : grande photo, dégradé sombre limité au
  * bas de l'image, titre directement sur la photo. Remplace les cartes
  * blanches identiques (galerie, actualités, équipes).
+ *
+ * Si le fichier n'existe pas encore (photo de campagne pas encore livrée),
+ * la tuile entière disparaît au premier échec de chargement — jamais
+ * d'icône d'image brisée ni de lien visuellement cassé.
  */
 export default function PhotoFeature({
   image,
@@ -29,11 +35,22 @@ export default function PhotoFeature({
   size = "secondary",
   ctaLabel,
   photoDeReference,
+  cheminComplet,
 }: PhotoFeatureProps) {
+  const [manquante, setManquante] = useState(false);
+  if (manquante) return null;
+
+  const src = cheminComplet ? cheminPublic(image) : cheminPhoto(image);
   const contenu: ReactNode = (
     <>
       <div className="al-feature__media">
-        <img src={cheminPhoto(image)} alt={imageAlt} loading="lazy" decoding="async" />
+        <img
+          src={src}
+          alt={imageAlt}
+          loading="lazy"
+          decoding="async"
+          onError={() => setManquante(true)}
+        />
         <div className="al-feature__scrim" aria-hidden="true" />
       </div>
       {photoDeReference && (

@@ -2,13 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 
 export interface SelectionEquipe {
   sport: string;
-  niveau: string;
   equipe: string;
 }
 
 const CLE_STOCKAGE = "alerions:mon-equipe";
 
-const selectionVide: SelectionEquipe = { sport: "", niveau: "", equipe: "" };
+const selectionVide: SelectionEquipe = { sport: "", equipe: "" };
 
 function lireStockage(): SelectionEquipe {
   if (typeof window === "undefined") return selectionVide;
@@ -23,9 +22,8 @@ function lireStockage(): SelectionEquipe {
 }
 
 /**
- * Mémorise le choix « Mon équipe » (sport / niveau / équipe) dans le
- * navigateur (localStorage uniquement, aucun serveur). Persiste entre les
- * visites et est utilisé pour l'accès rapide sur mobile.
+ * Mémorise le choix « Mon équipe » (sport / équipe) dans le navigateur
+ * (localStorage uniquement, aucun serveur). Persiste entre les visites.
  */
 export function useTeamSelection() {
   const [selection, setSelection] = useState<SelectionEquipe>(lireStockage);

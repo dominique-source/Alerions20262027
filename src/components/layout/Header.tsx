@@ -1,36 +1,30 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navEspaces, navPrincipale } from "../../data/navigation";
+import { navPrincipale } from "../../data/navigation";
 import MobileMenu from "./MobileMenu";
 import "./Header.css";
 
 /**
- * En-tête principal : fond bleu très foncé, ligne or sous la navigation.
- * Rangée haute = logo + navigation principale + bouton Calendrier.
- * Rangée basse (ordinateur uniquement) = navigation secondaire discrète.
- * Sur téléphone : logo + bouton Calendrier + menu regroupant tout le reste.
+ * En-tête principal — identique sur toutes les pages, reproduit depuis les
+ * maquettes approuvées : fond quasi noir, logo officiel, quatre liens
+ * principaux (Accueil / Mon équipe / Calendrier / Le mur), ligne rouge sous
+ * la page active. Les pages utiles qui ne figurent pas dans les maquettes
+ * (Parents, Documents, Boîte à idées…) restent accessibles via « Plus ».
  */
 export default function Header() {
-  const [menuMobileOuvert, setMenuMobileOuvert] = useState(false);
+  const [menuOuvert, setMenuOuvert] = useState(false);
 
   return (
     <header className="al-header">
-      <div className="container al-header__bar">
+      <div className="al-header__bar">
         <NavLink to="/" className="al-header__brand" aria-label="Retour à l'accueil des Alérions">
-          {/*
-            Espace réservé au logo officiel des Alérions : aucun fichier de
-            logo transparent n'est présent dans le dépôt à ce jour (seules
-            les 40 photos DSC_*.jpg y figurent). Ce bloc typographique doit
-            être remplacé par le vrai logo dès qu'il sera fourni — ne pas le
-            laisser en place s'il s'agit d'une tentative de faux logo.
-          */}
-          <span className="al-header__crest" aria-hidden="true">
-            A
-          </span>
-          <span className="al-header__wordmark">
-            <strong>Les Alérions</strong>
-            <span>Collège François-de-Laval</span>
-          </span>
+          <img
+            src="/images/marque/logo-alerions.png"
+            alt="Alérions — Collège François-de-Laval"
+            width={175}
+            height={40}
+            className="al-header__logo"
+          />
         </NavLink>
 
         <nav className="al-header__nav" aria-label="Navigation principale">
@@ -42,17 +36,24 @@ export default function Header() {
         </nav>
 
         <div className="al-header__actions">
-          <NavLink to="/calendrier" className="al-header__cta">
-            Calendrier
-          </NavLink>
+          <button
+            type="button"
+            className="al-header__plus"
+            aria-haspopup="true"
+            aria-expanded={menuOuvert}
+            aria-controls="menu-mobile"
+            onClick={() => setMenuOuvert(true)}
+          >
+            Plus
+          </button>
 
           <button
             type="button"
             className="al-header__burger"
             aria-haspopup="true"
-            aria-expanded={menuMobileOuvert}
+            aria-expanded={menuOuvert}
             aria-controls="menu-mobile"
-            onClick={() => setMenuMobileOuvert(true)}
+            onClick={() => setMenuOuvert(true)}
           >
             <span className="sr-only">Ouvrir le menu</span>
             <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
@@ -67,18 +68,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Navigation secondaire, plus discrète — ordinateur uniquement */}
-      <nav className="al-header__secondary" aria-label="Espaces">
-        <div className="container al-header__secondary-row">
-          {navEspaces.map((lien) => (
-            <NavLink key={lien.href} to={lien.href}>
-              {lien.label}
-            </NavLink>
-          ))}
-        </div>
-      </nav>
-
-      <MobileMenu isOpen={menuMobileOuvert} onClose={() => setMenuMobileOuvert(false)} />
+      <MobileMenu isOpen={menuOuvert} onClose={() => setMenuOuvert(false)} />
     </header>
   );
 }

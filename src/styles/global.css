@@ -13,7 +13,11 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  /* Fond quasi noir par défaut (direction V2) : le header/pied de page sont
+     désormais sombres sur toutes les pages, et la majorité des pages
+     principales le sont aussi. Les pages encore en ancienne direction
+     posent leur propre fond clair sur chaque section. */
+  background: var(--v-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -383,6 +387,147 @@ textarea {
   .al-split__panel {
     padding: var(--s-16) var(--s-12);
   }
+}
+
+/*
+  Composition asymétrique de sports/équipes : une grande tuile photo puis
+  des tuiles typographiques de tailles variées. Aucune grille uniforme.
+  Utilisée par la page Équipes et l'accueil.
+*/
+.al-equipes-grid {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+
+.al-equipes-grid .al-feature {
+  min-height: 260px;
+}
+
+.al-equipes-grid__reste {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+}
+
+@media (min-width: 640px) {
+  .al-equipes-grid__reste {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .al-equipes-grid {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .al-equipes-grid .al-feature--big {
+    min-height: 100%;
+  }
+
+  .al-equipes-grid__reste {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .al-equipes-grid__reste .al-sport-tile:nth-child(3n + 1) {
+    grid-column: span 2;
+  }
+}
+
+/* ============================================================
+   V2 — primitives partagées de la direction « Alérions refonte »
+   Utilisées par Header/Footer et les pages reconstruites depuis les
+   maquettes (Accueil, Mon équipe, Calendrier, Le mur, Profil joueur,
+   Détail d'un événement, Défis, Collection, Parents). Jetons dans
+   variables.css (--v-*). N'affecte aucune page qui ne les utilise pas.
+   ============================================================ */
+
+.al-v2-section {
+  padding: var(--s-16) var(--v-gutter);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+}
+
+.al-v2-eyebrow {
+  display: block;
+  font-family: var(--v-font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--v-gold);
+}
+
+.al-v2-title {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--v-white);
+}
+
+/* --- Bouton partagé (rouge = action primaire unique, outline = secondaire) --- */
+.al-btn-v2 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: var(--tap-min);
+  padding: 0 var(--s-6);
+  font-family: var(--v-font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--v-dur-fast) var(--v-ease), border-color var(--v-dur-fast) var(--v-ease),
+    color var(--v-dur-fast) var(--v-ease), opacity var(--v-dur-fast) var(--v-ease);
+}
+
+.al-btn-v2--red {
+  background: var(--v-red);
+  color: var(--v-white);
+}
+
+.al-btn-v2--red:hover {
+  background: var(--v-red-deep);
+}
+
+.al-btn-v2--outline {
+  background: transparent;
+  color: var(--v-white);
+  border-color: var(--v-line-strong);
+}
+
+.al-btn-v2--outline:hover {
+  border-color: var(--v-red);
+  color: var(--v-red);
+}
+
+.al-btn-v2--gold {
+  background: transparent;
+  color: var(--v-gold);
+  border-color: var(--v-gold);
+}
+
+.al-btn-v2--gold:hover {
+  background: var(--v-gold);
+  color: #1a1206;
+}
+
+.al-btn-v2:disabled,
+.al-btn-v2[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.al-btn-v2--sm {
+  min-height: 36px;
+  padding: 0 var(--s-4);
+  font-size: 0.6875rem;
 }
 
 /* --- Respect du mouvement réduit : appliqué globalement --- */

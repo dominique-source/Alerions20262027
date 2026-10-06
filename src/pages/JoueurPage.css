@@ -1,0 +1,214 @@
+.al-joueur {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-6) var(--v-gutter) var(--s-16);
+}
+
+.al-joueur__fil {
+  display: flex;
+  gap: var(--s-2);
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+  margin-bottom: var(--s-6);
+}
+
+.al-joueur__fil a {
+  color: var(--v-text-muted);
+}
+
+.al-joueur__fil a:hover {
+  color: var(--v-gold);
+}
+
+.al-joueur__haut {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+}
+
+.al-joueur__carte {
+  border: 1px solid var(--v-gold);
+  max-width: 360px;
+}
+
+.al-joueur__carte img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.al-joueur__infos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+
+.al-joueur__numero {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin: 0;
+}
+
+.al-joueur__sous-titre {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: var(--s-1) 0 0;
+}
+
+.al-joueur__champs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  width: 100%;
+}
+
+.al-joueur__champ,
+.al-joueur__champ--edition {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-3) var(--s-4);
+}
+
+.al-joueur__champ-icone {
+  font-size: 1.25rem;
+  flex: none;
+}
+
+.al-joueur__champ-corps {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.al-joueur__champ-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v-text-faint);
+}
+
+.al-joueur__champ-valeur {
+  font-size: 0.9375rem;
+  color: var(--v-white);
+}
+
+.al-joueur__champ--edition input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  font-size: 0.9375rem;
+  font-family: var(--v-font-body);
+  padding: var(--s-1) 0;
+  width: 100%;
+  outline: none;
+}
+
+.al-joueur__champ--edition input:focus {
+  border-color: var(--v-gold);
+}
+
+.al-joueur__champ-stylo {
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-text-muted);
+  width: 32px;
+  height: 32px;
+  flex: none;
+  cursor: pointer;
+}
+
+.al-joueur__champ-stylo:hover {
+  border-color: var(--v-gold);
+  color: var(--v-gold);
+}
+
+.al-joueur__bas {
+  margin-top: var(--s-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-10);
+}
+
+.al-joueur__section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-4);
+}
+
+.al-joueur__section-titre {
+  font-size: 1.375rem;
+  margin: 0;
+}
+
+.al-joueur__section-head a {
+  font-size: 0.8125rem;
+  color: var(--v-gold);
+  font-weight: 700;
+}
+
+.al-joueur__moments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+}
+
+.al-joueur__moments img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.al-joueur__cartes-apercu {
+  display: flex;
+  gap: var(--s-3);
+}
+
+.al-joueur__mini-carte {
+  width: 88px;
+  height: 120px;
+  border: 1px solid var(--v-gold);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--v-panel);
+  flex: none;
+}
+
+.al-joueur__mini-carte img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-joueur__mini-carte--verrouillee {
+  border-color: var(--v-line-strong);
+  color: var(--v-text-faint);
+  font-size: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .al-joueur__haut {
+    grid-template-columns: 360px 1fr;
+  }
+  .al-joueur__bas {
+    grid-template-columns: 1fr 1fr;
+  }
+}

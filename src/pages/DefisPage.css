@@ -1,0 +1,240 @@
+.al-defis {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-8) var(--v-gutter) var(--s-16);
+}
+
+.al-defis__haut {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+}
+
+.al-defis__visuel {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--v-line);
+}
+
+.al-defis__visuel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.al-defis__visuel-legende {
+  position: absolute;
+  left: var(--s-4);
+  bottom: var(--s-4);
+  font-family: var(--v-font-title);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: var(--v-white);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.al-defis__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.al-defis__titre {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0;
+}
+
+.al-defis__titre-red {
+  color: var(--v-red);
+}
+
+.al-defis__carte {
+  border: 1px solid var(--v-line-strong);
+  padding: var(--s-5);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-defis__carte-titre {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  color: var(--v-red);
+}
+
+.al-defis__carte-sous {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.al-defis__consignes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--s-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--v-white);
+  font-weight: 600;
+}
+
+.al-defis__demo-absente {
+  color: var(--v-text-faint);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.al-defis__bas {
+  margin-top: var(--s-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+}
+
+.al-defis__progression,
+.al-defis__objectif {
+  border: 1px solid var(--v-line);
+  padding: var(--s-6);
+}
+
+.al-defis__bloc-titre {
+  font-size: 1.5rem;
+  margin: 0 0 var(--s-5);
+}
+
+.al-defis__cercles {
+  display: flex;
+  gap: var(--s-6);
+  margin-bottom: var(--s-5);
+}
+
+.al-defis__cercle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  text-align: center;
+}
+
+.al-defis__cercle-chiffre {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--v-line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.al-defis__cercle-chiffre--fait {
+  border-color: var(--v-gold);
+  color: var(--v-gold);
+}
+
+.al-defis__cercle-label {
+  font-size: 0.6875rem;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.al-defis__compteur {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 1.5rem;
+  margin-bottom: var(--s-4);
+}
+
+.al-defis__coach {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--v-line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  font-size: 0.875rem;
+  color: var(--v-text-muted);
+}
+
+.al-defis__coach-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.al-defis__coach-form input {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  padding: 0 var(--s-3);
+  font-size: 0.875rem;
+  min-height: 36px;
+  min-width: 0;
+  flex: 1 1 140px;
+}
+
+.al-defis__coach-message {
+  color: var(--v-red);
+  font-size: 0.8125rem;
+}
+
+.al-defis__objectif-texte {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: var(--s-3);
+}
+
+.al-defis__barre {
+  height: 8px;
+  background: var(--v-line);
+  overflow: hidden;
+  margin-bottom: var(--s-2);
+}
+
+.al-defis__barre-remplissage {
+  height: 100%;
+  background: var(--v-red);
+  transition: width var(--v-dur-base) var(--v-ease);
+}
+
+.al-defis__objectif-chiffre {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 1.5rem;
+  margin-bottom: var(--s-5);
+}
+
+.al-defis__recompense {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  border-top: 1px solid var(--v-line);
+  padding-top: var(--s-4);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 900px) {
+  .al-defis__haut {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .al-defis__bas {
+    grid-template-columns: 1fr 1fr;
+  }
+}

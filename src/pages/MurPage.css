@@ -1,0 +1,313 @@
+.al-mur {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-8) var(--v-gutter) var(--s-16);
+}
+
+.al-mur__entete {
+  margin-bottom: var(--s-5);
+}
+
+.al-mur__titre {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  margin: 0;
+}
+
+.al-mur__titre-red {
+  color: var(--v-red);
+}
+
+.al-mur__sous-titre {
+  color: var(--v-text-muted);
+  font-size: 1rem;
+  margin-top: var(--s-2);
+}
+
+.al-mur__filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+}
+
+.al-mur__filtre {
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-text-muted);
+  padding: var(--s-2) var(--s-5);
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  min-height: var(--tap-min);
+}
+
+.al-mur__filtre--actif {
+  background: var(--v-red);
+  border-color: var(--v-red);
+  color: var(--v-white);
+}
+
+.al-mur__corps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+}
+
+.al-mur__grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+
+.al-mur__vide {
+  color: var(--v-text-muted);
+  padding: var(--s-8) 0;
+}
+
+.al-mur__tuile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--v-panel);
+  text-align: left;
+}
+
+.al-mur__tuile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--v-dur-base) var(--v-ease);
+}
+
+.al-mur__tuile:hover img,
+.al-mur__tuile:focus-visible img {
+  transform: scale(1.04);
+}
+
+.al-mur__tuile-date {
+  position: absolute;
+  top: var(--s-2);
+  left: var(--s-2);
+  font-size: 0.6875rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--v-white);
+  padding: 2px 8px;
+}
+
+.al-mur__tuile-bas {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--s-3);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.92), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-mur__tuile-categorie {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--v-red);
+  background: rgba(237, 0, 28, 0.16);
+  align-self: flex-start;
+  padding: 1px 8px;
+}
+
+.al-mur__tuile-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: var(--v-white);
+}
+
+.al-mur__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.al-mur__vote,
+.al-mur__collection {
+  border: 1px solid var(--v-line-strong);
+  padding: var(--s-5);
+}
+
+.al-mur__vote-titre,
+.al-mur__collection-titre {
+  font-size: 1.375rem;
+  margin: 0;
+}
+
+.al-mur__vote-sous {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: var(--s-1) 0 var(--s-4);
+}
+
+.al-mur__vote-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+}
+
+.al-mur__vote-option {
+  padding: 0;
+  border: 2px solid var(--v-line-strong);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.al-mur__vote-option img {
+  width: 100%;
+  display: block;
+}
+
+.al-mur__vote-option--actif {
+  border-color: var(--v-red);
+}
+
+.al-mur__vote-bouton {
+  width: 100%;
+  justify-content: center;
+}
+
+.al-mur__collection-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--v-font-title);
+  font-weight: 900;
+}
+
+.al-mur__collection-sous {
+  color: var(--v-text-muted);
+  font-size: 0.8125rem;
+  margin: var(--s-1) 0 var(--s-4);
+}
+
+.al-mur__collection-grille {
+  display: flex;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+}
+
+.al-mur__mini-carte {
+  flex: 1;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--v-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--v-panel);
+}
+
+.al-mur__mini-carte img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-mur__mini-carte--verrouillee {
+  border-color: var(--v-line-strong);
+  opacity: 0.6;
+}
+
+.al-mur__collection-lien {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--v-gold);
+}
+
+/* --- Visionneuse --- */
+.al-mur__lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-6);
+}
+
+.al-mur__lightbox figure {
+  margin: 0;
+  max-width: min(90vw, 900px);
+  max-height: 80vh;
+  text-align: center;
+}
+
+.al-mur__lightbox img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+  margin-inline: auto;
+}
+
+.al-mur__lightbox figcaption {
+  color: var(--v-white);
+  font-family: var(--v-font-title);
+  font-style: italic;
+  font-weight: 800;
+  margin-top: var(--s-3);
+}
+
+.al-mur__lightbox-fermer {
+  position: absolute;
+  top: var(--s-5);
+  right: var(--s-5);
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  cursor: pointer;
+  font-size: 1.125rem;
+}
+
+.al-mur__lightbox-nav {
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  flex: none;
+  margin: 0 var(--s-4);
+}
+
+.al-mur__lightbox-nav:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+@media (min-width: 640px) {
+  .al-mur__grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .al-mur__corps {
+    grid-template-columns: 2fr 1fr;
+  }
+}

@@ -1,0 +1,132 @@
+.al-evenement {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-6) var(--v-gutter) var(--s-16);
+}
+
+.al-evenement__haut {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+  align-items: center;
+}
+
+.al-evenement__contenu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.al-evenement__titre {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  margin: 0;
+}
+
+.al-evenement__date-heure {
+  font-family: var(--v-font-body);
+  font-size: 1rem;
+  color: var(--v-text-muted);
+  text-transform: capitalize;
+}
+
+.al-evenement__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+}
+
+.al-evenement__badge {
+  border: 1px solid var(--v-line-strong);
+  padding: var(--s-1) var(--s-3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.al-evenement__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.al-evenement__image {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--v-line);
+}
+
+.al-evenement__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.al-evenement__bas {
+  margin-top: var(--s-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-8);
+}
+
+.al-evenement__bloc {
+  border: 1px solid var(--v-line);
+  padding: var(--s-6);
+}
+
+.al-evenement__bloc-titre {
+  font-size: 1.5rem;
+  margin: 0 0 var(--s-4);
+}
+
+.al-evenement__programme {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.al-evenement__programme-etape {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  margin-bottom: var(--s-1);
+}
+
+.al-evenement__programme-etape em {
+  color: var(--v-red);
+  font-style: italic;
+}
+
+.al-evenement__programme p {
+  color: var(--v-text-muted);
+  font-size: 0.9375rem;
+  max-width: 50ch;
+}
+
+.al-evenement__adresse {
+  font-size: 0.9375rem;
+  color: var(--v-text-muted);
+  margin-bottom: var(--s-4);
+}
+
+.al-evenement__adresse-manquante {
+  color: var(--v-text-faint);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+@media (min-width: 900px) {
+  .al-evenement__haut {
+    grid-template-columns: 1fr 1fr;
+  }
+  .al-evenement__bas {
+    grid-template-columns: 1fr 1fr;
+  }
+}

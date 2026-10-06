@@ -1,6 +1,6 @@
 import ResultCard from "../components/ResultCard";
 import EmptyState from "../components/EmptyState";
-import { resultatsExemple } from "../data/results";
+import { resultats } from "../data/results";
 
 /** Page Résultats — présentation sobre, en liste (pas de cartes). */
 export default function ResultatsPage() {
@@ -16,11 +16,14 @@ export default function ResultatsPage() {
 
       <section className="al-section al-section--blanc">
         <div className="container">
-          {resultatsExemple.length === 0 ? (
-            <EmptyState title="Aucun résultat n'est disponible pour le moment." />
+          {resultats.length === 0 ? (
+            <EmptyState
+              title="Aucun résultat n'a encore été enregistré cette saison."
+              description="Cette page se remplit dès qu'un match est joué et confirmé."
+            />
           ) : (
             <div className="al-results-list">
-              {resultatsExemple.map((resultat) => (
+              {resultats.map((resultat) => (
                 <ResultCard key={resultat.id} resultat={resultat} />
               ))}
             </div>
