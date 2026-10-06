@@ -6,17 +6,17 @@ Ce document couvre la connexion du site à la feuille Google Sheets
 qu'elle alimente. Lecture seule : aucune donnée n'est écrite dans le Sheet
 depuis le site.
 
-> **État de la vérification en Preview (dernière passe) :** la configuration
-> Google Cloud (compte de service, partage Lecteur, API activée) a été faite
-> manuellement, et les trois variables sont maintenant actives en Preview et
-> Production sur `alerions20262027-1j9t`. Un bug de résolution de module
-> (voir §13) empêchait la fonction de démarrer ; il est corrigé et déployé.
-> Au dernier test réel, `/api/roster` répond `502 google_auth_echouee` — les
-> journaux serveur montrent `error:1E08010C:DECODER routines::unsupported`,
-> l'erreur OpenSSL typique d'une clé privée PEM mal formée (valeur tronquée,
-> guillemets collés au copier-coller, ou retours à la ligne corrompus). Voir
-> §13 pour le diagnostic précis et la procédure de correction (aucun secret
-> n'est demandé).
+> **État de la vérification en Preview : connexion réelle confirmée ✅.**
+> Après correction de la clé privée, `/api/roster` répond `200 OK` avec des
+> données réelles de l'onglet ÉQUIPES (ex. `Basketball Cadet Masculin`,
+> `Basketball Juvénile Masculin`), et `joueurs: []` / `entraineurs: []` pour
+> chaque équipe testée — confirmant que l'authentification, la lecture du
+> Sheet et le filtrage de publication fonctionnent tous les trois, et que
+> les 456 joueurs / 76 entraîneurs actuellement fictifs sont bien exclus du
+> public. Une équipe sport+slug inexistante renvoie `equipe: null` plutôt
+> qu'une erreur. Cache CDN vérifié (`x-vercel-cache: HIT` au 2ᵉ appel).
+> Historique complet du diagnostic (bug ESM, variables non configurées,
+> clé PEM mal formée) en §13.
 
 ## 1. Ce que cette étape livre
 
@@ -424,3 +424,50 @@ plus fréquentes, par ordre de probabilité :
 Dès que ce sera fait, dites-le et le test réel sera relancé
 immédiatement — plus aucune action de code n'est nécessaire à ce stade,
 seule la valeur de cette variable est en cause.
+
+### Confirmation finale : connexion réelle réussie
+
+Après correction de `GOOGLE_PRIVATE_KEY` et redéploiement de ce seul
+Preview, `GET /api/roster?sport=basketball&equipe=cadet-masculin`
+répond :
+
+```json
+{
+  "equipe": {
+    "idEquipe": "2026-2027-basketball-cadet-masculin",
+    "sport": "Basketball",
+    "nomEquipe": "Basketball Cadet Masculin",
+    "categorie": "Cadet",
+    "genre": "Masculin",
+    "division": "",
+    "slugSite": "cadet-masculin",
+    "saison": "2026-2027"
+  },
+  "joueurs": [],
+  "entraineurs": [],
+  "meta": { "fetchedAt": "2026-10-06T10:52:26.063Z", "cacheAgeSecondes": 0, "prochaineRevalidationSecondes": 30 }
+}
+```
+
+Les trois éléments demandés sont confirmés séparément :
+
+- **Authentification** : réussie — statut `200`, plus aucune erreur
+  `google_auth_echouee` ni entrée d'erreur dans les journaux serveur
+  (vérifiés sur la fenêtre du test, seul un avertissement Node
+  bénin et sans rapport subsiste).
+- **Lecture du Sheet** : réussie — `équipe` contient des données réelles
+  de l'onglet ÉQUIPES (nom, catégorie, genre, saison), vérifié sur deux
+  lignes différentes (`Cadet Masculin` et `Juvénile Masculin`), et une
+  équipe sport+slug inexistante renvoie proprement `equipe: null` plutôt
+  qu'une erreur.
+- **Filtrage de publication** : réussi — `joueurs` et `entraineurs` sont
+  vides pour les deux équipes réelles testées, confirmant que les 456
+  joueurs et 76 entraîneurs actuellement fictifs du Sheet sont bien
+  exclus de l'API publique (comportement attendu, annoncé à l'avance :
+  aucune donnée fictive n'apparaîtra tant que l'administrateur n'aura
+  pas saisi de vraies personnes avec `donnée_fictive = FALSE`,
+  `statut_membre = Actif` et `publication_profil = TRUE`).
+
+Cache CDN vérifié également : le 2ᵉ appel à la même équipe a renvoyé
+`x-vercel-cache: HIT` avec le même `fetchedAt`, confirmant que la
+double couche de cache (serveur + CDN) fonctionne comme prévu.
