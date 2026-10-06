@@ -6,6 +6,17 @@ Ce document couvre la connexion du site à la feuille Google Sheets
 qu'elle alimente. Lecture seule : aucune donnée n'est écrite dans le Sheet
 depuis le site.
 
+> **État de la vérification en Preview (dernière passe) :** la configuration
+> Google Cloud (compte de service, partage Lecteur, API activée) a été faite
+> manuellement. Un bug de résolution de module (voir §13) empêchait la
+> fonction de démarrer ; il est corrigé et déployé. Au dernier test réel en
+> Preview, `/api/roster` répond `503 service_non_configure` sur les deux
+> projets Vercel liés à ce dépôt — les trois variables `GOOGLE_SHEET_ID` /
+> `GOOGLE_SERVICE_ACCOUNT_EMAIL` / `GOOGLE_PRIVATE_KEY` ne sont donc pas
+> encore visibles par le runtime Preview pour la branche de cette PR. Voir
+> §13 pour le diagnostic précis et la checklist de vérification côté
+> tableau de bord Vercel (aucun secret n'est demandé).
+
 ## 1. Ce que cette étape livre
 
 - Une fonction serveur (`api/roster.ts`) qui lit ÉQUIPES et MEMBRES via un
@@ -280,3 +291,74 @@ Dans tous les cas, **main et la production ne sont jamais touchés par ce
 travail tant que cette PR n'est pas fusionnée et redéployée
 explicitement** — cette livraison reste sur une branche, sans fusion ni
 déploiement en production.
+
+## 13. Journal de la vérification réelle en Preview
+
+Deux déploiements Preview liés à cette branche existent (deux projets
+Vercel sont connectés au même dépôt GitHub) :
+- `alerions20262027-1j9t` — **celui qui porte le domaine public réel**
+  (`alerions20262027-1j9t.vercel.app`, utilisé en production).
+- `alerions20262027` — projet plus ancien, sans domaine public connu,
+  probablement un reliquat ; testé aussi par prudence, même résultat.
+
+### Bug trouvé et corrigé : résolution de module ESM
+
+Le premier test réel (après ajout des identifiants) a renvoyé
+`500 FUNCTION_INVOCATION_FAILED`. Les logs runtime Vercel ont montré :
+
+```
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/var/task/api/_lib/sheets'
+imported from /var/task/api/roster.js
+```
+
+Cause : `package.json` a `"type": "module"`, donc le runtime Node.js de
+Vercel résout les imports relatifs selon les règles strictes de l'ESM
+natif, qui **exigent l'extension de fichier** (`./_lib/sheets.js`) — à la
+différence du résolveur « bundler » de Vite/TypeScript utilisé pour
+`src/`, qui l'accepte sans extension. Corrigé en ajoutant `.js` à tous
+les imports relatifs porteurs d'une valeur dans `api/roster.ts` et
+`api/_lib/*.ts` (les imports `import type` sont inchangés dans leur
+effet — entièrement effacés à la compilation — mais ont reçu l'extension
+par cohérence, y compris dans `api/boite-a-idees.ts` préexistant, qui
+déclenchait un avertissement de compilation TypeScript similaire côté
+Vercel sans jamais planter à l'exécution).
+
+Vérifié localement avant de repousser : build esbuild + exécution Node
+réelle du module compilé (reproduisant la résolution ESM stricte de
+Vercel), `npm run build`/`lint`/`test` verts.
+
+### État actuel : lecture Google non confirmée faute de variables visibles
+
+Après correction et redéploiement (vérifié sur les deux projets, sur
+deux déploiements Preview distincts à chaque fois pour exclure un cache
+obsolète), `GET /api/roster?sport=basketball&equipe=cadet-masculin`
+répond maintenant proprement (plus de 500) mais avec :
+
+```json
+{"ok": false, "code": "service_non_configure"}
+```
+
+Ce code signifie que `lireConfigurationGoogle()` (api/_lib/sheets.ts) ne
+trouve pas au moins une des trois variables dans `process.env` au moment
+de l'exécution — le code lui-même n'a pas changé de comportement ici, il
+rapporte honnêtement une configuration absente plutôt que de deviner.
+**Cette session ne peut pas lister les variables d'environnement du
+projet via l'API Vercel disponible (403 Forbidden sur cette opération)**,
+donc le diagnostic exact (quelle variable manque, sur quel projet)
+n'a pas pu être confirmé à distance. Pistes à vérifier dans le tableau de
+bord Vercel (Project → **alerions20262027-1j9t** → Settings →
+Environment Variables) — aucune ne nécessite de coller un secret ici :
+
+1. Les trois variables sont bien enregistrées sur **ce** projet
+   (`alerions20262027-1j9t`), pas seulement sur l'autre.
+2. La case **Preview** est cochée pour chacune (pas seulement
+   Production/Development).
+3. Si un scope de branches est actif sur la variable, il inclut bien
+   `feat/roster-google-sheets` (ou « All branches » est sélectionné).
+4. L'enregistrement a bien été sauvegardé (revisiter la page et
+   confirmer que les trois lignes apparaissent toujours).
+
+Une fois corrigé, aucune nouvelle action de code n'est nécessaire — un
+nouveau push (ou un simple redeploy depuis le tableau de bord Vercel)
+suffit à faire lire les variables à jour, puisque les fonctions
+serverless les relisent à chaque nouveau build.
