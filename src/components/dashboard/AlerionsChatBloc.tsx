@@ -14,7 +14,7 @@ interface AlerionsChatBlocProps {
  * déjà autorisée pour ce compte puisqu'il a accès à cette équipe).
  */
 export default function AlerionsChatBloc({ idEquipe, lienChat }: AlerionsChatBlocProps) {
-  const chat = useTeamChat(idEquipe);
+  const chat = useTeamChat(idEquipe, { marquerCommeLuAutomatiquement: false });
   const dernier = [...chat.messages].reverse().find((m) => !m.deleted);
 
   return (

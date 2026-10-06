@@ -70,7 +70,24 @@ export interface ResultatUseTeamChat {
 
 export type ResultatSuppression = { ok: true } | { ok: false; code: string };
 
-export function useTeamChat(teamId: string | null): ResultatUseTeamChat {
+export interface OptionsUseTeamChat {
+  /**
+   * true (défaut) pour un vrai salon (TeamChatRoom) : l'utilisateur est
+   * réputé au bas de la conversation dès l'ouverture, donc les messages
+   * se marquent comme lus normalement. false pour un widget qui ne fait
+   * qu'afficher un aperçu/compteur en arrière-plan (AlerionsChatBloc, le
+   * badge de non-lus des dashboards) — ce widget ne doit jamais marquer
+   * la conversation comme lue : un simple chargement de données ne
+   * constitue pas une lecture par l'utilisateur.
+   */
+  marquerCommeLuAutomatiquement?: boolean;
+}
+
+export function useTeamChat(
+  teamId: string | null,
+  options: OptionsUseTeamChat = {},
+): ResultatUseTeamChat {
+  const { marquerCommeLuAutomatiquement = true } = options;
   const { utilisateur } = useAuth();
   const [etat, setEtat] = useState<EtatChat>("chargement");
   const [messages, setMessages] = useState<MessageChat[]>([]);
@@ -81,7 +98,7 @@ export function useTeamChat(teamId: string | null): ResultatUseTeamChat {
   const [chargementAncien, setChargementAncien] = useState(false);
   const [peutChargerPlusAncien, setPeutChargerPlusAncien] = useState(false);
 
-  const auBasRef = useRef(true);
+  const auBasRef = useRef(marquerCommeLuAutomatiquement);
   const curseurAncienRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(null);
   const premierSnapshotRef = useRef(true);
   const teamIdRef = useRef(teamId);
@@ -181,11 +198,11 @@ export function useTeamChat(teamId: string | null): ResultatUseTeamChat {
   }, [messages, lastReadAtMs, utilisateur]);
 
   useEffect(() => {
-    if (etat === "pret" && auBasRef.current) {
+    if (marquerCommeLuAutomatiquement && etat === "pret" && auBasRef.current) {
       marquerCommeLu();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [etat, messages]);
+  }, [etat, messages, marquerCommeLuAutomatiquement]);
 
   const envoyerTexte = useCallback(
     async (texte: string) => {
@@ -273,10 +290,10 @@ export function useTeamChat(teamId: string | null): ResultatUseTeamChat {
     auBasRef.current = auBas;
     if (auBas) {
       setNouveauxMessagesDisponibles(false);
-      marquerCommeLu();
+      if (marquerCommeLuAutomatiquement) marquerCommeLu();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [marquerCommeLuAutomatiquement]);
 
   const effacerNouveauxMessagesDisponibles = useCallback(() => setNouveauxMessagesDisponibles(false), []);
 

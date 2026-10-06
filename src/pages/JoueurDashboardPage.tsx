@@ -43,7 +43,7 @@ export default function JoueurDashboardPage() {
   const equipeCourante = idEquipeActif ?? idEquipes[0] ?? null;
 
   const { equipe, joueurs, etat: etatRoster } = useRoster(undefined, undefined, equipeCourante);
-  const chat = useTeamChat(equipeCourante);
+  const chat = useTeamChat(equipeCourante, { marquerCommeLuAutomatiquement: false });
 
   if (!compte) return null;
 

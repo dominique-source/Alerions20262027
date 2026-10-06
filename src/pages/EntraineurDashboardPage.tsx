@@ -39,7 +39,7 @@ export default function EntraineurDashboardPage() {
   const equipeCourante = idEquipeActif ?? idEquipes[0] ?? null;
 
   const { equipe, joueurs, entraineurs, etat: etatRoster } = useRoster(undefined, undefined, equipeCourante);
-  const chat = useTeamChat(equipeCourante);
+  const chat = useTeamChat(equipeCourante, { marquerCommeLuAutomatiquement: false });
 
   if (!compte) return null;
   const espaces = espacesAutorises(compte);
