@@ -11,8 +11,15 @@ import CollectionPage from "./pages/CollectionPage";
 import EquipesPage from "./pages/EquipesPage";
 import SportPage from "./pages/SportPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
+import MembrePage from "./pages/MembrePage";
 import ChatApercuPage from "./pages/ChatApercuPage";
 import ChatPage from "./pages/ChatPage";
+import ConnexionPage from "./pages/ConnexionPage";
+import ComptePage from "./pages/ComptePage";
+import JoueurDashboardPage from "./pages/JoueurDashboardPage";
+import EntraineurDashboardPage from "./pages/EntraineurDashboardPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import RequireAuth from "./components/auth/RequireAuth";
 import ResultatsPage from "./pages/ResultatsPage";
 import ActualitesPage from "./pages/ActualitesPage";
 import CulturePage from "./pages/CulturePage";
@@ -34,6 +41,32 @@ export default function App() {
         Voir le commentaire en tête de ChatApercuPage.tsx.
       */}
       <Route path="equipes/:sport/:equipe/chat" element={<ChatApercuPage />} />
+      <Route path="connexion" element={<ConnexionPage />} />
+      <Route path="compte" element={<ComptePage />} />
+      <Route
+        path="espace/joueur"
+        element={
+          <RequireAuth espaceRequis="joueur">
+            <JoueurDashboardPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="espace/entraineur"
+        element={
+          <RequireAuth espaceRequis="entraineur">
+            <EntraineurDashboardPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="espace/admin"
+        element={
+          <RequireAuth espaceRequis="administration">
+            <AdminDashboardPage />
+          </RequireAuth>
+        }
+      />
 
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -48,6 +81,7 @@ export default function App() {
         <Route path="equipes" element={<EquipesPage />} />
         <Route path="equipes/:sport" element={<SportPage />} />
         <Route path="equipes/:sport/:equipe" element={<TeamDetailPage />} />
+        <Route path="equipes/:sport/:equipe/membres/:idMembre" element={<MembrePage />} />
         <Route path="resultats" element={<ResultatsPage />} />
         <Route path="actualites" element={<ActualitesPage />} />
         <Route path="culture" element={<CulturePage />} />

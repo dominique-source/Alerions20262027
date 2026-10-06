@@ -1,14 +1,60 @@
-.al-sport-hero {
-  position: relative;
-  min-height: 34vh;
+.al-sportpage {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-6) var(--v-gutter) var(--s-16);
   display: flex;
-  align-items: flex-end;
-  color: var(--color-text-inverse);
-  overflow: hidden;
-  border-bottom: 3px solid var(--alerions-gold);
+  flex-direction: column;
+  gap: var(--s-8);
 }
 
-.al-sport-hero--photo img {
+.al-sportpage__fil {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+}
+
+.al-sportpage__fil a {
+  color: var(--v-text-muted);
+  text-decoration: none;
+}
+
+.al-sportpage__fil a:hover {
+  color: var(--v-gold);
+}
+
+.al-sportpage__fil span:last-child {
+  color: var(--v-white);
+  font-weight: 600;
+}
+
+.al-sportpage__vide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-16) 0;
+}
+
+.al-sportpage__vide-titre {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+/* --- Héros --- */
+.al-sportpage__hero {
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  align-items: flex-end;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  overflow: hidden;
+}
+
+.al-sportpage__hero--photo img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -16,104 +62,178 @@
   object-fit: cover;
 }
 
-.al-sport-hero--photo::after {
+.al-sportpage__hero--photo::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(3, 21, 34, 0.2) 20%, rgba(3, 21, 34, 0.9) 100%);
+  background: linear-gradient(0deg, rgba(8, 8, 8, 0.92) 10%, rgba(8, 8, 8, 0.2) 70%);
 }
 
-.al-sport-hero--sansphoto {
-  background: var(--alerions-deep);
-  min-height: 26vh;
-}
-
-.al-sport-hero__content {
+.al-sportpage__hero-texte {
   position: relative;
   z-index: 1;
-  padding-block: var(--s-10) var(--s-8);
-}
-
-.al-sport-hero__content h1 {
-  font-size: var(--fs-h1);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-}
-
-.al-sport-hero__meta {
-  margin-top: var(--s-2);
-  color: var(--color-text-muted-inverse);
-}
-
-.al-sport-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-3);
-  margin-top: var(--s-6);
-}
-
-.al-sport-filters {
-  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--s-2);
+  padding: var(--s-8) var(--s-6);
+  width: 100%;
+}
+
+.al-sportpage__titre {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  color: var(--v-white);
+}
+
+.al-sportpage__actions {
+  display: flex;
   flex-wrap: wrap;
-  margin-bottom: var(--s-6);
-}
-
-.al-sport-filters button {
-  min-height: var(--tap-min);
-  padding: 0 var(--s-5);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  font-size: var(--fs-small);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.al-sport-filters button[aria-pressed="true"] {
-  background: var(--alerions-blue);
-  border-color: var(--alerions-blue);
-  color: var(--color-text-inverse);
-}
-
-.al-sport-teams {
-  display: grid;
-  grid-template-columns: 1fr;
   gap: var(--s-3);
+  margin-top: var(--s-2);
 }
 
-@media (min-width: 640px) {
-  .al-sport-teams {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* --- Filtres + liste équipes --- */
+.al-sportpage__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
 }
 
-@media (min-width: 1024px) {
-  .al-sport-teams {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.al-sportpage__section-titre {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--v-white);
 }
 
-.al-sport-team-row {
+.al-sportpage__filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.al-sportpage__filtres button {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-4);
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-text-muted);
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.al-sportpage__filtres button[aria-pressed="true"] {
+  background: var(--v-gold);
+  border-color: var(--v-gold);
+  color: var(--v-bg);
+}
+
+.al-sportpage__equipes {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--v-line);
+}
+
+.al-sportpage__equipe {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-3);
-  padding: var(--s-5);
-  border: 1px solid var(--color-border);
-  min-height: var(--tap-min);
+  min-height: 56px;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--v-line);
+  color: var(--v-white);
+  text-decoration: none;
 }
 
-.al-sport-team-row:hover {
-  border-color: var(--alerions-blue);
+.al-sportpage__equipe:hover {
+  color: var(--v-gold);
 }
 
-.al-sport-team-row__nom {
-  font-family: var(--font-display);
+.al-sportpage__equipe-nom {
+  font-family: var(--v-font-title);
   font-weight: 700;
-  text-transform: uppercase;
+  font-size: 1.125rem;
 }
 
-.al-sport-docs {
+/* --- Documents --- */
+.al-sportpage__docs {
   display: flex;
   flex-direction: column;
+  border-top: 1px solid var(--v-line);
+}
+
+.al-sportpage__doc {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--v-line);
+}
+
+.al-sportpage__doc-titre {
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--v-white);
+}
+
+.al-sportpage__doc-meta {
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+}
+
+.al-sportpage__doc-actions {
+  display: flex;
+  gap: var(--s-4);
+}
+
+.al-sportpage__doc-actions a {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v-gold);
+  text-decoration: none;
+  min-height: var(--tap-min);
+  display: inline-flex;
+  align-items: center;
+}
+
+.al-sportpage__doc-actions a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 600px) {
+  .al-sportpage__doc {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+  }
+}
+
+/* --- Galerie --- */
+.al-sportpage__galerie {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+}
+
+.al-sportpage__photo {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--v-panel-2);
+  border: 1px solid var(--v-line);
+}
+
+.al-sportpage__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 600px) {
+  .al-sportpage__galerie {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

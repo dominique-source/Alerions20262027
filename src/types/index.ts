@@ -207,3 +207,158 @@ export interface DefiSemaine {
   seancesCibles: number;
   recompense: string;
 }
+
+/**
+ * --- Effectif (Google Sheet) ---
+ * Forme PUBLIQUE renvoyée par /api/roster — reflète api/_lib/types.ts
+ * côté serveur (dupliqué volontairement : c'est un contrat d'API stable,
+ * pas une source de vérité interne, et tsc -b ne type-vérifie que src/).
+ * Ne contient jamais de courriel, auth_user_id, notes ni champ privé.
+ */
+export interface EquipeRoster {
+  idEquipe: string;
+  sport: string;
+  nomEquipe: string;
+  categorie: string;
+  genre: string;
+  division: string;
+  slugSite: string;
+  saison: string;
+}
+
+export interface MembreRoster {
+  idMembre: string;
+  idPersonne: string;
+  idEquipe: string;
+  categorieRole: "joueur" | "entraineur";
+  nomAffiche: string;
+  numero: number | null;
+  poste: string | null;
+  capitaine: boolean;
+  photoUrl: string | null;
+  saison: string;
+}
+
+export interface RosterReponse {
+  equipe: EquipeRoster | null;
+  joueurs: MembreRoster[];
+  entraineurs: MembreRoster[];
+  meta: {
+    fetchedAt: string;
+    cacheAgeSecondes: number;
+    prochaineRevalidationSecondes: number;
+  };
+}
+
+export type RosterCodeErreur =
+  | "methode_non_autorisee"
+  | "parametres_manquants"
+  | "service_non_configure"
+  | "equipe_introuvable"
+  | "google_auth_echouee"
+  | "google_quota_depasse"
+  | "google_indisponible"
+  | "erreur_inattendue"
+  | "reseau";
+
+/**
+ * --- Authentification / permissions (Firebase) ---
+ * Formes PUBLIQUES renvoyées par /api/me et /api/firebase-config —
+ * reflètent api/_lib/authTypes.ts côté serveur (même raison de
+ * duplication volontaire que RosterReponse ci-dessus). Ne contiennent
+ * jamais de courriel, de jeton ni de champ privé.
+ */
+export type RoleMembre = "joueur" | "entraineur";
+
+export interface RattachementPublic {
+  teamId: string;
+  role: RoleMembre;
+}
+
+export interface CompteReponse {
+  uid: string;
+  displayName: string;
+  personId: string;
+  isAdmin: boolean;
+  rattachements: RattachementPublic[];
+}
+
+export type MeCodeErreur =
+  | "methode_non_autorisee"
+  | "jeton_manquant"
+  | "jeton_invalide"
+  | "jeton_revoque"
+  | "courriel_non_verifie"
+  | "compte_non_autorise"
+  | "service_non_configure"
+  | "erreur_inattendue"
+  | "reseau";
+
+/**
+ * --- Chat d'équipe (Firestore temps réel) ---
+ * Forme d'un message tel que lu directement depuis
+ * teamChats/{teamId}/messages via le SDK client (protégé par
+ * firestore.rules + chatAccess — voir api/_lib/chatAccess.ts).
+ */
+export interface MessageChat {
+  id: string;
+  teamId: string;
+  authorUid: string;
+  authorName: string;
+  text: string;
+  /** Millisecondes epoch — converti depuis le Timestamp Firestore ; null tant que le serveur n'a pas encore résolu createdAt (écriture optimiste locale). */
+  createdAtMs: number | null;
+  deleted: boolean;
+}
+
+export type CodeErreurEnvoiChat =
+  | "methode_non_autorisee"
+  | "corps_invalide"
+  | "texte_vide"
+  | "texte_trop_long"
+  | "equipe_non_autorisee"
+  | "trop_de_messages"
+  | "jeton_manquant"
+  | "jeton_invalide"
+  | "jeton_revoque"
+  | "courriel_non_verifie"
+  | "compte_non_autorise"
+  | "service_non_configure"
+  | "erreur_inattendue"
+  | "reseau";
+
+/**
+ * --- Vue admin « Gestion des accès » (api/admin/comptes.ts) ---
+ * Lecture seule, réservée à isAdmin === true (revérifié côté serveur) —
+ * jamais de courriel, jamais de modification depuis cette forme.
+ */
+export interface CompteAdminItem {
+  uid: string;
+  displayName: string;
+  personId: string;
+  isAdmin: boolean;
+  enabled: boolean;
+}
+
+export interface RattachementAdminItem {
+  id: string;
+  userId: string;
+  teamId: string;
+  role: RoleMembre;
+  enabled: boolean;
+}
+
+export interface ComptesAdminReponse {
+  comptes: CompteAdminItem[];
+  rattachements: RattachementAdminItem[];
+}
+
+/** Configuration Web publique du SDK Firebase — voir api/firebase-config.ts. */
+export interface ConfigWebFirebase {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId: string;
+}

@@ -1,0 +1,41 @@
+.al-auth-etat {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  text-align: center;
+  padding: var(--s-8) var(--v-gutter);
+  background: var(--v-bg);
+  color: var(--v-text-muted);
+}
+
+.al-auth-etat__titre {
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--v-white);
+}
+
+.al-auth-etat__spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--v-line);
+  border-top-color: var(--v-gold);
+  animation: al-auth-spin 0.8s linear infinite;
+}
+
+@keyframes al-auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .al-auth-etat__spinner {
+    animation: none;
+  }
+}

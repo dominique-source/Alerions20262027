@@ -39,6 +39,44 @@
   font-size: 0.8125rem;
 }
 
+.al-chat-apercu__connexion {
+  max-width: 1536px;
+  margin: 0 auto var(--s-4);
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+}
+
+.al-chat-apercu__connexion a {
+  color: var(--v-gold);
+  font-weight: 700;
+}
+
+/* --- Vrai salon (membre autorisé) : pleine hauteur, composeur toujours visible --- */
+.al-chat-apercu--salon {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.al-chat-apercu--salon .al-chat-apercu__barre {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: none;
+  padding: 0 var(--v-gutter);
+}
+
+.al-chat-apercu__salon-corps {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  border-left: 1px solid var(--v-line);
+  border-right: 1px solid var(--v-line);
+}
+
 .al-chat-apercu__image {
   max-width: 1536px;
   margin: 0 auto;

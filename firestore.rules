@@ -1,0 +1,113 @@
+rules_version = '2';
+
+// Règles Firestore — comptes et rattachements (Firebase Auth + Firestore,
+// projet alerions-2026-2027).
+//
+// Politique, telle que décrite par Dominique et reproduite ici pour être
+// versionnée et testable via l'émulateur (voir test/firestore-rules/) :
+//   - Un compte ACTIF (accounts/{uid}.enabled == true) peut lire son
+//     propre document accounts et ses propres rattachements ACTIFS.
+//   - Un admin (accounts/{uid}.isAdmin == true, compte actif) peut lire
+//     tous les comptes et tous les rattachements.
+//   - Aucune écriture n'est autorisée depuis le navigateur, pour
+//     personne — accounts et memberships ne sont modifiables que par le
+//     SDK Admin (API serveur), jamais par un client Firestore direct.
+//     Cela inclut explicitement isAdmin et les rattachements : aucune
+//     action cliente ne peut se les attribuer.
+//   - Toute autre collection reste fermée (aucune règle ne l'autorise
+//     explicitement == refusée par défaut).
+//
+// Rappel : le SDK Admin (api/_lib/firebaseAdmin.ts) contourne ces règles.
+// Elles protègent uniquement l'accès Firestore DIRECT depuis le
+// navigateur ; chaque endpoint serveur (api/me.ts, etc.) revérifie donc
+// lui-même les permissions — ces règles sont une seconde barrière, pas
+// la seule.
+//
+// --- Chat d'équipe (teamChats, chatAccess) ---
+//   - chatAccess/{teamId}__{uid} : miroir interne, écrit UNIQUEMENT par
+//     le serveur (api/_lib/chatAccess.ts), reconstruit à chaque requête
+//     vérifiée à partir des memberships réels. Jamais lu ni écrit
+//     directement par un client — il sert seulement de vérification
+//     rapide (get()) aux règles ci-dessous, qui ne peuvent pas parcourir
+//     arbitrairement toute la collection memberships.
+//   - teamChats/{teamId}/messages/{messageId} : lecture directe (requise
+//     pour le temps réel) si ce compte a un accès chat actif à cette
+//     équipe, ou est admin. Écriture TOUJOURS refusée depuis le
+//     navigateur — passe par api/chat/send.ts et api/chat/delete.ts
+//     (SDK Admin), qui valident le texte, l'auteur et l'idempotence.
+//   - teamChats/{teamId}/readState/{uid} : chaque utilisateur ne lit et
+//     n'écrit QUE sa propre progression de lecture, et seulement s'il a
+//     accès au chat de cette équipe.
+// Aucune règle globale « tout utilisateur connecté accède à tout » :
+// chaque accès est vérifié équipe par équipe via chatAccess.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function estConnecte() {
+      return request.auth != null;
+    }
+
+    function compteActif(uid) {
+      return exists(/databases/$(database)/documents/accounts/$(uid)) &&
+             get(/databases/$(database)/documents/accounts/$(uid)).data.enabled == true;
+    }
+
+    function estAdmin() {
+      return estConnecte() && compteActif(request.auth.uid) &&
+             get(/databases/$(database)/documents/accounts/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    function idAccesChat(teamId) {
+      return teamId + '__' + request.auth.uid;
+    }
+
+    function aAccesChatEquipe(teamId) {
+      return estConnecte() && compteActif(request.auth.uid) &&
+             exists(/databases/$(database)/documents/chatAccess/$(idAccesChat(teamId))) &&
+             get(/databases/$(database)/documents/chatAccess/$(idAccesChat(teamId))).data.enabled == true;
+    }
+
+    match /accounts/{uid} {
+      allow read: if estConnecte() && compteActif(request.auth.uid) &&
+                     (request.auth.uid == uid || estAdmin());
+      allow write: if false;
+    }
+
+    match /memberships/{membershipId} {
+      allow read: if estConnecte() && compteActif(request.auth.uid) &&
+                     (
+                       (resource.data.userId == request.auth.uid && resource.data.enabled == true) ||
+                       estAdmin()
+                     );
+      allow write: if false;
+    }
+
+    // Miroir interne — jamais accessible directement, ni en lecture ni
+    // en écriture, depuis un client. Seules les fonctions ci-dessus
+    // (get()/exists(), évalués par le moteur de règles) le consultent.
+    match /chatAccess/{accessId} {
+      allow read, write: if false;
+    }
+
+    match /teamChats/{teamId} {
+      match /messages/{messageId} {
+        allow read: if aAccesChatEquipe(teamId) || estAdmin();
+        allow write: if false;
+      }
+
+      match /readState/{uid} {
+        allow read: if estConnecte() && request.auth.uid == uid;
+        allow write: if estConnecte() && request.auth.uid == uid &&
+                        (aAccesChatEquipe(teamId) || estAdmin());
+      }
+    }
+
+    // Fermé par défaut : toute collection non listée ci-dessus est
+    // inaccessible, en lecture comme en écriture, tant qu'une règle
+    // explicite ne l'autorise pas.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

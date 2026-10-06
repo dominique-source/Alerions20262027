@@ -1,0 +1,33 @@
+.al-equipe-selecteur {
+  display: inline-flex;
+  align-items: center;
+}
+
+.al-equipe-selecteur--unique {
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--v-gold);
+}
+
+.al-equipe-selecteur select {
+  background: var(--v-panel);
+  border: 1px solid var(--v-gold);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.55em 2em 0.55em 0.9em;
+  min-height: 44px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%23d9b35b' stroke-width='1.5' fill='none' fill-rule='evenodd'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.85em center;
+}
+
+.al-equipe-selecteur select:focus-visible {
+  outline: 2px solid var(--v-focus);
+  outline-offset: 2px;
+}

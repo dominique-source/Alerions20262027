@@ -1,0 +1,58 @@
+.al-bloc-chat {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.al-bloc-chat__entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.al-bloc-chat__badge {
+  background: var(--v-red);
+  color: var(--v-white);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.25em 0.6em;
+}
+
+.al-bloc-chat__statut {
+  color: var(--v-text-muted);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
+.al-bloc-chat__dernier {
+  background: var(--v-panel-2);
+  border: 1px solid var(--v-line);
+  padding: var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-bloc-chat__auteur {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--v-gold);
+}
+
+.al-bloc-chat__dernier p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.al-bloc-chat .al-btn-v2 {
+  align-self: flex-start;
+}

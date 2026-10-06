@@ -1,0 +1,234 @@
+.al-adash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.al-adash__entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.al-adash__titre {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  color: var(--v-white);
+  margin: 0;
+}
+
+.al-adash__titre-accent {
+  color: var(--v-red);
+}
+
+.al-adash__sous-titre {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 4px 0 0;
+}
+
+.al-adash__indicateurs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
+}
+
+.al-adash__indicateur {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-adash__indicateur--indispo {
+  opacity: 0.6;
+}
+
+.al-adash__indicateur-chiffre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--v-white);
+}
+
+.al-adash__indicateur-chiffre--sm {
+  font-size: 1.125rem;
+}
+
+.al-adash__indicateur-label {
+  font-size: 0.6875rem;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.al-adash__grille {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.al-adash__colonne-principale,
+.al-adash__colonne-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.al-adash__bloc {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.al-adash__bloc-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.al-adash__actions-calendrier {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.al-adash__filtres {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.al-adash__filtre select {
+  background: var(--v-panel-2);
+  border: 1px solid var(--v-line);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-size: 0.8125rem;
+  padding: 0.5em 1.5em 0.5em 0.75em;
+  min-height: 40px;
+}
+
+.al-adash__note-calendrier {
+  color: var(--v-text-faint);
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.al-adash__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.al-adash__table th {
+  text-align: left;
+  color: var(--v-text-muted);
+  font-weight: 600;
+  padding: var(--s-2);
+  border-bottom: 1px solid var(--v-line);
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+}
+
+.al-adash__table td {
+  padding: var(--s-2);
+  border-bottom: 1px solid var(--v-line);
+  color: var(--v-white);
+}
+
+.al-adash__table-dash {
+  color: var(--v-text-faint);
+}
+
+.al-adash__voir-tout {
+  align-self: flex-start;
+  color: var(--v-gold);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.al-adash__statut {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.al-adash__badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.35em 0.7em;
+  width: fit-content;
+}
+
+.al-adash__badge--ok {
+  background: rgba(154, 199, 90, 0.16);
+  color: #9ac75a;
+}
+
+.al-adash__badge--echec {
+  background: rgba(237, 0, 28, 0.16);
+  color: var(--v-red);
+}
+
+.al-adash__badge--attente {
+  background: var(--v-panel-2);
+  color: var(--v-text-muted);
+}
+
+.al-adash__liste-comptes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-adash__liste-comptes li {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--v-line);
+  padding-bottom: var(--s-2);
+}
+
+.al-adash__compte-nom {
+  font-weight: 700;
+  color: var(--v-white);
+  font-size: 0.875rem;
+}
+
+.al-adash__compte-role {
+  color: var(--v-text-muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1023px) {
+  .al-adash__grille {
+    grid-template-columns: 1fr;
+  }
+
+  .al-adash__indicateurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .al-adash__table {
+    display: block;
+    overflow-x: auto;
+  }
+}

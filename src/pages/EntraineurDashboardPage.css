@@ -1,0 +1,137 @@
+.al-edash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.al-edash__entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.al-edash__titre {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  color: var(--v-white);
+  margin: 0;
+}
+
+.al-edash__titre-accent {
+  color: var(--v-red);
+}
+
+.al-edash__sous-titre {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 4px 0 0;
+}
+
+.al-edash__indicateurs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
+}
+
+.al-edash__indicateur {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-edash__indicateur-chiffre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--v-white);
+}
+
+.al-edash__indicateur-chiffre--sm {
+  font-size: 1.125rem;
+}
+
+.al-edash__indicateur-label {
+  font-size: 0.75rem;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.al-edash__grille {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.al-edash__colonne-principale,
+.al-edash__colonne-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.al-edash__bloc {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.al-edash__bloc-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.al-edash__voir-tout {
+  color: var(--v-gold);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.al-edash__voir-plus {
+  align-self: center;
+  color: var(--v-gold);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.al-edash__statut {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.al-edash__grille-joueurs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+}
+
+@media (max-width: 1023px) {
+  .al-edash__grille {
+    grid-template-columns: 1fr;
+  }
+
+  .al-edash__indicateurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .al-edash__grille-joueurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

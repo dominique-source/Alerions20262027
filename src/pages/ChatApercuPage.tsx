@@ -1,22 +1,29 @@
 import { Link, useParams } from "react-router-dom";
 import { trouverSport } from "../data/sports";
 import { trouverEquipe } from "../data/teams";
+import { useAuth } from "../contexts/AuthContext";
+import { useRoster } from "../hooks/useRoster";
+import TeamChatRoom from "../components/chat/TeamChatRoom";
 import "./ChatApercuPage.css";
 
 /**
- * Aperçu du chat d'équipe — version imagée uniquement.
+ * Chat d'équipe — aperçu imagé public, ou vraie conversation pour les
+ * membres autorisés.
  *
- * Reproduit exactement les deux maquettes approuvées (chat-desktop.png,
- * chat-mobile.png) comme visuels principaux, pixels inchangés. Aucune
- * bulle, aucun champ et aucun bouton dessiné dans l'image n'est
- * interactif : rien n'est envoyé, stocké ou compté ici. La messagerie
- * réelle (comptes joueurs, appartenance vérifiée, historique) suivra dans
- * une étape future — voir le bloc de documentation en bas de ce fichier.
+ * Pour un visiteur non connecté (ou connecté mais sans accès à cette
+ * équipe précise), reproduit exactement les deux maquettes approuvées
+ * (chat-desktop.png, chat-mobile.png), pixels inchangés — rien n'est
+ * jamais envoyé ni enregistré pour ce public. Pour un membre authentifié
+ * avec un rattachement actif à cette équipe (ou un admin), affiche la
+ * vraie conversation temps réel (TeamChatRoom) : messages texte, envoi,
+ * suppression, tout vérifié côté serveur (api/chat/*, firestore.rules).
+ * Jamais de messagerie « fonctionnelle en apparence » tant que l'accès
+ * n'est pas confirmé par /api/me.
  *
  * Volontairement en dehors de <Layout> : l'image desktop contient déjà une
  * navigation dessinée (logo, ACCUEIL/MON ÉQUIPE/CALENDRIER/LE MUR, sélecteur
- * d'équipe). Superposer le vrai <Header/> du site créerait une deuxième
- * navigation identique au-dessus de celle de la maquette.
+ * d'équipe), et le vrai salon a besoin de toute la hauteur disponible.
+ * Superposer le vrai <Header/> du site créerait une deuxième navigation.
  */
 export default function ChatApercuPage() {
   const { sport: sportSlugParam, equipe: equipeSlugParam } = useParams<{
@@ -26,6 +33,16 @@ export default function ChatApercuPage() {
 
   const sport = sportSlugParam ? trouverSport(sportSlugParam) : undefined;
   const equipe = sport && equipeSlugParam ? trouverEquipe(sport.slug, equipeSlugParam) : undefined;
+
+  const { statut, compte } = useAuth();
+  const { equipe: equipeRoster } = useRoster(sport?.slug, equipe?.slug);
+  const idEquipe = equipeRoster?.idEquipe ?? null;
+
+  const aAcces =
+    statut === "connecte" &&
+    compte !== null &&
+    idEquipe !== null &&
+    (compte.isAdmin || compte.rattachements.some((r) => r.teamId === idEquipe));
 
   if (!sport || !equipe) {
     return (
@@ -44,6 +61,22 @@ export default function ChatApercuPage() {
 
   const retourHref = `/equipes/${sport.slug}/${equipe.slug}`;
 
+  if (aAcces && idEquipe) {
+    return (
+      <div className="al-chat-apercu al-chat-apercu--salon">
+        <div className="al-chat-apercu__barre">
+          <Link to={retourHref} className="al-chat-apercu__retour">
+            <span aria-hidden="true">←</span> Retour à {sport.nom} {equipe.nom}
+          </Link>
+          <span className="al-chat-apercu__mention">Alérions Chat — {sport.nom} {equipe.nom}</span>
+        </div>
+        <div className="al-chat-apercu__salon-corps">
+          <TeamChatRoom idEquipe={idEquipe} nomEquipe={`${sport.nom} ${equipe.nom}`} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="al-chat-apercu">
       <div className="al-chat-apercu__barre">
@@ -51,9 +84,21 @@ export default function ChatApercuPage() {
           <span aria-hidden="true">←</span> Retour à {sport.nom} {equipe.nom}
         </Link>
         <span className="al-chat-apercu__mention">
-          Aperçu du chat — démonstration visuelle, aucun message réel n'est envoyé ni enregistré
+          {statut === "connecte"
+            ? "Aperçu du chat — ce compte n'a pas accès à cette équipe"
+            : "Aperçu du chat — démonstration visuelle, aucun message réel n'est envoyé ni enregistré"}
         </span>
       </div>
+
+      {statut !== "connecte" && (
+        <p className="al-chat-apercu__connexion">
+          Membre de cette équipe ?{" "}
+          <Link to="/connexion" state={{ depuis: { pathname: `${retourHref}/chat` } }}>
+            Connectez-vous
+          </Link>{" "}
+          pour accéder à la vraie conversation.
+        </p>
+      )}
 
       <div className="al-chat-apercu__image">
         <picture>
@@ -84,24 +129,16 @@ export default function ChatApercuPage() {
 }
 
 /*
- * --- Architecture future (documentée, non implémentée dans cette étape) ---
- * Ce que l'ajout d'un vrai chat par équipe demandera plus tard :
- *  - Session joueur authentifiée (compte réel, pas un code coach local ni
- *    un choix d'équipe en localStorage — ni l'un ni l'autre ne prouve une
- *    appartenance).
- *  - Appartenance à l'équipe vérifiée côté serveur (ou dans les règles de
- *    la base de données), pas seulement dans l'URL ou l'état du navigateur.
- *  - Conversation privée par équipe, isolée des autres équipes et des
- *    visiteurs non membres.
- *  - Historique persistant (base de données partagée, pas localStorage).
- *  - Photos privées : stockage et droits d'accès distincts des photos
- *    publiques du site (Le mur, Accueil).
- *  - Compteur de messages non lus réel, par membre, pas une valeur
- *    décorative.
- *  - Mise à jour en temps réel (ex. WebSocket ou flux équivalent) au lieu
- *    d'un instantané statique.
- *  - Idempotence des envois (un message envoyé deux fois par erreur réseau
- *    ne doit pas se dupliquer).
- *  - Suppression réservée à l'auteur du message ou à un responsable
- *    (entraîneur·e), avec vérification côté serveur de ce droit.
+ * --- État réel vs reste à faire ---
+ * Le chat texte est maintenant réel pour un membre authentifié et
+ * autorisé (TeamChatRoom : session Firebase, appartenance vérifiée
+ * serveur à chaque appel, conversation isolée par équipe via
+ * firestore.rules + chatAccess, historique Firestore persistant,
+ * temps réel par abonnement, idempotence des envois, suppression
+ * auteur/entraîneur/admin vérifiée côté serveur).
+ *
+ * Reste hors de cette étape :
+ *  - Photos privées (stockage et droits d'accès) — le bouton associé
+ *    reste visible mais désactivé ("Photos bientôt disponibles"),
+ *    jamais présenté comme fonctionnel.
  */
