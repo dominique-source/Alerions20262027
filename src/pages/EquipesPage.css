@@ -1,0 +1,232 @@
+.al-equipespage {
+  background: var(--v-bg);
+  color: var(--v-white);
+}
+
+.al-equipespage__entete {
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-10) var(--v-gutter) var(--s-6);
+}
+
+.al-equipespage__titre {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  margin: var(--s-1) 0 var(--s-3);
+}
+
+.al-equipespage__intro {
+  color: var(--v-text-muted);
+  font-size: 1.0625rem;
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* --- Sélecteur « Mon équipe » --- */
+.al-equipespage__selecteur {
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-6) var(--v-gutter);
+  border-top: 1px solid var(--v-line);
+  border-bottom: 1px solid var(--v-line);
+}
+
+.al-equipespage__selecteur > p {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  max-width: 60ch;
+  margin: var(--s-1) 0 0;
+}
+
+.al-equipespage__selecteur-grille {
+  display: grid;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+
+.al-equipespage__champ {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-equipespage__champ span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-text-muted);
+}
+
+.al-equipespage__champ select {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-4);
+  background: var(--v-panel);
+  border: 1px solid var(--v-gold);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-size: 0.9375rem;
+}
+
+.al-equipespage__champ select:disabled {
+  border-color: var(--v-line-strong);
+  color: var(--v-text-faint);
+}
+
+.al-equipespage__selecteur-resume {
+  margin-top: var(--s-5);
+  font-size: 0.875rem;
+  color: var(--v-text-muted);
+}
+
+.al-equipespage__selecteur-resume strong {
+  color: var(--v-gold);
+}
+
+@media (min-width: 640px) {
+  .al-equipespage__selecteur-grille {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: end;
+  }
+}
+
+/* --- Grille des sports --- */
+.al-equipespage__section {
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-10) var(--v-gutter) var(--s-16);
+}
+
+.al-equipespage__section-titre {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: var(--s-1) 0 var(--s-6);
+}
+
+.al-equipespage__grille {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.al-equipespage__tuile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 220px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--v-white);
+  border: 1px solid var(--v-line);
+  background: var(--v-panel);
+  transition: border-color var(--v-dur-base) var(--v-ease);
+}
+
+.al-equipespage__tuile:hover,
+.al-equipespage__tuile:focus-visible {
+  border-color: var(--v-gold);
+}
+
+.al-equipespage__tuile--grande {
+  min-height: 280px;
+}
+
+.al-equipespage__tuile--grande img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-equipespage__tuile-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8, 8, 8, 0.92) 15%, rgba(8, 8, 8, 0.1) 75%);
+}
+
+.al-equipespage__tuile-corps {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-6);
+}
+
+.al-equipespage__tuile-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v-gold);
+  font-weight: 700;
+}
+
+.al-equipespage__tuile-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 0.95;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0;
+}
+
+.al-equipespage__tuile--grande .al-equipespage__tuile-titre {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.al-equipespage__tuile-cta {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: var(--s-2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-white);
+}
+
+.al-equipespage__tuile:hover .al-equipespage__tuile-cta {
+  color: var(--v-gold);
+}
+
+.al-equipespage__autres {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+}
+
+.al-equipespage__tuile--typo {
+  padding: var(--s-5);
+  min-height: 160px;
+}
+
+.al-equipespage__tuile-num {
+  position: absolute;
+  top: var(--s-3);
+  right: var(--s-4);
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-size: 2.25rem;
+  color: var(--v-line-strong);
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .al-equipespage__autres {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .al-equipespage__grille {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .al-equipespage__tuile--grande {
+    min-height: 100%;
+  }
+
+  .al-equipespage__autres {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
