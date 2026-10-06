@@ -7,23 +7,20 @@ import TeamChatRoom from "../components/chat/TeamChatRoom";
 import "./ChatApercuPage.css";
 
 /**
- * Chat d'équipe — aperçu imagé public, ou vraie conversation pour les
- * membres autorisés.
+ * Chat d'équipe — accès réservé aux membres autorisés.
  *
  * Pour un visiteur non connecté (ou connecté mais sans accès à cette
- * équipe précise), reproduit exactement les deux maquettes approuvées
- * (chat-desktop.png, chat-mobile.png), pixels inchangés — rien n'est
- * jamais envoyé ni enregistré pour ce public. Pour un membre authentifié
- * avec un rattachement actif à cette équipe (ou un admin), affiche la
- * vraie conversation temps réel (TeamChatRoom) : messages texte, envoi,
- * suppression, tout vérifié côté serveur (api/chat/*, firestore.rules).
- * Jamais de messagerie « fonctionnelle en apparence » tant que l'accès
- * n'est pas confirmé par /api/me.
+ * équipe précise), affiche un état explicite invitant à se connecter —
+ * plus aucune image de démonstration n'est rendue ici. Pour un membre
+ * authentifié avec un rattachement actif à cette équipe (ou un admin),
+ * affiche la vraie conversation temps réel (TeamChatRoom) : messages
+ * texte, envoi, suppression, tout vérifié côté serveur (api/chat/*,
+ * firestore.rules). Jamais de messagerie « fonctionnelle en apparence »
+ * tant que l'accès n'est pas confirmé par /api/me.
  *
- * Volontairement en dehors de <Layout> : l'image desktop contient déjà une
- * navigation dessinée (logo, ACCUEIL/MON ÉQUIPE/CALENDRIER/LE MUR, sélecteur
- * d'équipe), et le vrai salon a besoin de toute la hauteur disponible.
- * Superposer le vrai <Header/> du site créerait une deuxième navigation.
+ * Volontairement en dehors de <Layout> : le vrai salon a besoin de toute
+ * la hauteur disponible ; superposer le vrai <Header/> du site créerait
+ * une deuxième navigation au-dessus de la barre de retour déjà présente.
  */
 export default function ChatApercuPage() {
   const { sport: sportSlugParam, equipe: equipeSlugParam } = useParams<{
@@ -86,7 +83,7 @@ export default function ChatApercuPage() {
         <span className="al-chat-apercu__mention">
           {statut === "connecte"
             ? "Aperçu du chat — ce compte n'a pas accès à cette équipe"
-            : "Aperçu du chat — démonstration visuelle, aucun message réel n'est envoyé ni enregistré"}
+            : "Aperçu du chat — aucun message réel n'est envoyé ni enregistré"}
         </span>
       </div>
 
@@ -99,31 +96,6 @@ export default function ChatApercuPage() {
           pour accéder à la vraie conversation.
         </p>
       )}
-
-      <div className="al-chat-apercu__image">
-        <picture>
-          {/*
-            767px testé d'abord comme suggéré, mais à 768px l'image desktop
-            (1536px de large, texte dense) devient illisible une fois
-            réduite à la largeur d'une tablette. L'image mobile (portrait,
-            1024×1536) reste nette et lisible jusqu'à 1023px — le point de
-            rupture est donc relevé à 1023px après inspection des deux
-            captures, conformément à la consigne « à ajuster après
-            inspection ».
-          */}
-          <source media="(max-width: 1023px)" srcSet="/images/chat/chat-mobile.png" />
-          <img
-            src="/images/chat/chat-desktop.png"
-            alt={
-              `Aperçu du clavardage « Alérions Chat » de l'équipe ${equipe.nom} — conversation de ` +
-              "démonstration entre trois membres fictifs (Alex Martin, Noah Tremblay, Sarah Dubois, " +
-              "entraîneuse) au sujet de l'heure de pratique, avec une photo du gymnase et d'un ballon " +
-              "partagée dans la conversation, et deux messages marqués comme non lus."
-            }
-            loading="eager"
-          />
-        </picture>
-      </div>
     </div>
   );
 }
