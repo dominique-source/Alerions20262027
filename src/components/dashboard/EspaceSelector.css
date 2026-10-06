@@ -1,0 +1,30 @@
+.al-espace-selecteur {
+  display: inline-flex;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: 3px;
+  gap: 2px;
+}
+
+.al-espace-selecteur__item {
+  padding: 0.45em 1em;
+  font-family: var(--v-font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.al-espace-selecteur__item:hover {
+  color: var(--v-white);
+}
+
+.al-espace-selecteur__item--actif {
+  background: var(--v-gold);
+  color: var(--v-bg);
+}
+
+.al-espace-selecteur__item--actif:hover {
+  color: var(--v-bg);
+}

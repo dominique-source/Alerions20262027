@@ -6,11 +6,15 @@ import type { MembrePublic, RosterErreur, RosterReponse } from "./_lib/types.js"
 
 /**
  * GET /api/roster?sport=<slug>&equipe=<slug_site>
+ * GET /api/roster?idEquipe=<id_equipe>
  *
- * Renvoie l'effectif public (joueurs + entraîneurs) d'UNE équipe. Le
- * client choisit quelle équipe il regarde (il connaît déjà sport+équipe
- * par l'URL de la page), mais ne choisit jamais le fichier Sheet ni la
- * plage lue côté serveur — ceux-ci restent fixés dans api/_lib/sheets.ts.
+ * Renvoie l'effectif public (joueurs + entraîneurs) d'UNE équipe, soit
+ * par sport+slug (pages publiques, qui connaissent déjà ce couple via
+ * l'URL), soit directement par idEquipe (teamId Firestore — ex. les
+ * dashboards privés, qui ne connaissent que le teamId d'un rattachement
+ * memberships). Le client choisit QUELLE équipe il regarde, jamais le
+ * fichier Sheet ni la plage lue côté serveur — ceux-ci restent fixés
+ * dans api/_lib/sheets.ts.
  *
  * Champs renvoyés : voir MembrePublic / EquipePublique dans
  * api/_lib/types.ts. Jamais de courriel, auth_user_id, notes, dates de
@@ -47,8 +51,9 @@ export default async function handler(req: RequeteMinimale, res: ReponseMinimale
 
   const sport = normaliserTexte(parametreTexte(req.query?.sport));
   const equipeSlug = normaliserTexte(parametreTexte(req.query?.equipe));
+  const idEquipe = normaliserTexte(parametreTexte(req.query?.idEquipe));
 
-  if (!sport || !equipeSlug) {
+  if (!idEquipe && (!sport || !equipeSlug)) {
     envoyerErreur(res, 400, "parametres_manquants");
     return;
   }
@@ -84,9 +89,9 @@ export default async function handler(req: RequeteMinimale, res: ReponseMinimale
     return;
   }
 
-  const ligneEquipe = roster.equipes.find(
-    (e) => normaliserTexte(e.sport) === sport && normaliserTexte(e.slugSite) === equipeSlug,
-  );
+  const ligneEquipe = idEquipe
+    ? roster.equipes.find((e) => normaliserTexte(e.idEquipe) === idEquipe)
+    : roster.equipes.find((e) => normaliserTexte(e.sport) === sport && normaliserTexte(e.slugSite) === equipeSlug);
 
   const reponse: RosterReponse = {
     equipe: ligneEquipe ? redigerEquipe(ligneEquipe) : null,

@@ -1,0 +1,111 @@
+.al-connexion {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--v-bg);
+  padding: var(--s-6) var(--v-gutter);
+}
+
+.al-connexion__carte {
+  width: 100%;
+  max-width: 400px;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-8) var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.al-connexion__logo {
+  align-self: center;
+  margin-bottom: var(--s-2);
+}
+
+.al-connexion__logo img {
+  height: 36px;
+  width: auto;
+}
+
+.al-connexion__titre {
+  text-align: center;
+  margin: 0;
+}
+
+.al-connexion__sous-titre {
+  text-align: center;
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.al-connexion__formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.al-connexion__formulaire > .al-btn-v2 {
+  width: 100%;
+  justify-content: center;
+}
+
+.al-connexion__champ {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.al-connexion__champ span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--v-text-muted);
+}
+
+.al-connexion__champ input {
+  min-height: 44px;
+  background: var(--v-bg);
+  border: 1px solid var(--v-line);
+  color: var(--v-white);
+  padding: 0 var(--s-3);
+  font-size: 0.9375rem;
+}
+
+.al-connexion__champ input:focus-visible {
+  outline: 2px solid var(--v-focus);
+  outline-offset: 1px;
+}
+
+.al-connexion__erreur {
+  color: var(--v-red);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
+.al-connexion__lien {
+  background: none;
+  border: none;
+  color: var(--v-gold);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: center;
+  min-height: 44px;
+}
+
+.al-connexion__confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.al-connexion__retour-site {
+  text-align: center;
+  color: var(--v-text-faint);
+  font-size: 0.8125rem;
+  margin-top: var(--s-2);
+}

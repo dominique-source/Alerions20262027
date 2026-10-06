@@ -1,0 +1,120 @@
+.al-compte {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--v-bg);
+  padding: var(--s-6) var(--v-gutter);
+}
+
+.al-compte--etat {
+  color: var(--v-text-muted);
+}
+
+.al-compte__carte {
+  width: 100%;
+  max-width: 420px;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-8) var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  color: var(--v-text-muted);
+}
+
+.al-compte__carte--large {
+  max-width: 560px;
+}
+
+.al-compte__titre {
+  margin: 0;
+}
+
+.al-compte__personid {
+  margin: -var(--s-2) 0 0;
+  font-size: 0.75rem;
+  color: var(--v-text-faint);
+  letter-spacing: 0.04em;
+}
+
+.al-compte__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.al-compte__confirmation {
+  color: var(--v-gold);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.al-compte__espaces {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.al-compte__espace-carte {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--s-3);
+  background: var(--v-panel-2);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.al-compte__espace-carte:hover {
+  border-color: var(--v-gold);
+}
+
+.al-compte__espace-titre {
+  grid-column: 1;
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--v-white);
+}
+
+.al-compte__espace-desc {
+  grid-column: 1;
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+}
+
+.al-compte__espace-fleche {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--v-gold);
+  font-size: 1.25rem;
+}
+
+.al-compte__bas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  border-top: 1px solid var(--v-line);
+  padding-top: var(--s-4);
+  margin-top: var(--s-2);
+}
+
+.al-compte__lien-site {
+  color: var(--v-text-faint);
+  font-size: 0.8125rem;
+}
+
+.al-compte__deconnexion {
+  background: none;
+  border: none;
+  color: var(--v-red);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: 44px;
+}

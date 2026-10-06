@@ -38,7 +38,16 @@ interface ReponseErreurApi {
   code: RosterCodeErreur;
 }
 
-export function useRoster(sport: string | undefined, equipeSlug: string | undefined): ResultatUseRoster {
+/**
+ * `idEquipe`, s'il est fourni, prend le pas sur sport+equipeSlug —
+ * utilisé par les dashboards privés, qui ne connaissent que le teamId
+ * d'un rattachement memberships (voir api/roster.ts, paramètre idEquipe).
+ */
+export function useRoster(
+  sport: string | undefined,
+  equipeSlug: string | undefined,
+  idEquipe?: string | null,
+): ResultatUseRoster {
   const [etat, setEtat] = useState<EtatRoster>("chargement");
   const [donnees, setDonnees] = useState<RosterReponse | null>(null);
   const [codeErreur, setCodeErreur] = useState<RosterCodeErreur | null>(null);
@@ -49,7 +58,7 @@ export function useRoster(sport: string | undefined, equipeSlug: string | undefi
   const echecsConsecutifsRef = useRef(0);
 
   useEffect(() => {
-    if (!sport || !equipeSlug) {
+    if (!idEquipe && (!sport || !equipeSlug)) {
       setEtat("vide");
       return;
     }
@@ -78,10 +87,10 @@ export function useRoster(sport: string | undefined, equipeSlug: string | undefi
       controleurRef.current = controleur;
 
       try {
-        const reponse = await fetch(
-          `/api/roster?sport=${encodeURIComponent(sport!)}&equipe=${encodeURIComponent(equipeSlug!)}`,
-          { signal: controleur.signal },
-        );
+        const url = idEquipe
+          ? `/api/roster?idEquipe=${encodeURIComponent(idEquipe)}`
+          : `/api/roster?sport=${encodeURIComponent(sport!)}&equipe=${encodeURIComponent(equipeSlug!)}`;
+        const reponse = await fetch(url, { signal: controleur.signal });
 
         if (demonte) return;
 
@@ -131,7 +140,7 @@ export function useRoster(sport: string | undefined, equipeSlug: string | undefi
       controleurRef.current?.abort();
       document.removeEventListener("visibilitychange", surVisibilite);
     };
-  }, [sport, equipeSlug, compteurRafraichissement]);
+  }, [sport, equipeSlug, idEquipe, compteurRafraichissement]);
 
   const rafraichir = useCallback(() => {
     echecsConsecutifsRef.current = 0;

@@ -1,0 +1,206 @@
+.al-jdash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.al-jdash__entete {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.al-jdash__titre {
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+  color: var(--v-white);
+}
+
+.al-jdash__titre-accent {
+  color: var(--v-red);
+}
+
+.al-jdash__sous-titre {
+  color: var(--v-text-muted);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.al-jdash__selecteur-equipe select {
+  background: var(--v-panel);
+  border: 1px solid var(--v-gold);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.55em 2em 0.55em 0.9em;
+  min-height: 44px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.al-jdash__grille {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+/* --- Carte joueur verticale --- */
+.al-jdash__carte-joueur {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  text-align: center;
+}
+
+.al-jdash__carte-portrait {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--v-panel-2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.al-jdash__carte-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-jdash__carte-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--v-gold);
+  color: var(--v-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-size: 1.75rem;
+}
+
+.al-jdash__carte-vide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-6) 0;
+}
+
+.al-jdash__carte-numero {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--v-red);
+}
+
+.al-jdash__carte-nom {
+  font-weight: 700;
+  color: var(--v-white);
+}
+
+/* --- Colonne principale --- */
+.al-jdash__colonne-principale {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.al-jdash__bloc-match {
+  background: linear-gradient(120deg, var(--v-red-deep), var(--v-panel) 70%);
+  border: 1px solid var(--v-line);
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  align-items: flex-start;
+}
+
+.al-jdash__match-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--v-white);
+  margin: 0;
+}
+
+.al-jdash__match-infos,
+.al-jdash__match-lieu {
+  margin: 0;
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+}
+
+.al-jdash__rangee-deux {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+
+.al-jdash__bloc-annonce,
+.al-jdash__bloc-calendrier,
+.al-jdash__bloc-objectif {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.al-jdash__bloc-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.al-jdash__voir-tout {
+  color: var(--v-gold);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.al-jdash__statut {
+  color: var(--v-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.al-jdash__erreur {
+  color: var(--v-red);
+  font-size: 0.875rem;
+}
+
+.al-jdash__note {
+  color: var(--v-text-faint);
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+@media (max-width: 1023px) {
+  .al-jdash__grille {
+    grid-template-columns: 1fr;
+  }
+
+  .al-jdash__carte-joueur {
+    max-width: 260px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .al-jdash__rangee-deux {
+    grid-template-columns: 1fr;
+  }
+}
