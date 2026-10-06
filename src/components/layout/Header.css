@@ -2,8 +2,8 @@
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: var(--alerions-deep);
-  border-bottom: 3px solid var(--alerions-gold);
+  background: var(--v-bg);
+  border-bottom: 1px solid var(--v-line);
 }
 
 .al-header__bar {
@@ -11,96 +11,46 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
-  min-height: 68px;
-  padding-block: var(--s-3);
+  min-height: 64px;
+  padding: var(--s-3) var(--v-gutter);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
 }
 
 .al-header__brand {
   display: flex;
   align-items: center;
-  gap: var(--s-2);
-  min-width: 0;
-  color: var(--color-text-inverse);
   min-height: var(--tap-min);
 }
 
-.al-header__crest {
-  width: 38px;
-  height: 38px;
-  flex: none;
-  border: 2px solid var(--alerions-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--alerions-gold);
-  letter-spacing: 0.02em;
-}
-
-.al-header__wordmark {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  min-width: 0;
-}
-
-.al-header__wordmark strong {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.al-header__wordmark span {
-  font-size: var(--fs-meta);
-  color: var(--color-text-muted-inverse);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/*
-  Priorité mobile : le logo (crest) suffit en dessous de 400px — le nom du
-  Collège en sous-titre s'efface d'abord, puis le mot-symbole complet.
-*/
-@media (max-width: 479px) {
-  .al-header__wordmark span {
-    display: none;
-  }
-}
-
-@media (max-width: 399px) {
-  .al-header__wordmark {
-    display: none;
-  }
+.al-header__logo {
+  display: block;
+  height: 32px;
+  width: auto;
 }
 
 .al-header__nav {
   display: none;
   align-items: center;
-  gap: var(--s-6);
+  gap: var(--s-8);
 }
 
 .al-header__nav a {
   position: relative;
   padding-block: var(--s-2);
-  font-size: var(--fs-small);
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-family: var(--v-font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-text-inverse);
+  color: var(--v-white);
   min-height: var(--tap-min);
   display: inline-flex;
   align-items: center;
 }
 
 .al-header__nav a[aria-current="page"] {
-  color: var(--alerions-gold);
+  color: var(--v-white);
 }
 
 .al-header__nav a::after {
@@ -108,12 +58,12 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 4px;
   height: 2px;
-  background: var(--alerions-gold);
+  background: var(--v-red);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--dur-base) var(--ease-out);
+  transition: transform var(--v-dur-base) var(--v-ease);
 }
 
 .al-header__nav a:hover::after,
@@ -128,31 +78,26 @@
   flex: none;
 }
 
-.al-header__cta {
-  display: inline-flex;
+.al-header__plus {
+  display: none;
   align-items: center;
   min-height: var(--tap-min);
   padding: 0 var(--s-4);
-  background: var(--alerions-gold);
-  color: var(--alerions-deep);
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
   font-weight: 700;
-  font-size: var(--fs-small);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--v-dur-fast), color var(--v-dur-fast);
 }
 
-@media (min-width: 400px) {
-  .al-header__actions {
-    gap: var(--s-3);
-  }
-  .al-header__cta {
-    padding: 0 var(--s-5);
-  }
-}
-
-.al-header__cta:hover {
-  background: var(--c-or-clair);
+.al-header__plus:hover {
+  border-color: var(--v-gold);
+  color: var(--v-gold);
 }
 
 .al-header__burger {
@@ -162,43 +107,19 @@
   width: var(--tap-min);
   height: var(--tap-min);
   background: transparent;
-  border: 1px solid var(--color-border-inverse);
-  color: var(--color-text-inverse);
-}
-
-/* Navigation secondaire — discrète, ordinateur uniquement */
-.al-header__secondary {
-  display: none;
-  background: rgba(0, 0, 0, 0.18);
-}
-
-.al-header__secondary-row {
-  display: flex;
-  gap: var(--s-6);
-  padding-block: var(--s-2);
-}
-
-.al-header__secondary-row a {
-  font-size: var(--fs-meta);
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-text-muted-inverse);
-  font-weight: 600;
-}
-
-.al-header__secondary-row a:hover,
-.al-header__secondary-row a[aria-current="page"] {
-  color: var(--alerions-gold);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {
   .al-header__nav {
     display: flex;
   }
+  .al-header__plus {
+    display: inline-flex;
+  }
   .al-header__burger {
     display: none;
-  }
-  .al-header__secondary {
-    display: block;
   }
 }

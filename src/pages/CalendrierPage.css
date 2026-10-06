@@ -1,172 +1,313 @@
-.al-cal__toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
-  margin-bottom: var(--s-8);
+.al-calendrier {
+  background: var(--v-bg);
+  color: var(--v-white);
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-8) var(--v-gutter) var(--s-16);
 }
 
-.al-cal__tabs {
+.al-calendrier__entete {
+  margin-bottom: var(--s-6);
+}
+
+.al-calendrier__titre {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  margin: var(--s-1) 0 0;
+}
+
+.al-calendrier__corps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+}
+
+/* --- Barre --- */
+.al-calendrier__barre {
   display: flex;
-  gap: var(--s-2);
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
 }
 
-.al-cal__tab {
-  min-height: var(--tap-min);
-  padding: 0 var(--s-5);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  font-size: var(--fs-small);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  color: var(--color-text);
-}
-
-.al-cal__tab[aria-pressed="true"] {
-  background: var(--alerions-blue);
-  color: var(--color-text-inverse);
-  border-color: var(--alerions-blue);
-}
-
-.al-cal__search {
+.al-calendrier__nav-mois {
   display: flex;
   align-items: center;
-  gap: var(--s-2);
+  gap: var(--s-3);
 }
 
-.al-cal__search input {
-  flex: 1;
-  min-height: var(--tap-min);
-  padding: 0 var(--s-4);
-  border: 1px solid var(--color-border);
-  font-size: var(--fs-body);
+.al-calendrier__nav-mois button {
+  width: 36px;
+  height: 36px;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  cursor: pointer;
+  font-size: 1.125rem;
 }
 
-.al-cal__filter-toggle {
-  min-height: var(--tap-min);
-  padding: 0 var(--s-5);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  font-weight: 700;
+.al-calendrier__mois-nom {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 1.375rem;
   text-transform: uppercase;
-  font-size: var(--fs-small);
+  min-width: 14ch;
 }
 
-.al-cal__body {
+.al-calendrier__controles {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.al-calendrier__select select {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  font-size: 0.8125rem;
+  padding: var(--s-2) var(--s-3);
+  min-height: 40px;
+}
+
+.al-calendrier__vues {
+  display: flex;
+  border: 1px solid var(--v-line-strong);
+}
+
+.al-calendrier__vues button {
+  background: transparent;
+  color: var(--v-text-muted);
+  border: none;
+  padding: var(--s-2) var(--s-4);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 40px;
+}
+
+.al-calendrier__vues button[aria-selected="true"] {
+  background: var(--v-red);
+  color: var(--v-white);
+}
+
+/* --- Grille mensuelle --- */
+.al-calendrier__grille {
   display: grid;
-  gap: var(--s-8);
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--v-line);
+  border: 1px solid var(--v-line);
 }
 
-.al-cal__filters {
+.al-calendrier__entete-jour {
+  background: var(--v-bg-soft);
+  padding: var(--s-2);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v-text-muted);
+  text-align: center;
+}
+
+.al-calendrier__case {
+  background: var(--v-panel);
+  border: none;
+  color: var(--v-white);
+  min-height: 86px;
+  padding: var(--s-1);
   display: flex;
   flex-direction: column;
-  gap: var(--s-5);
-  background: var(--alerions-ice);
-  border: 1px solid var(--color-border);
-  padding: var(--s-6);
+  align-items: flex-start;
+  gap: 2px;
+  cursor: pointer;
+  text-align: left;
 }
 
-.al-cal__filters[hidden] {
-  display: none;
+.al-calendrier__case:disabled {
+  cursor: default;
 }
 
-.al-cal__filter-field {
+.al-calendrier__case--hors {
+  color: var(--v-text-faint);
+  background: var(--v-bg-soft);
+}
+
+.al-calendrier__case-num {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.al-calendrier__case--aujourdhui .al-calendrier__case-num {
+  color: var(--v-gold);
+}
+
+.al-calendrier__case--selectionnee {
+  background: var(--v-red);
+}
+
+.al-calendrier__case--selectionnee .al-calendrier__case-num,
+.al-calendrier__case--selectionnee .al-calendrier__pill {
+  color: var(--v-white);
+}
+
+.al-calendrier__case-pills {
   display: flex;
   flex-direction: column;
-  gap: var(--s-2);
+  gap: 2px;
+  width: 100%;
 }
 
-.al-cal__filter-field label {
-  font-size: var(--fs-small);
+.al-calendrier__pill {
+  display: block;
+  width: 100%;
+  font-size: 0.5625rem;
+  line-height: 1.3;
+  padding: 1px 4px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--v-font-body);
 }
 
-.al-cal__filter-field select {
-  min-height: var(--tap-min);
-  padding: 0 var(--s-3);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+.al-calendrier__pill--pratique {
+  background: var(--v-gold);
+  color: #241b06;
 }
 
-/*
-  Présentation par journées : une colonne date (grande, stylisée) et une
-  colonne activités. Sur téléphone, la date reste visible en tête de liste.
-*/
-.al-cal__day-group {
-  display: grid;
-  grid-template-columns: 1fr;
+.al-calendrier__pill--optionnel {
+  background: transparent;
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-text-muted);
+}
+
+.al-calendrier__pill--match {
+  background: var(--v-red-deep);
+  color: var(--v-white);
+}
+
+.al-calendrier__pill--active {
+  outline: 2px solid var(--v-gold);
+}
+
+/* --- Vue semaine --- */
+.al-calendrier__semaine {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--v-line);
+  border: 1px solid var(--v-line);
+}
+
+.al-calendrier__semaine-jour {
+  background: var(--v-panel);
+  display: flex;
   gap: var(--s-4);
-  padding-block: var(--s-8);
-  border-bottom: 1px solid var(--color-border);
+  padding: var(--s-3) var(--s-4);
+  align-items: flex-start;
 }
 
-.al-cal__day-group:first-child {
-  padding-top: 0;
-}
-
-.al-cal__day-date {
+.al-calendrier__semaine-date {
   display: flex;
-  align-items: baseline;
-  gap: var(--s-3);
+  flex-direction: column;
+  align-items: center;
+  flex: none;
+  width: 48px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
-.al-cal__day-date .al-cal__day-num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 2.75rem;
+.al-calendrier__semaine-date span {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 1.25rem;
+}
+
+.al-calendrier__semaine-liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  flex: 1;
+}
+
+.al-calendrier__semaine-liste .al-calendrier__pill {
+  width: auto;
+  display: inline-block;
+  padding: var(--s-1) var(--s-2);
+  font-size: 0.75rem;
+}
+
+.al-calendrier__semaine-vide {
+  color: var(--v-text-faint);
+}
+
+/* --- Panneau de détail --- */
+.al-calendrier__panneau {
+  background: var(--v-panel);
+  border: 1px solid var(--v-gold);
+  padding: var(--s-6);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-calendrier__panneau-date {
+  display: flex;
+  flex-direction: column;
   line-height: 1;
-  color: var(--alerions-blue);
 }
 
-.al-cal__day-date .al-cal__day-label {
-  display: flex;
-  flex-direction: column;
+.al-calendrier__panneau-jour {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 3rem;
+  color: var(--v-red);
 }
 
-.al-cal__day-label strong {
-  font-family: var(--font-display);
-  font-weight: 700;
+.al-calendrier__panneau-mois {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-size: var(--fs-small);
+  color: var(--v-text-muted);
 }
 
-.al-cal__day-label span {
-  font-size: var(--fs-meta);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
+.al-calendrier__panneau-titre {
+  font-size: 1.75rem;
+  margin: var(--s-2) 0;
 }
 
-.al-cal__day-events {
+.al-calendrier__panneau-heure,
+.al-calendrier__panneau-lieu {
+  font-size: 0.9375rem;
+  color: var(--v-text-muted);
+  margin: 0;
+}
+
+.al-calendrier__panneau-bouton {
+  margin-top: var(--s-4);
+  justify-content: center;
+}
+
+.al-calendrier__panneau-actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
 }
 
-@media (min-width: 1024px) {
-  .al-cal__body {
-    grid-template-columns: 280px 1fr;
-    align-items: start;
-  }
+.al-calendrier__panneau-vide {
+  color: var(--v-text-muted);
+  font-size: 0.9375rem;
+}
 
-  .al-cal__filters {
-    position: sticky;
-    top: calc(68px + var(--s-6));
-  }
-
-  .al-cal__filters[hidden] {
-    display: flex;
-  }
-
-  .al-cal__filter-toggle {
-    display: none;
-  }
-
-  .al-cal__day-group {
-    grid-template-columns: 160px 1fr;
-    gap: var(--s-8);
+@media (min-width: 1100px) {
+  .al-calendrier__corps {
+    grid-template-columns: 1fr 380px;
   }
 }

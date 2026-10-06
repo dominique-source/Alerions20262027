@@ -122,4 +122,40 @@
   --z-nav: 100;
   --z-drawer: 200;
   --z-overlay: 300;
+
+  /*
+    --- V2 : direction "ALÉRIONS REFONTE" (maquettes 1536×1024) ---
+    Jetons dédiés à la nouvelle direction visuelle (fond quasi noir, rouge,
+    or, blanc cassé) — utilisés par le Header/Footer (partout) et les pages
+    reconstruites depuis les maquettes approuvées (Accueil, Mon équipe,
+    Calendrier, Le mur, Profil joueur, Détail d'un événement, Défis,
+    Collection, Parents). Les anciennes pages non retouchées continuent
+    d'utiliser les jetons --color-... et --alerions-... ci-dessus, inchangés.
+  */
+  --v-bg: #080808;
+  --v-bg-soft: #0c0c0c;
+  --v-panel: #101010;
+  --v-panel-2: #161616;
+  --v-panel-3: #1c1c1c;
+  --v-red: #ed001c;
+  --v-red-deep: #a8020f;
+  --v-white: #f5f4f1;
+  --v-gold: #d9b35b;
+  --v-gold-soft: #c9a567;
+  --v-line: rgba(255, 255, 255, 0.14);
+  --v-line-strong: rgba(255, 255, 255, 0.28);
+  --v-text-muted: rgba(245, 244, 241, 0.64);
+  --v-text-faint: rgba(245, 244, 241, 0.4);
+  --v-focus: #d9b35b;
+
+  --v-font-title: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --v-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --v-w-wide: 1536px;
+  --v-w-content: 1180px;
+  --v-gutter: clamp(16px, 4vw, 64px);
+
+  --v-dur-fast: 140ms;
+  --v-dur-base: 240ms;
+  --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }

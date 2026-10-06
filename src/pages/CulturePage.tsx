@@ -1,14 +1,15 @@
 import PhotoGrid from "../components/PhotoGrid";
 import SectionTitle from "../components/SectionTitle";
-import { photosGalerie } from "../data/gallery";
+import { photos } from "../data/photos";
 import "./CulturePage.css";
 
 const jalons = [
-  { annee: "1668", legende: "Racines du Collège — à documenter" },
   { annee: "XVI", legende: "Seize Alérions, une identité" },
   { annee: "2026", legende: "Saison en cours" },
   { annee: "Demain", legende: "La suite à écrire" },
 ];
+
+const photosCulture = photos.filter((p) => p.type === "reportage").slice(0, 11);
 
 /**
  * Page Culture Alérions — traitement émotionnel et historique.
@@ -32,11 +33,10 @@ export default function CulturePage() {
           <div className="al-culture-main__body">
             <h2>L'histoire n'est pas un décor.</h2>
             <p>
-              Seize Alérions : un nombre qui revient dans l'histoire du Collège
-              François-de-Laval et qui inspire aujourd'hui l'identité sportive
-              portée par chaque équipe, chaque génération d'athlètes. Ce chiffre
-              n'est pas un ornement — il rappelle que chaque génération ajoute sa
-              propre page à une histoire commune.
+              Seize Alérions : un nombre qui inspire aujourd'hui l'identité sportive
+              portée par chaque équipe, chaque génération d'athlètes. Ce chiffre n'est
+              pas un ornement — il rappelle que chaque génération ajoute sa propre page
+              à une histoire commune.
             </p>
             <p className="al-culture-main__quote">Porter l'histoire. Écrire la suite.</p>
           </div>
@@ -60,7 +60,7 @@ export default function CulturePage() {
       <section className="al-section al-section--ice">
         <div className="container">
           <SectionTitle eyebrow="En images" title="La vie Alérions" />
-          <PhotoGrid photos={photosGalerie} />
+          <PhotoGrid photos={photosCulture} />
         </div>
       </section>
     </>

@@ -1,0 +1,241 @@
+.al-equipe {
+  background: var(--v-bg);
+  color: var(--v-white);
+  min-height: 60vh;
+}
+
+.al-equipe__selecteur-rangee {
+  display: flex;
+  justify-content: flex-end;
+  max-width: var(--v-w-wide);
+  margin-inline: auto;
+  padding: var(--s-4) var(--v-gutter) 0;
+}
+
+.al-equipe__selecteur select {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--s-2) var(--s-4);
+  min-height: var(--tap-min);
+}
+
+/* --- Rangée du haut : match / titre / objectif --- */
+.al-equipe__top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+  max-width: var(--v-w-wide);
+  margin: var(--s-4) auto 0;
+  padding: 0 var(--v-gutter);
+}
+
+.al-equipe__carte-info {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.al-equipe__match-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.al-equipe__match-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+  margin-bottom: var(--s-2);
+}
+
+.al-equipe__titre-bloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--s-1);
+  padding: var(--s-6) var(--s-4);
+}
+
+.al-equipe__crown {
+  color: var(--v-gold);
+  font-size: 1.5rem;
+}
+
+.al-equipe__nom {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.al-equipe__saison {
+  font-family: var(--v-font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--v-text-muted);
+}
+
+.al-equipe__objectif-titre {
+  font-family: var(--v-font-title);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  color: var(--v-white);
+}
+
+.al-equipe__objectif-titre span {
+  color: var(--v-red);
+}
+
+.al-equipe__objectif-chiffre {
+  font-family: var(--v-font-title);
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.al-equipe__objectif-chiffre span {
+  font-family: var(--v-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--v-text-muted);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.al-equipe__objectif-barre {
+  height: 6px;
+  background: var(--v-line);
+  overflow: hidden;
+}
+
+.al-equipe__objectif-remplissage {
+  height: 100%;
+  background: var(--v-red);
+  transition: width var(--v-dur-base) var(--v-ease);
+}
+
+.al-equipe__objectif-valeurs {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v-text-faint);
+}
+
+@media (min-width: 1024px) {
+  .al-equipe__top {
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+/* --- Joueurs --- */
+.al-equipe__joueurs {
+  max-width: var(--v-w-wide);
+  margin: var(--s-10) auto 0;
+  padding: 0 var(--v-gutter) var(--s-16);
+}
+
+.al-equipe__joueurs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.al-equipe__joueurs-titre {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0;
+}
+
+.al-equipe__cartes {
+  display: flex;
+  gap: var(--s-4);
+  overflow-x: auto;
+  padding-bottom: var(--s-2);
+  scroll-snap-type: x proximity;
+}
+
+.al-equipe__carte {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(260px, 70vw);
+  scroll-snap-align: start;
+  border: 1px solid var(--v-gold);
+  display: block;
+  overflow: hidden;
+}
+
+.al-equipe__carte img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform var(--v-dur-base) var(--v-ease);
+}
+
+.al-equipe__carte-hint {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--s-2);
+  text-align: center;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85), transparent);
+  color: var(--v-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--v-dur-fast) var(--v-ease);
+}
+
+.al-equipe__carte:hover img {
+  transform: scale(1.03);
+}
+
+.al-equipe__carte:hover .al-equipe__carte-hint,
+.al-equipe__carte:focus-visible .al-equipe__carte-hint {
+  opacity: 1;
+}
+
+.al-equipe__carte--equipe {
+  cursor: default;
+}
+
+.al-equipe__vide {
+  padding: var(--s-8);
+  border: 1px dashed var(--v-line-strong);
+  color: var(--v-text-muted);
+  font-size: 0.9375rem;
+  max-width: 60ch;
+}
+
+@media (min-width: 768px) {
+  .al-equipe__cartes {
+    overflow-x: visible;
+    justify-content: center;
+  }
+  .al-equipe__carte {
+    width: auto;
+    flex: 0 1 300px;
+  }
+}

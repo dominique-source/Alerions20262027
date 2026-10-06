@@ -1,119 +1,94 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EmptyState from "../components/EmptyState";
-import { categoriesSports, equipes, niveaux } from "../data/teams";
-import { evenementsExemple } from "../data/events";
-import { resultatsExemple } from "../data/results";
-import { cheminPhoto } from "../lib/images";
+import PhotoGrid from "../components/PhotoGrid";
+import DocumentRow from "../components/DocumentRow";
+import SectionTitle from "../components/SectionTitle";
+import { trouverSport } from "../data/sports";
+import { trouverEquipe } from "../data/teams";
+import { documentsParSport } from "../data/documents";
+import { photosParSport } from "../data/photos";
+import { cheminPublic } from "../lib/images";
 import "./TeamDetailPage.css";
 
-const rubriques = [
-  "Actualités",
-  "Horaire",
-  "Photos",
-  "Vidéos",
-  "Documents",
-  "Entraîneurs",
-];
-
-/**
- * Gabarit réutilisable de page d'équipe (/equipes/:slug).
- * Seule « equipe-exemple » existe pour le moment : la liste officielle des
- * équipes n'a pas été fournie et ne doit pas être inventée.
- */
+/** Gabarit réutilisable de page d'équipe (/equipes/:sport/:equipe). */
 export default function TeamDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const equipe = equipes.find((e) => e.slug === slug);
+  const { sport: sportSlugParam, equipe: equipeSlugParam } = useParams<{
+    sport: string;
+    equipe: string;
+  }>();
 
-  if (!equipe) {
+  const sport = sportSlugParam ? trouverSport(sportSlugParam) : undefined;
+  const equipe = sport && equipeSlugParam ? trouverEquipe(sport.slug, equipeSlugParam) : undefined;
+
+  if (!sport || !equipe) {
     return (
       <section className="al-section al-section--blanc">
         <div className="container">
           <EmptyState
-            title="Cette équipe n'est pas encore disponible."
-            description="La liste officielle des équipes sera ajoutée prochainement."
+            title="Cette équipe n'existe pas."
+            description="Consultez la liste complète des équipes Alérions."
           />
+          <p className="al-team-back">
+            <Link to="/equipes" className="al-btn al-btn--outline-dark">
+              Voir toutes les équipes
+            </Link>
+          </p>
         </div>
       </section>
     );
   }
 
-  const sport = categoriesSports.find((c) => c.sport === equipe.sport);
-  const niveau = niveaux.find((n) => n.valeur === equipe.niveau);
-
-  const prochainMatch = evenementsExemple
-    .filter((e) => e.equipeSlug === equipe.slug && e.type === "match")
-    .sort((a, b) => a.date.localeCompare(b.date))[0];
-
-  const prochainEntrainement = evenementsExemple
-    .filter((e) => e.equipeSlug === equipe.slug && e.type === "entrainement")
-    .sort((a, b) => a.date.localeCompare(b.date))[0];
-
-  const dernierResultat = resultatsExemple
-    .filter((r) => r.equipeSlug === equipe.slug)
-    .sort((a, b) => b.date.localeCompare(a.date))[0];
+  const documents = documentsParSport(sport.slug);
+  const photosGalerie = photosParSport(sport.slug);
 
   return (
     <>
       <section className="al-team-hero">
         <div className="al-team-hero__identity">
           <h1>
-            <span>{sport?.nom.toUpperCase() ?? equipe.sport.toUpperCase()}</span>
-            <span>{niveau?.label.toUpperCase() ?? equipe.niveau.toUpperCase()}</span>
-            <span>{equipe.genre.toUpperCase()}</span>
+            <span>{sport.nom.toUpperCase()}</span>
+            <span>{equipe.nom.toUpperCase()}</span>
           </h1>
         </div>
         <div className="al-team-hero__media">
-          {equipe.photoPrincipale && (
+          {sport.photoCouverture && (
             <img
-              src={cheminPhoto(equipe.photoPrincipale)}
-              alt="Athlète représentant l'équipe exemple"
+              src={cheminPublic(sport.photoCouverture)}
+              alt={`Athlète des Alérions en action — programme ${sport.nom}`}
             />
           )}
         </div>
       </section>
 
-      <div className="al-team-band">
-        <div className="container al-team-band__row">
-          <div className="al-team-band__item">
-            <span className="al-team-band__label">Prochain match</span>
-            <span className="al-team-band__value">
-              {prochainMatch ? `${prochainMatch.date} · ${prochainMatch.heure}` : "Information à confirmer"}
-            </span>
-          </div>
-          <div className="al-team-band__item">
-            <span className="al-team-band__label">Prochain entraînement</span>
-            <span className="al-team-band__value">
-              {prochainEntrainement
-                ? `${prochainEntrainement.date} · ${prochainEntrainement.heure}`
-                : "Information à confirmer"}
-            </span>
-          </div>
-          <div className="al-team-band__item">
-            <span className="al-team-band__label">Dernier résultat</span>
-            <span className="al-team-band__value">
-              {dernierResultat
-                ? `vs ${dernierResultat.adversaire} — ${dernierResultat.score}`
-                : "Information à confirmer"}
-            </span>
-          </div>
-        </div>
-      </div>
-
       <section className="al-section al-section--blanc">
         <div className="container">
-          <div className="al-numbered">
-            {rubriques.map((rubrique, index) => (
-              <div className="al-numbered__row" key={rubrique}>
-                <span className="al-numbered__index">{String(index + 1).padStart(2, "0")}</span>
-                <div className="al-numbered__body">
-                  <h3>{rubrique}</h3>
-                  <p>Contenu à confirmer</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Link to={`/calendrier?sport=${sport.slug}`} className="al-btn al-btn--primary">
+            Calendrier {sport.nom}
+          </Link>
         </div>
       </section>
+
+      {documents.length > 0 && (
+        <section className="al-section al-section--ice">
+          <div className="container">
+            <SectionTitle eyebrow="Ressources" title="Documents" />
+            <div className="al-doc-list">
+              {documents.map((document) => (
+                <DocumentRow key={document.slug} document={document} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {photosGalerie.length > 0 && (
+        <section className="al-section al-section--blanc">
+          <div className="container">
+            <SectionTitle eyebrow="En images" title={`Galerie ${sport.nom}`} />
+            <PhotoGrid photos={photosGalerie} />
+          </div>
+        </section>
+      )}
     </>
   );
 }

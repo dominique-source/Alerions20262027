@@ -1,80 +1,96 @@
-import type { Equipe, Sport } from "../types";
+import type { Categorie, Equipe, Genre, SportSlug } from "../types";
 
-export interface CategorieSport {
-  sport: Sport;
-  nom: string;
-  description: string;
+const libellesCategorie: Record<Categorie, string> = {
+  atome: "Atome",
+  benjamin: "Benjamin",
+  cadet: "Cadet",
+  juvenile: "Juvénile",
+  "programme-unique": "Programme",
+};
+
+const libellesGenre: Record<Genre, string> = {
+  feminin: "Féminin",
+  masculin: "Masculin",
+  mixte: "Mixte",
+};
+
+function equipe(sportSlug: SportSlug, categorie: Categorie, genre: Genre): Equipe {
+  const slug =
+    categorie === "programme-unique"
+      ? "programme"
+      : `${categorie}-${genre === "feminin" ? "feminin" : genre === "masculin" ? "masculin" : "mixte"}`;
+  const nom =
+    categorie === "programme-unique"
+      ? "Programme mixte"
+      : `${libellesCategorie[categorie]} ${libellesGenre[genre]}`;
+  return { slug, sportSlug, categorie, genre, nom };
 }
 
 /**
- * Grille des sports affichée sur l'accueil et la page Équipes.
- * La liste officielle des équipes (noms, divisions, effectifs) n'est pas
- * encore fournie : ces catégories reflètent uniquement les familles de
- * sports demandées, pas une liste d'équipes inventée.
+ * Les 38 équipes officielles des Alérions, réparties sur onze sports.
+ * Aucune division RSEQ n'est inventée : le nom de la catégorie suffit,
+ * conformément à la pratique du CFDL.
  */
-export const categoriesSports: CategorieSport[] = [
-  {
-    sport: "basketball",
-    nom: "Basketball",
-    description: "Contenu à confirmer",
-  },
-  {
-    sport: "volleyball",
-    nom: "Volleyball",
-    description: "Contenu à confirmer",
-  },
-  {
-    sport: "athletisme",
-    nom: "Athlétisme",
-    description: "Contenu à confirmer",
-  },
-  {
-    sport: "autres",
-    nom: "Autres sports",
-    description: "Contenu à confirmer",
-  },
+export const equipes: Equipe[] = [
+  // Basketball — 8 équipes
+  equipe("basketball", "atome", "feminin"),
+  equipe("basketball", "atome", "masculin"),
+  equipe("basketball", "benjamin", "feminin"),
+  equipe("basketball", "benjamin", "masculin"),
+  equipe("basketball", "cadet", "feminin"),
+  equipe("basketball", "cadet", "masculin"),
+  equipe("basketball", "juvenile", "feminin"),
+  equipe("basketball", "juvenile", "masculin"),
+
+  // Volleyball — 6 équipes
+  equipe("volleyball", "benjamin", "feminin"),
+  equipe("volleyball", "benjamin", "masculin"),
+  equipe("volleyball", "cadet", "feminin"),
+  equipe("volleyball", "cadet", "masculin"),
+  equipe("volleyball", "juvenile", "feminin"),
+  equipe("volleyball", "juvenile", "masculin"),
+
+  // Football — 3 équipes
+  equipe("football", "atome", "masculin"),
+  equipe("football", "benjamin", "masculin"),
+  equipe("football", "juvenile", "masculin"),
+
+  // Flag-football — 6 équipes
+  equipe("flag-football", "benjamin", "feminin"),
+  equipe("flag-football", "benjamin", "masculin"),
+  equipe("flag-football", "cadet", "feminin"),
+  equipe("flag-football", "cadet", "masculin"),
+  equipe("flag-football", "juvenile", "feminin"),
+  equipe("flag-football", "juvenile", "masculin"),
+
+  // Volleyball de plage — 6 équipes
+  equipe("volleyball-plage", "benjamin", "feminin"),
+  equipe("volleyball-plage", "benjamin", "masculin"),
+  equipe("volleyball-plage", "cadet", "feminin"),
+  equipe("volleyball-plage", "cadet", "masculin"),
+  equipe("volleyball-plage", "juvenile", "feminin"),
+  equipe("volleyball-plage", "juvenile", "masculin"),
+
+  // Soccer — 2 équipes
+  equipe("soccer", "cadet", "masculin"),
+  equipe("soccer", "juvenile", "masculin"),
+
+  // Ultimate — 3 équipes mixtes
+  equipe("ultimate", "benjamin", "mixte"),
+  equipe("ultimate", "cadet", "mixte"),
+  equipe("ultimate", "juvenile", "mixte"),
+
+  // Programmes mixtes uniques
+  equipe("cross-country", "programme-unique", "mixte"),
+  equipe("athletisme", "programme-unique", "mixte"),
+  equipe("natation", "programme-unique", "mixte"),
+  equipe("echecs", "programme-unique", "mixte"),
 ];
 
-/**
- * Une seule équipe modèle, explicitement marquée « exemple », pour valider
- * la structure du gabarit /equipes/:slug avant que la liste officielle des
- * équipes ne soit fournie. Ne pas dupliquer pour créer de fausses équipes.
- */
-export const equipeExemple: Equipe = {
-  slug: "equipe-exemple",
-  nom: "Équipe exemple",
-  sport: "basketball",
-  niveau: "secondaire-3-4-5",
-  genre: "mixte",
-  photoPrincipale: "DSC_1119.jpg",
-  statut: "exemple",
-};
+export function equipesParSport(sportSlug: SportSlug): Equipe[] {
+  return equipes.filter((e) => e.sportSlug === sportSlug);
+}
 
-export const equipes: Equipe[] = [equipeExemple];
-
-export const niveaux: { valeur: string; label: string }[] = [
-  { valeur: "secondaire-1-2", label: "Secondaire 1-2" },
-  { valeur: "secondaire-3-4-5", label: "Secondaire 3-4-5" },
-];
-
-/**
- * Composition asymétrique de la page Équipes : une grande image (programme
- * principal) + quatre blocs secondaires. Aucune photo par sport n'existe
- * encore : les photos de basketball servent de référence visuelle
- * temporaire pour les programmes sans photo (marquées `photoDeReference`
- * pour un remplacement futur), sauf le dernier bloc qui pointe vers la
- * vraie photo de l'équipe modèle.
- */
-export const composantsEquipesAccueil = {
-  grande: {
-    sport: "basketball" as Sport,
-    nom: "Basketball",
-    photo: "DSC_1094.jpg",
-    photoDeReference: false,
-  },
-  secondaires: [
-    { sport: "volleyball" as Sport, nom: "Volleyball", photo: "DSC_1070.jpg", photoDeReference: true },
-    { sport: "athletisme" as Sport, nom: "Athlétisme", photo: "DSC_1089.jpg", photoDeReference: true },
-    { sport: "autres" as Sport, nom: "Autres sports", photo: "DSC_0967.jpg", photoDeReference: true },
-  ],
-};
+export function trouverEquipe(sportSlug: string, equipeSlug: string): Equipe | undefined {
+  return equipes.find((e) => e.sportSlug === sportSlug && e.slug === equipeSlug);
+}

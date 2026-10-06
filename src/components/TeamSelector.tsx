@@ -1,32 +1,33 @@
 import { useId } from "react";
-import { categoriesSports, equipes, niveaux } from "../data/teams";
+import { sports } from "../data/sports";
+import { equipesParSport, trouverEquipe } from "../data/teams";
 import { useTeamSelection } from "../hooks/useTeamSelection";
+import type { SportSlug } from "../types";
 import "./TeamSelector.css";
 
 /**
- * Sélecteur « Mon équipe » : Sport / Niveau / Équipe.
+ * Sélecteur « Mon équipe » : Sport / Équipe.
  * Le choix est mémorisé dans le navigateur (localStorage, voir
  * useTeamSelection) — aucune donnée n'est envoyée à un serveur.
  */
 export default function TeamSelector() {
   const { selection, definirSelection } = useTeamSelection();
   const idSport = useId();
-  const idNiveau = useId();
   const idEquipe = useId();
 
-  const equipesFiltrees = equipes.filter(
-    (equipe) =>
-      (!selection.sport || equipe.sport === selection.sport) &&
-      (!selection.niveau || equipe.niveau === selection.niveau),
-  );
+  const equipesFiltrees = selection.sport
+    ? equipesParSport(selection.sport as SportSlug)
+    : [];
 
-  const equipeChoisie = equipes.find((equipe) => equipe.slug === selection.equipe);
+  const equipeChoisie = selection.sport
+    ? trouverEquipe(selection.sport, selection.equipe)
+    : undefined;
 
   return (
     <div className="al-selector">
       <p>
-        Choisissez votre sport, votre niveau et votre équipe pour un accès rapide sur
-        toutes les pages du site.
+        Choisissez votre sport et votre équipe pour un accès rapide sur toutes les
+        pages du site.
       </p>
       <div className="al-selector__grid">
         <div className="al-selector__field">
@@ -39,27 +40,9 @@ export default function TeamSelector() {
             }
           >
             <option value="">Choisir un sport</option>
-            {categoriesSports.map((categorie) => (
-              <option key={categorie.sport} value={categorie.sport}>
-                {categorie.nom}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="al-selector__field">
-          <label htmlFor={idNiveau}>Niveau</label>
-          <select
-            id={idNiveau}
-            value={selection.niveau}
-            onChange={(evenement) =>
-              definirSelection({ niveau: evenement.target.value, equipe: "" })
-            }
-          >
-            <option value="">Choisir un niveau</option>
-            {niveaux.map((niveau) => (
-              <option key={niveau.valeur} value={niveau.valeur}>
-                {niveau.label}
+            {sports.map((sport) => (
+              <option key={sport.slug} value={sport.slug}>
+                {sport.nom}
               </option>
             ))}
           </select>
@@ -70,11 +53,10 @@ export default function TeamSelector() {
           <select
             id={idEquipe}
             value={selection.equipe}
+            disabled={!selection.sport}
             onChange={(evenement) => definirSelection({ equipe: evenement.target.value })}
           >
-            <option value="">
-              {equipesFiltrees.length ? "Choisir une équipe" : "Liste à confirmer"}
-            </option>
+            <option value="">Choisir une équipe</option>
             {equipesFiltrees.map((equipe) => (
               <option key={equipe.slug} value={equipe.slug}>
                 {equipe.nom}

@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="al-footer">
-      <div className="container al-footer__top">
+      <div className="al-footer__top">
         <div className="al-footer__brand">
           <strong>Les Alérions</strong>
           <p>Collège François-de-Laval — l'identité sportive du Collège.</p>
@@ -52,7 +52,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container al-footer__bottom">
+      <div className="al-footer__bottom">
         <span>© {anneeCourante} Collège François-de-Laval — Les Alérions</span>
         <Link to="/contact">Confidentialité — page à confirmer</Link>
       </div>
