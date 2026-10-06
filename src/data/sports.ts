@@ -43,3 +43,16 @@ export const sports: Sport[] = [
 export function trouverSport(slug: string): Sport | undefined {
   return sports.find((s) => s.slug === slug);
 }
+
+/**
+ * Résout le slug local d'un sport à partir du texte brut du Sheet
+ * (ex. EquipeRoster.sport = « Basketball ») — nécessaire partout où un
+ * lien construit depuis /api/roster doit pointer vers une route du site
+ * (ex. /equipes/:sport/:equipe/chat), qui attend le slug, jamais le nom
+ * affiché. Retombe sur le texte normalisé si aucun sport local ne
+ * correspond, plutôt que de construire un lien manifestement cassé.
+ */
+export function sportSlugDepuisNomBrut(nomBrut: string): string {
+  const trouve = sports.find((s) => s.nom.toLowerCase() === nomBrut.trim().toLowerCase());
+  return trouve?.slug ?? nomBrut.trim().toLowerCase();
+}

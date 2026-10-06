@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { espacesAutorises, equipesPourRole } from "../lib/permissions";
 import { useRoster } from "../hooks/useRoster";
 import { prochainMatch, evenements } from "../data/events";
+import { sportSlugDepuisNomBrut } from "../data/sports";
 import DashboardShell from "../components/dashboard/DashboardShell";
 import EspaceSelector from "../components/dashboard/EspaceSelector";
 import AlerionsChatBloc from "../components/dashboard/AlerionsChatBloc";
@@ -65,7 +66,7 @@ export default function JoueurDashboardPage() {
     );
   }
 
-  const lienChat = equipe ? `/equipes/${equipe.sport}/${equipe.slugSite}/chat` : "#";
+  const lienChat = equipe ? `/equipes/${sportSlugDepuisNomBrut(equipe.sport)}/${equipe.slugSite}/chat` : "#";
 
   return (
     <DashboardShell

@@ -5,6 +5,7 @@ import { espacesAutorises, equipesPourRole } from "../lib/permissions";
 import { useRoster } from "../hooks/useRoster";
 import { useTeamChat } from "../hooks/useTeamChat";
 import { evenements } from "../data/events";
+import { sportSlugDepuisNomBrut } from "../data/sports";
 import DashboardShell from "../components/dashboard/DashboardShell";
 import EspaceSelector from "../components/dashboard/EspaceSelector";
 import EquipeSelector from "../components/dashboard/EquipeSelector";
@@ -57,7 +58,7 @@ export default function EntraineurDashboardPage() {
     );
   }
 
-  const lienChat = equipe ? `/equipes/${equipe.sport}/${equipe.slugSite}/chat` : "#";
+  const lienChat = equipe ? `/equipes/${sportSlugDepuisNomBrut(equipe.sport)}/${equipe.slugSite}/chat` : "#";
   const evenementsEquipe = equipe ? evenements.filter((e) => e.sportSlug === equipe.sport) : [];
   const prochaineSeance = evenementsEquipe.find((e) => e.date >= new Date().toISOString().slice(0, 10));
 
