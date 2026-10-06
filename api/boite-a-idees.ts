@@ -1,4 +1,4 @@
-import type { SoumissionIdee } from "../src/types.js";
+import type { SoumissionIdee } from "../src/types";
 
 /**
  * Fonction serverless Vercel — reçoit une soumission de la Boîte à idées

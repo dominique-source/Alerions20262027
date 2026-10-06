@@ -8,14 +8,15 @@ depuis le site.
 
 > **État de la vérification en Preview (dernière passe) :** la configuration
 > Google Cloud (compte de service, partage Lecteur, API activée) a été faite
-> manuellement. Un bug de résolution de module (voir §13) empêchait la
-> fonction de démarrer ; il est corrigé et déployé. Au dernier test réel en
-> Preview, `/api/roster` répond `503 service_non_configure` sur les deux
-> projets Vercel liés à ce dépôt — les trois variables `GOOGLE_SHEET_ID` /
-> `GOOGLE_SERVICE_ACCOUNT_EMAIL` / `GOOGLE_PRIVATE_KEY` ne sont donc pas
-> encore visibles par le runtime Preview pour la branche de cette PR. Voir
-> §13 pour le diagnostic précis et la checklist de vérification côté
-> tableau de bord Vercel (aucun secret n'est demandé).
+> manuellement, et les trois variables sont maintenant actives en Preview et
+> Production sur `alerions20262027-1j9t`. Un bug de résolution de module
+> (voir §13) empêchait la fonction de démarrer ; il est corrigé et déployé.
+> Au dernier test réel, `/api/roster` répond `502 google_auth_echouee` — les
+> journaux serveur montrent `error:1E08010C:DECODER routines::unsupported`,
+> l'erreur OpenSSL typique d'une clé privée PEM mal formée (valeur tronquée,
+> guillemets collés au copier-coller, ou retours à la ligne corrompus). Voir
+> §13 pour le diagnostic précis et la procédure de correction (aucun secret
+> n'est demandé).
 
 ## 1. Ce que cette étape livre
 
@@ -362,3 +363,64 @@ Une fois corrigé, aucune nouvelle action de code n'est nécessaire — un
 nouveau push (ou un simple redeploy depuis le tableau de bord Vercel)
 suffit à faire lire les variables à jour, puisque les fonctions
 serverless les relisent à chaque nouveau build.
+
+### Étape suivante : les trois variables sont lues, mais la clé privée est mal formée
+
+Une fois les trois variables activées en Preview (confirmé : `/api/roster`
+ne renvoie plus `503 service_non_configure`), le test réel suivant a
+renvoyé :
+
+```json
+{"ok": false, "code": "google_auth_echouee"}
+```
+
+Pour obtenir le détail (jamais la clé elle-même), `api/roster.ts`
+journalise désormais le message d'erreur complet côté serveur
+uniquement (`console.error`, jamais renvoyé au client). Le journal
+Vercel a montré :
+
+```
+error:1E08010C:DECODER routines::unsupported
+```
+
+C'est l'erreur OpenSSL typique d'une valeur `GOOGLE_PRIVATE_KEY` **mal
+formée** — le décodeur PEM ne reconnaît pas le format reçu. Causes les
+plus fréquentes, par ordre de probabilité :
+
+1. **Guillemets collés au copier-coller.** Si la valeur a été copiée
+   depuis le fichier JSON du compte de service en incluant les
+   guillemets `"` qui l'entourent dans le JSON, la variable commence et
+   finit par un caractère `"` littéral — le décodeur PEM échoue
+   immédiatement puisque la première ligne n'est plus exactement
+   `-----BEGIN PRIVATE KEY-----`.
+2. **Valeur tronquée.** Un copier-coller interrompu (clic en dehors du
+   champ, limite de caractères d'un presse-papier) qui ne conserve pas
+   la ligne `-----END PRIVATE KEY-----` finale.
+3. **Retours à la ligne corrompus** différemment de ce que
+   `normaliserCléPrivée` (api/_lib/sheets.ts) sait gérer — elle gère les
+   deux formats courants (vrais retours à la ligne, ou séquence littérale
+   à deux caractères `\n`), mais pas, par exemple, des retours à la ligne
+   remplacés par des espaces.
+
+**Procédure de correction** (aucun secret à coller ici) :
+
+1. Rouvrir le fichier JSON du compte de service téléchargé depuis Google
+   Cloud (ou en régénérer un nouveau si l'original n'est plus
+   disponible : IAM & Admin → Service Accounts → `alerions-site` → Keys →
+   Add Key → Create new key → JSON).
+2. Copier **uniquement la valeur** du champ `"private_key"` — tout ce
+   qui est entre les guillemets, guillemets exclus — qui doit commencer
+   par `-----BEGIN PRIVATE KEY-----` et finir par
+   `-----END PRIVATE KEY-----\n` (ou l'équivalent avec de vrais retours
+   à la ligne).
+3. Coller cette valeur telle quelle dans Vercel (Project →
+   `alerions20262027-1j9t` → Settings → Environment Variables →
+   `GOOGLE_PRIVATE_KEY` → Edit). Le champ de Vercel accepte un collage
+   multi-lignes avec de vrais retours à la ligne — pas besoin de les
+   convertir manuellement en `\n`.
+4. Enregistrer, puis redéployer ce Preview (un nouveau push, ou un
+   redeploy manuel depuis le tableau de bord Vercel).
+
+Dès que ce sera fait, dites-le et le test réel sera relancé
+immédiatement — plus aucune action de code n'est nécessaire à ce stade,
+seule la valeur de cette variable est en cause.
