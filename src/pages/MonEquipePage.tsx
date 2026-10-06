@@ -7,6 +7,7 @@ import { seancesDeclarees } from "../lib/defis";
 import { marquerDecouverte } from "../lib/decouvertes";
 import { trouverEquipe } from "../data/teams";
 import { CATEGORIES, CATEGORIE_SLUGS, GENRES } from "../data/categoriesBasketball";
+import RosterSection from "../components/RosterSection";
 import "./MonEquipePage.css";
 
 function formaterDate(date: string): string {
@@ -149,6 +150,20 @@ export default function MonEquipePage() {
           </div>
         )}
       </div>
+
+      {equipeSelectionnee && (
+        <div className="al-equipe__effectif">
+          <RosterSection
+            sport="basketball"
+            equipeSlug={equipeSelectionnee.slug}
+            equipeNomAffiche={equipeSelectionnee.nom}
+            construireLienProfil={(idMembre) =>
+              `/equipes/basketball/${equipeSelectionnee.slug}/membres/${idMembre}`
+            }
+            titre="Effectif officiel — saison 2026-2027"
+          />
+        </div>
+      )}
     </div>
   );
 }

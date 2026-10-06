@@ -1,0 +1,117 @@
+/* Carte joueur/entraîneur — direction V2 (maquettes 1536×1024) : panneau
+   quasi noir, accent rouge pour le numéro, or pour les détails, Barlow
+   Condensed pour le nom. Réutilise les jetons --v-* existants. */
+
+.al-carte-joueur {
+  display: flex;
+  flex-direction: column;
+  background: var(--v-panel);
+  border: 1px solid var(--v-line);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: border-color var(--v-dur-base) var(--v-ease), transform var(--v-dur-base) var(--v-ease);
+}
+
+.al-carte-joueur:hover,
+.al-carte-joueur:focus-visible {
+  border-color: var(--v-gold);
+  transform: translateY(-2px);
+}
+
+.al-carte-joueur:focus-visible {
+  outline: 2px solid var(--v-focus);
+  outline-offset: 2px;
+}
+
+.al-carte-joueur__portrait {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--v-panel-2);
+  overflow: hidden;
+}
+
+.al-carte-joueur__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.al-carte-joueur__avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: 0.04em;
+  color: var(--v-text-muted);
+  background: linear-gradient(160deg, var(--v-panel-2), var(--v-panel-3));
+}
+
+.al-carte-joueur__numero {
+  position: absolute;
+  top: var(--s-3);
+  left: var(--s-3);
+  min-width: 2em;
+  padding: 0.15em 0.4em;
+  text-align: center;
+  background: var(--v-red);
+  color: var(--v-white);
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.al-carte-joueur__capitaine {
+  position: absolute;
+  top: var(--s-3);
+  right: var(--s-3);
+  padding: 0.25em 0.6em;
+  background: var(--v-gold);
+  color: var(--v-bg);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.al-carte-joueur__corps {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--s-3) var(--s-4) var(--s-4);
+}
+
+.al-carte-joueur__nom {
+  font-family: var(--v-font-title);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--v-white);
+  line-height: 1.1;
+}
+
+.al-carte-joueur__meta {
+  font-size: 0.8125rem;
+  color: var(--v-text-muted);
+}
+
+.al-carte-joueur__saison {
+  font-size: 0.75rem;
+  color: var(--v-text-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 600px) {
+  .al-carte-joueur__nom {
+    font-size: 1.25rem;
+  }
+}
