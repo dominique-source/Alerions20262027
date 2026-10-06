@@ -11,6 +11,8 @@ import CollectionPage from "./pages/CollectionPage";
 import EquipesPage from "./pages/EquipesPage";
 import SportPage from "./pages/SportPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
+import ChatApercuPage from "./pages/ChatApercuPage";
+import ChatPage from "./pages/ChatPage";
 import ResultatsPage from "./pages/ResultatsPage";
 import ActualitesPage from "./pages/ActualitesPage";
 import CulturePage from "./pages/CulturePage";
@@ -25,6 +27,14 @@ import NotFoundPage from "./pages/NotFoundPage";
 export default function App() {
   return (
     <Routes>
+      {/*
+        Hors <Layout> : la maquette desktop contient déjà une navigation
+        dessinée (logo, nav principale, sélecteur d'équipe) — superposer le
+        vrai Header créerait une deuxième navigation identique au-dessus.
+        Voir le commentaire en tête de ChatApercuPage.tsx.
+      */}
+      <Route path="equipes/:sport/:equipe/chat" element={<ChatApercuPage />} />
+
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="calendrier" element={<CalendrierPage />} />
@@ -32,6 +42,7 @@ export default function App() {
         <Route path="mon-equipe" element={<MonEquipePage />} />
         <Route path="joueurs/:numero" element={<JoueurPage />} />
         <Route path="mur" element={<MurPage />} />
+        <Route path="chat" element={<ChatPage />} />
         <Route path="defis" element={<DefisPage />} />
         <Route path="collection" element={<CollectionPage />} />
         <Route path="equipes" element={<EquipesPage />} />

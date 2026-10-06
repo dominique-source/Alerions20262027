@@ -5,9 +5,9 @@ import { prochainMatch } from "../data/events";
 import { defiSemaine } from "../data/defis";
 import { seancesDeclarees } from "../lib/defis";
 import { marquerDecouverte } from "../lib/decouvertes";
+import { trouverEquipe } from "../data/teams";
+import { CATEGORIES, CATEGORIE_SLUGS, GENRES } from "../data/categoriesBasketball";
 import "./MonEquipePage.css";
-
-const CATEGORIES = ["Atome", "Benjamin", "Cadet", "Juvénile"];
 
 function formaterDate(date: string): string {
   return new Intl.DateTimeFormat("fr-CA", { day: "numeric", month: "long" }).format(
@@ -23,6 +23,7 @@ function formaterDate(date: string): string {
  */
 export default function MonEquipePage() {
   const [categorie, setCategorie] = useState("Cadet");
+  const [genre, setGenre] = useState("masculin");
   const match = prochainMatch();
   const progression = seancesDeclarees(defiSemaine.id);
 
@@ -30,21 +31,48 @@ export default function MonEquipePage() {
     marquerDecouverte("mon-equipe");
   }, []);
 
-  const aDesJoueurs = categorie === "Cadet";
+  const aDesJoueurs = categorie === "Cadet" && genre === "masculin";
+
+  // Résout une équipe précise (sport + catégorie + genre) pour le bouton
+  // Chat : la catégorie seule ne suffit pas à cibler une seule équipe
+  // réelle (ex. « Cadet » recouvre Cadet Masculin ET Cadet Féminin), donc
+  // on ne construit la destination qu'une fois les trois critères connus.
+  const equipeSelectionnee = trouverEquipe("basketball", `${CATEGORIE_SLUGS[categorie]}-${genre}`);
 
   return (
     <div className="al-equipe">
       <div className="al-equipe__selecteur-rangee">
-        <label className="al-equipe__selecteur">
-          <span className="sr-only">Choisir une catégorie</span>
-          <select value={categorie} onChange={(e) => setCategorie(e.target.value)}>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="al-equipe__selecteurs">
+          <label className="al-equipe__selecteur">
+            <span className="sr-only">Choisir une catégorie</span>
+            <select value={categorie} onChange={(e) => setCategorie(e.target.value)}>
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="al-equipe__selecteur">
+            <span className="sr-only">Choisir un genre</span>
+            <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+              {GENRES.map((g) => (
+                <option key={g.slug} value={g.slug}>
+                  {g.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        {equipeSelectionnee && (
+          <Link
+            to={`/equipes/basketball/${equipeSelectionnee.slug}/chat`}
+            className="al-btn-v2 al-btn-v2--red al-btn-v2--sm"
+          >
+            💬 Chat de l'équipe <span aria-hidden="true">→</span>
+          </Link>
+        )}
       </div>
 
       <div className="al-equipe__top">
@@ -71,7 +99,9 @@ export default function MonEquipePage() {
             ♛
           </span>
           <div className="al-equipe__nom">{categorie}</div>
-          <div className="al-equipe__saison">Saison 2026-2027</div>
+          <div className="al-equipe__saison">
+            {GENRES.find((g) => g.slug === genre)?.label} · Saison 2026-2027
+          </div>
         </div>
 
         <div className="al-equipe__carte-info">
@@ -114,8 +144,8 @@ export default function MonEquipePage() {
           </div>
         ) : (
           <div className="al-equipe__vide">
-            Aucun portrait de joueur n'est encore disponible pour l'équipe {categorie}. Les cartes
-            apparaîtront ici dès qu'elles seront fournies.
+            Aucun portrait de joueur n'est encore disponible pour {equipeSelectionnee?.nom ?? `${categorie} ${genre === "masculin" ? "Masculin" : "Féminin"}`}.
+            Les cartes apparaîtront ici dès qu'elles seront fournies.
           </div>
         )}
       </div>
