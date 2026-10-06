@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import {
-  onAuthStateChanged,
+  onIdTokenChanged,
   sendPasswordResetEmail,
   sendEmailVerification,
   signInWithEmailAndPassword,
@@ -86,6 +86,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [compte, setCompte] = useState<CompteReponse | null>(null);
   const [codeErreur, setCodeErreur] = useState<CodeErreurAuth | null>(null);
   const demonteRef = useRef(false);
+  const statutRef = useRef<StatutAuth>("initialisation");
+  useEffect(() => {
+    statutRef.current = statut;
+  }, [statut]);
 
   const resoudrePourUtilisateur = useCallback(async (u: User, forcerNouveauJeton = false) => {
     if (!u.emailVerified) {
@@ -96,7 +100,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    setStatut("chargement_compte");
+    // Audit : écouter onIdTokenChanged (plutôt que onAuthStateChanged, voir
+    // plus bas) revalide le compte à chaque renouvellement de jeton, pas
+    // seulement à la connexion — ce qui resynchronise régulièrement le
+    // miroir chatAccess (firestore.rules borne sa fraîcheur à 2h). Mais un
+    // compte déjà connecté ne doit pas voir l'interface clignoter en
+    // "chargement_compte" à chaque renouvellement silencieux (~chaque
+    // heure) : on ne bascule cet état visible que pour un tout premier
+    // chargement (ou après une déconnexion/erreur).
+    if (statutRef.current !== "connecte") {
+      setStatut("chargement_compte");
+    }
     const resultat = await chargerCompte(u, forcerNouveauJeton);
     if (demonteRef.current) return;
 
@@ -110,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (resultat.code === "jeton_revoque" || resultat.code === "jeton_invalide") {
       const auth = await obtenirAuthClient();
       await signOut(auth);
-      return; // onAuthStateChanged gérera la suite (statut "deconnecte")
+      return; // onIdTokenChanged gérera la suite (statut "deconnecte")
     }
 
     if (resultat.code === "courriel_non_verifie") {
@@ -139,7 +153,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     obtenirAuthClient()
       .then((auth) => {
         if (demonteRef.current) return;
-        detacher = onAuthStateChanged(auth, (u) => {
+        detacher = onIdTokenChanged(auth, (u) => {
           setUtilisateur(u);
           if (!u) {
             setStatut("deconnecte");
@@ -166,7 +180,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const auth = await obtenirAuthClient();
     try {
       await signInWithEmailAndPassword(auth, courriel, motDePasse);
-      // onAuthStateChanged prend le relais (statut mis à jour via l'effet ci-dessus).
+      // onIdTokenChanged prend le relais (statut mis à jour via l'effet ci-dessus).
     } catch {
       // Message volontairement générique : ne jamais confirmer si le
       // courriel existe ou si c'est le mot de passe qui est erroné.

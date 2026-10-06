@@ -40,12 +40,37 @@ rules_version = '2';
 //     accès au chat de cette équipe.
 // Aucune règle globale « tout utilisateur connecté accède à tout » :
 // chaque accès est vérifié équipe par équipe via chatAccess.
+//
+// Audit (corrections) :
+//   - Les lectures privées du chat (messages, readState) exigent en plus
+//     `estVerifie()` : un jeton Firebase valide ne suffit pas, le
+//     courriel doit être confirmé — jusqu'ici seuls les endpoints
+//     serveur (api/me.ts via verifierCompte.ts) l'exigeaient ; la lecture
+//     Firestore DIRECTE (temps réel) ne le vérifiait pas du tout.
+//   - `aAccesChatEquipe` borne aussi la fraîcheur du miroir chatAccess
+//     (`syncedAt`, un Timestamp Firestore) à 2 heures : un rattachement
+//     désactivé ou supprimé directement dans Firestore (hors d'un appel
+//     serveur vérifié) ne doit jamais rester actif indéfiniment ici
+//     simplement parce que personne n'a redéclenché une synchronisation.
+//     Deux heures couvre largement le cycle de rafraîchissement normal
+//     du jeton côté client (AuthContext écoute onIdTokenChanged, qui
+//     redéclenche /api/me — donc une resynchronisation — à chaque
+//     renouvellement, environ chaque heure) sans faire expirer une
+//     session active légitime.
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
     function estConnecte() {
       return request.auth != null;
+    }
+
+    // Jeton valide ET courriel confirmé — distinct de estConnecte() :
+    // les rattachements/comptes (accounts, memberships) restent
+    // accessibles dès la connexion (comme avant), seules les lectures
+    // privées du CHAT (messages, readState) exigent ce niveau en plus.
+    function estVerifie() {
+      return estConnecte() && request.auth.token.email_verified == true;
     }
 
     function compteActif(uid) {
@@ -63,9 +88,12 @@ service cloud.firestore {
     }
 
     function aAccesChatEquipe(teamId) {
-      return estConnecte() && compteActif(request.auth.uid) &&
+      let acces = get(/databases/$(database)/documents/chatAccess/$(idAccesChat(teamId)));
+      return estVerifie() && compteActif(request.auth.uid) &&
              exists(/databases/$(database)/documents/chatAccess/$(idAccesChat(teamId))) &&
-             get(/databases/$(database)/documents/chatAccess/$(idAccesChat(teamId))).data.enabled == true;
+             acces.data.enabled == true &&
+             acces.data.syncedAt is timestamp &&
+             request.time < acces.data.syncedAt + duration.value(2, 'h');
     }
 
     match /accounts/{uid} {
@@ -92,13 +120,13 @@ service cloud.firestore {
 
     match /teamChats/{teamId} {
       match /messages/{messageId} {
-        allow read: if aAccesChatEquipe(teamId) || estAdmin();
+        allow read: if estVerifie() && (aAccesChatEquipe(teamId) || estAdmin());
         allow write: if false;
       }
 
       match /readState/{uid} {
-        allow read: if estConnecte() && request.auth.uid == uid;
-        allow write: if estConnecte() && request.auth.uid == uid &&
+        allow read: if estVerifie() && request.auth.uid == uid;
+        allow write: if estVerifie() && request.auth.uid == uid &&
                         (aAccesChatEquipe(teamId) || estAdmin());
       }
     }
