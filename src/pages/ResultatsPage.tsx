@@ -14,7 +14,7 @@ export default function ResultatsPage() {
         </div>
       </header>
 
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container">
           {resultats.length === 0 ? (
             <EmptyState

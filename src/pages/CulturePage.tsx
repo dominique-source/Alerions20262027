@@ -13,7 +13,7 @@ const photosCulture = photos.filter((p) => p.type === "reportage").slice(0, 11);
 
 /**
  * Page Culture Alérions — traitement émotionnel et historique.
- * Seul endroit du site où l'ivoire réapparaît, comme référence historique.
+ * Même direction noire, rouge et or que les autres pages.
  */
 export default function CulturePage() {
   return (
@@ -25,7 +25,7 @@ export default function CulturePage() {
         </h1>
       </section>
 
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container al-culture-main">
           <span className="al-culture-main__num" aria-hidden="true">
             XVI
@@ -43,7 +43,7 @@ export default function CulturePage() {
         </div>
       </section>
 
-      <section className="al-section al-section--ivoire">
+      <section className="al-section al-section--raised">
         <div className="container">
           <SectionTitle eyebrow="Repères" title="Une ligne historique" />
           <div className="al-culture-timeline">
@@ -57,7 +57,7 @@ export default function CulturePage() {
         </div>
       </section>
 
-      <section className="al-section al-section--ice">
+      <section className="al-section al-section--soft">
         <div className="container">
           <SectionTitle eyebrow="En images" title="La vie Alérions" />
           <PhotoGrid photos={photosCulture} />

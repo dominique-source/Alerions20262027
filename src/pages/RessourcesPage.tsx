@@ -13,7 +13,7 @@ export default function RessourcesPage() {
         </div>
       </header>
 
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container">
           <div className="al-doc-list">
             {documents.map((document) => (

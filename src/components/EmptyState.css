@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--c-bleu);
+  color: var(--v-gold);
   font-family: var(--font-display);
   font-weight: 700;
 }

@@ -22,8 +22,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--alerions-blue);
-  border: 1px solid var(--alerions-blue);
+  color: var(--v-white);
+  border: 1px solid var(--v-panel);
   padding: var(--s-1) var(--s-2);
   display: inline-flex;
   width: fit-content;
@@ -34,7 +34,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--alerions-red);
+  color: var(--v-red);
 }
 
 .al-doc-row__titre {
@@ -73,7 +73,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--alerions-red);
+  color: var(--v-red);
   min-height: var(--tap-min);
   display: inline-flex;
   align-items: center;

@@ -111,7 +111,7 @@ export default function EntraineurDashboardPage() {
               <div className="al-edash__bloc-entete">
                 <span className="al-v2-eyebrow">Mon effectif</span>
                 {equipe && (
-                  <Link to={`/equipes/${equipe.sport}/${equipe.slugSite}`} className="al-edash__voir-tout">
+                  <Link to={`/equipes/${sportSlugDepuisNomBrut(equipe.sport)}/${equipe.slugSite}`} className="al-edash__voir-tout">
                     Gérer les joueurs <span aria-hidden="true">→</span>
                   </Link>
                 )}
@@ -129,7 +129,7 @@ export default function EntraineurDashboardPage() {
                         key={j.idMembre}
                         membre={j}
                         equipeNom={equipe.nomEquipe}
-                        lienProfil={`/equipes/${equipe.sport}/${equipe.slugSite}/membres/${j.idMembre}`}
+                        lienProfil={`/equipes/${sportSlugDepuisNomBrut(equipe.sport)}/${equipe.slugSite}/membres/${j.idMembre}`}
                       />
                     ) : null,
                   )}
@@ -137,7 +137,7 @@ export default function EntraineurDashboardPage() {
               )}
 
               {joueurs.length > 6 && equipe && (
-                <Link to={`/equipes/${equipe.sport}/${equipe.slugSite}`} className="al-edash__voir-plus">
+                <Link to={`/equipes/${sportSlugDepuisNomBrut(equipe.sport)}/${equipe.slugSite}`} className="al-edash__voir-plus">
                   Voir les {joueurs.length} joueurs <span aria-hidden="true">→</span>
                 </Link>
               )}

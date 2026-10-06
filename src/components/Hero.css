@@ -5,7 +5,7 @@
   align-items: flex-end;
   color: var(--color-text-inverse);
   overflow: hidden;
-  background: var(--alerions-deep);
+  background: var(--v-bg);
 }
 
 .al-hero__media {
@@ -32,11 +32,11 @@
   inset: 0;
   background: linear-gradient(
       180deg,
-      rgba(3, 21, 34, 0.45) 0%,
-      rgba(3, 21, 34, 0.25) 35%,
-      rgba(3, 21, 34, 0.92) 100%
+      rgba(8, 8, 8, 0.45) 0%,
+      rgba(8, 8, 8, 0.25) 35%,
+      rgba(8, 8, 8, 0.92) 100%
     ),
-    linear-gradient(90deg, rgba(3, 21, 34, 0.86) 0%, rgba(3, 21, 34, 0.1) 62%);
+    linear-gradient(90deg, rgba(8, 8, 8, 0.86) 0%, rgba(8, 8, 8, 0.1) 62%);
 }
 
 .al-hero__content {
@@ -51,7 +51,7 @@
   font-size: var(--fs-meta);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
   font-weight: 700;
   margin-bottom: var(--s-4);
 }

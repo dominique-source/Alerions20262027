@@ -13,10 +13,6 @@ html {
 
 body {
   margin: 0;
-  /* Fond quasi noir par défaut (direction V2) : le header/pied de page sont
-     désormais sombres sur toutes les pages, et la majorité des pages
-     principales le sont aussi. Les pages encore en ancienne direction
-     posent leur propre fond clair sur chaque section. */
   background: var(--v-bg);
   color: var(--color-text);
   font-family: var(--font-body);
@@ -106,8 +102,8 @@ textarea {
   top: -100%;
   left: var(--s-4);
   z-index: 999;
-  background: var(--c-or);
-  color: var(--c-bleu);
+  background: var(--v-gold);
+  color: var(--v-bg);
   padding: var(--s-3) var(--s-5);
   font-weight: 600;
   border-radius: var(--radius-sm);
@@ -148,14 +144,14 @@ textarea {
 }
 
 .al-btn--primary {
-  background: var(--c-or);
-  color: var(--c-bleu);
-  border-color: var(--c-or);
+  background: var(--v-gold);
+  color: var(--v-bg);
+  border-color: var(--v-gold);
 }
 
 .al-btn--primary:hover {
-  background: var(--c-or-clair);
-  border-color: var(--c-or-clair);
+  background: var(--v-gold-soft);
+  border-color: var(--v-gold-soft);
 }
 
 .al-btn--outline {
@@ -165,18 +161,18 @@ textarea {
 }
 
 .al-btn--outline:hover {
-  border-color: var(--c-or);
-  color: var(--c-or);
+  border-color: var(--v-gold);
+  color: var(--v-gold);
 }
 
 .al-btn--outline-dark {
   background: transparent;
-  color: var(--c-bleu);
-  border-color: var(--c-bleu);
+  color: var(--v-white);
+  border-color: var(--v-white);
 }
 
 .al-btn--outline-dark:hover {
-  background: var(--c-bleu);
+  background: var(--v-panel);
   color: var(--color-text-inverse);
 }
 
@@ -191,36 +187,32 @@ textarea {
   }
 }
 
-/* Fond principal : blanc froid — plus aucun ivoire dominant. */
-.al-section--blanc {
+/* Surfaces du site noir, rouge et or. */
+.al-section--panel {
   background: var(--color-surface);
 }
 
-.al-section--ice {
-  background: var(--alerions-ice);
+.al-section--soft {
+  background: var(--v-panel);
 }
 
-.al-section--bleu {
-  background: var(--alerions-blue);
+.al-section--dark {
+  background: var(--v-panel);
   color: var(--color-text-inverse);
 }
 
 .al-section--deep {
-  background: var(--alerions-deep);
+  background: var(--v-bg);
   color: var(--color-text-inverse);
 }
 
 .al-section--rouge {
-  background: var(--alerions-red);
+  background: var(--v-red);
   color: var(--color-text-inverse);
 }
 
-/*
-  Réservée à la page Culture Alérions : seul endroit où l'ivoire peut
-  encore apparaître, comme référence historique.
-*/
-.al-section--ivoire {
-  background: var(--alerions-ivory);
+.al-section--raised {
+  background: var(--v-panel-2);
   color: var(--color-text);
 }
 
@@ -228,7 +220,7 @@ textarea {
 .al-rule {
   border: none;
   height: 3px;
-  background: var(--alerions-gold);
+  background: var(--v-gold);
   width: 64px;
 }
 
@@ -244,7 +236,7 @@ textarea {
   font-weight: 700;
   font-size: var(--fs-stat);
   line-height: 0.9;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
 }
 
 /* --- Liste numérotée (remplace les cartes arrondies dans les Espaces) --- */
@@ -269,7 +261,7 @@ textarea {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
   min-width: 2.5ch;
 }
 
@@ -288,17 +280,17 @@ textarea {
 
 /* Variante sombre : liste numérotée lisible sur fond bleu/deep. */
 .al-section--deep .al-numbered__row,
-.al-section--bleu .al-numbered__row {
+.al-section--dark .al-numbered__row {
   border-color: var(--color-border-inverse);
 }
 
 .al-section--deep .al-numbered__body h3,
-.al-section--bleu .al-numbered__body h3 {
+.al-section--dark .al-numbered__body h3 {
   color: var(--color-text-inverse);
 }
 
 .al-section--deep .al-numbered__body p,
-.al-section--bleu .al-numbered__body p {
+.al-section--dark .al-numbered__body p {
   color: var(--color-text-muted-inverse);
 }
 
@@ -325,16 +317,16 @@ textarea {
 
 .al-page-header {
   padding-block: var(--s-16) var(--s-10);
-  background: var(--alerions-deep);
+  background: var(--v-bg);
   color: var(--color-text-inverse);
-  border-bottom: 3px solid var(--alerions-gold);
+  border-bottom: 3px solid var(--v-gold);
 }
 
 .al-page-header__eyebrow {
   font-size: var(--fs-meta);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
   font-weight: 600;
   display: block;
   margin-bottom: var(--s-3);
@@ -363,8 +355,8 @@ textarea {
   padding: var(--s-10) var(--gutter);
 }
 
-.al-split__panel--blue {
-  background: var(--alerions-blue);
+.al-split__panel--dark {
+  background: var(--v-panel);
   color: var(--color-text-inverse);
 }
 
@@ -374,7 +366,7 @@ textarea {
   margin-bottom: var(--s-4);
 }
 
-.al-split__panel--blue p {
+.al-split__panel--dark p {
   color: var(--color-text-muted-inverse);
   font-size: var(--fs-lead);
   max-width: 44ch;
@@ -541,3 +533,6 @@ textarea {
     scroll-behavior: auto !important;
   }
 }
+
+/* Champs lisibles sur les surfaces sombres. */
+input, select, textarea { color: var(--v-white); color-scheme: dark; }

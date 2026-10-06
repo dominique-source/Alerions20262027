@@ -26,7 +26,7 @@ export default function ActualitesPage() {
         </div>
       </header>
 
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container">
           {!histoirePrincipale ? (
             <EmptyState title="Aucune actualité n'a encore été publiée." />

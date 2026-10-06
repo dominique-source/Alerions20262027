@@ -3,7 +3,7 @@
   séparateurs gris entre chaque ligne, résultat en rouge, typographie forte.
 */
 .al-results-list {
-  border-top: 3px solid var(--alerions-blue);
+  border-top: 3px solid var(--v-panel);
 }
 
 .al-result-row {
@@ -41,7 +41,7 @@
 .al-result-row__score {
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--alerions-red);
+  color: var(--v-red);
 }
 
 .al-result-row__badge {
