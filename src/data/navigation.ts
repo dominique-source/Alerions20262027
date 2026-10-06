@@ -3,13 +3,16 @@ import type { NavLien } from "../types";
 /**
  * Navigation principale — les quatre pages montrées dans la barre de
  * navigation sur toutes les maquettes approuvées (Accueil, Calendrier,
- * Mon équipe, Le mur). Identique sur toutes les pages du site.
+ * Mon équipe, Le mur), plus Chat (demande explicite, ajouté après la
+ * refonte — absent des maquettes d'origine). Identique sur toutes les
+ * pages du site.
  */
 export const navPrincipale: NavLien[] = [
   { label: "Accueil", href: "/" },
   { label: "Mon équipe", href: "/mon-equipe" },
   { label: "Calendrier", href: "/calendrier" },
   { label: "Le mur", href: "/mur" },
+  { label: "Chat", href: "/chat" },
 ];
 
 /**

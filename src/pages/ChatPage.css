@@ -1,0 +1,55 @@
+.al-chat-entree {
+  background: var(--v-bg);
+  color: var(--v-white);
+  min-height: 60vh;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--s-16) var(--v-gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+  text-align: left;
+}
+
+.al-chat-entree__titre {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  margin: 0;
+}
+
+.al-chat-entree__texte {
+  color: var(--v-text-muted);
+  font-size: 0.9375rem;
+  max-width: 48ch;
+}
+
+.al-chat-entree__selecteurs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+
+.al-chat-entree__selecteur select {
+  background: var(--v-panel);
+  border: 1px solid var(--v-line-strong);
+  color: var(--v-white);
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--s-2) var(--s-4);
+  min-height: var(--tap-min);
+}
+
+.al-chat-entree__lien-secondaire {
+  margin-top: var(--s-2);
+  font-size: 0.8125rem;
+  color: var(--v-gold);
+  font-weight: 700;
+}
+
+.al-chat-entree__lien-secondaire:hover {
+  color: var(--v-white);
+}

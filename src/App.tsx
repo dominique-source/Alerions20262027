@@ -12,6 +12,7 @@ import EquipesPage from "./pages/EquipesPage";
 import SportPage from "./pages/SportPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
 import ChatApercuPage from "./pages/ChatApercuPage";
+import ChatPage from "./pages/ChatPage";
 import ResultatsPage from "./pages/ResultatsPage";
 import ActualitesPage from "./pages/ActualitesPage";
 import CulturePage from "./pages/CulturePage";
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="mon-equipe" element={<MonEquipePage />} />
         <Route path="joueurs/:numero" element={<JoueurPage />} />
         <Route path="mur" element={<MurPage />} />
+        <Route path="chat" element={<ChatPage />} />
         <Route path="defis" element={<DefisPage />} />
         <Route path="collection" element={<CollectionPage />} />
         <Route path="equipes" element={<EquipesPage />} />

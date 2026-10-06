@@ -6,19 +6,8 @@ import { defiSemaine } from "../data/defis";
 import { seancesDeclarees } from "../lib/defis";
 import { marquerDecouverte } from "../lib/decouvertes";
 import { trouverEquipe } from "../data/teams";
+import { CATEGORIES, CATEGORIE_SLUGS, GENRES } from "../data/categoriesBasketball";
 import "./MonEquipePage.css";
-
-const CATEGORIES = ["Atome", "Benjamin", "Cadet", "Juvénile"];
-const CATEGORIE_SLUGS: Record<string, string> = {
-  Atome: "atome",
-  Benjamin: "benjamin",
-  Cadet: "cadet",
-  Juvénile: "juvenile",
-};
-const GENRES: Array<{ label: string; slug: string }> = [
-  { label: "Masculin", slug: "masculin" },
-  { label: "Féminin", slug: "feminin" },
-];
 
 function formaterDate(date: string): string {
   return new Intl.DateTimeFormat("fr-CA", { day: "numeric", month: "long" }).format(
