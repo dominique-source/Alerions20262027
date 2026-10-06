@@ -4,7 +4,7 @@ import EmptyState from "../components/EmptyState";
 /** Page 404 — route inconnue. */
 export default function NotFoundPage() {
   return (
-    <section className="al-section al-section--blanc">
+    <section className="al-section al-section--panel">
       <div className="container">
         <EmptyState
           title="Cette page n'existe pas."

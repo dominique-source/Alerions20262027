@@ -1,5 +1,5 @@
 .al-culture-intro {
-  background: var(--alerions-deep);
+  background: var(--v-bg);
   color: var(--color-text-inverse);
   padding-block: var(--s-32) var(--s-24);
   text-align: center;
@@ -18,7 +18,7 @@
 }
 
 .al-culture-intro h1 span:last-child {
-  color: var(--alerions-gold);
+  color: var(--v-gold);
 }
 
 /* Section principale : grand chiffre XVI + propos. */
@@ -33,7 +33,7 @@
   font-weight: 700;
   font-size: clamp(6rem, 22vw, 14rem);
   line-height: 0.8;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
 }
 
 .al-culture-main__body h2 {
@@ -55,8 +55,8 @@
   font-weight: 700;
   text-transform: uppercase;
   font-size: var(--fs-h2);
-  color: var(--alerions-blue);
-  border-left: 4px solid var(--alerions-gold);
+  color: var(--v-gold);
+  border-left: 4px solid var(--v-gold);
   padding-left: var(--s-5);
   line-height: var(--lh-tight);
 }
@@ -67,7 +67,7 @@
   }
 }
 
-/* Ligne historique — l'ivoire n'apparaît qu'ici, comme référence historique. */
+/* Repères historiques dans la direction visuelle du site. */
 .al-culture-timeline {
   display: grid;
   grid-template-columns: 1fr;
@@ -75,7 +75,7 @@
 
 .al-culture-timeline__item {
   padding-block: var(--s-8);
-  border-bottom: 1px solid var(--c-ivoire-ombre);
+  border-bottom: 1px solid var(--v-line);
 }
 
 .al-culture-timeline__item:last-child {
@@ -86,7 +86,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--alerions-blue);
+  color: var(--v-gold);
 }
 
 .al-culture-timeline__caption {
@@ -103,7 +103,7 @@
   }
   .al-culture-timeline__item {
     border-bottom: none;
-    border-left: 1px solid var(--c-ivoire-ombre);
+    border-left: 1px solid var(--v-line);
     padding-inline: var(--s-6);
   }
   .al-culture-timeline__item:first-child {

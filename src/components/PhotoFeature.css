@@ -52,7 +52,7 @@
   font-size: var(--fs-meta);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--alerions-gold);
+  color: var(--v-gold);
   font-weight: 700;
 }
 
@@ -89,8 +89,8 @@
 
 .al-feature:hover .al-feature__cta,
 .al-feature:focus-visible .al-feature__cta {
-  border-color: var(--alerions-gold);
-  color: var(--alerions-gold);
+  border-color: var(--v-gold);
+  color: var(--v-gold);
 }
 
 .al-feature__ref-badge {

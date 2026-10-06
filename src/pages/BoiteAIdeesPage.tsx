@@ -174,7 +174,7 @@ export default function BoiteAIdeesPage() {
 
   if (etat === "succes") {
     return (
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container al-idees-succes">
           <h2>Ton idée est dans la boîte.</h2>
           <p>Merci de faire avancer les Alérions.</p>
@@ -195,7 +195,7 @@ export default function BoiteAIdeesPage() {
         </div>
       </section>
 
-      <section className="al-section al-section--ice">
+      <section className="al-section al-section--soft">
         <div className="container al-idees-highlight">
           <h2>{docBoiteAIdees.titre}</h2>
           <p>{docBoiteAIdees.description}</p>
@@ -219,7 +219,7 @@ export default function BoiteAIdeesPage() {
         </div>
       </section>
 
-      <section className="al-section al-section--blanc">
+      <section className="al-section al-section--panel">
         <div className="container al-idees-scene">
           {etat === "erreur" && (
             <div className="al-idees-erreur" role="alert">
@@ -457,8 +457,8 @@ export default function BoiteAIdeesPage() {
 
           <div className={`al-idees-box${boiteAllumee ? " al-idees-box--allumee" : ""}`}>
             <svg className="al-idees-box__svg" viewBox="0 0 120 100" aria-hidden="true">
-              <rect x="10" y="30" width="100" height="60" fill="var(--alerions-blue)" />
-              <polygon points="10,30 60,10 110,30" fill="var(--alerions-deep)" />
+              <rect x="10" y="30" width="100" height="60" fill="var(--v-panel)" />
+              <polygon points="10,30 60,10 110,30" fill="var(--v-bg)" />
               <rect className="al-idees-box__slot" x="45" y="16" width="30" height="6" rx="2" />
               <circle className="al-idees-box__light" cx="60" cy="19" r="14" />
             </svg>
@@ -468,7 +468,7 @@ export default function BoiteAIdeesPage() {
       </section>
 
       {autresProjets.length > 0 && (
-        <section className="al-section al-section--ice">
+        <section className="al-section al-section--soft">
           <div className="container">
             <SectionTitle eyebrow="Projets Alérions" title="Les idées prennent vie" />
             <div className="al-doc-list">

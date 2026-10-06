@@ -25,7 +25,7 @@ export default function ContactPage() {
       </header>
 
       <div className="al-split">
-        <div className="al-split__panel al-split__panel--blue">
+        <div className="al-split__panel al-split__panel--dark">
           <div className="al-contact-info">
             <div className="al-contact-info__item">
               <h3>Adresse</h3>

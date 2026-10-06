@@ -10,7 +10,7 @@ interface AlerionsChatBlocProps {
 /**
  * Bloc « Alérions Chat » réutilisé dans les trois dashboards — compteur
  * de non-lus et dernier message RÉELS (useTeamChat), jamais une valeur
- * décorative. Le bouton ouvre la vraie conversation (ChatApercuPage,
+ * décorative. Le bouton ouvre la vraie conversation (TeamChatPage,
  * déjà autorisée pour ce compte puisqu'il a accès à cette équipe).
  */
 export default function AlerionsChatBloc({ idEquipe, lienChat }: AlerionsChatBlocProps) {
@@ -41,7 +41,7 @@ export default function AlerionsChatBloc({ idEquipe, lienChat }: AlerionsChatBlo
         </div>
       )}
 
-      <Link to={lienChat} className="al-btn-v2 al-btn-v2--red al-btn-v2--sm">
+      <Link to={lienChat === "#" ? "/chat" : lienChat} className="al-btn-v2 al-btn-v2--red al-btn-v2--sm">
         Ouvrir le chat <span aria-hidden="true">→</span>
       </Link>
     </div>

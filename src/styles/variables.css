@@ -1,64 +1,22 @@
-/*
-  Alérions — jetons de conception (source de vérité)
-  Direction visuelle validée : sportive, jeune, énergique — sur une
-  structure institutionnelle claire. Le blanc froid domine, le bleu
-  profond structure, le rouge et l'or sont des accents ponctuels.
-  Toutes les couleurs, tailles et espacements de l'interface doivent
-  passer par ces variables : ne jamais coder une couleur en dur ailleurs.
-*/
+/* Alérions : direction unique noir, rouge et or. */
 :root {
-  /* --- Palette de marque (direction validée) --- */
-  --alerions-blue: #06233f;
-  --alerions-deep: #031522; /* bleu très foncé — en-tête, sections pleine largeur */
-  --alerions-gold: #cea531;
-  --alerions-red: #951f3d;
-  --alerions-white: #ffffff;
-  --alerions-ice: #f6f8fa; /* blanc froid — fond principal (remplace l'ivoire) */
-  --alerions-line: #dce2e7;
-  --alerions-ink: #101820;
-  --alerions-muted: #607080;
-  /*
-    L'ivoire n'est plus un fond principal. Il ne doit apparaître que dans
-    certains détails de la page Culture Alérions (référence historique).
-  */
-  --alerions-ivory: #f2eee5;
-
-  /* --- Nuances dérivées (usage fonctionnel uniquement) --- */
-  --c-or-clair: #e4c463;
-  --c-bleu-clair: #0d3157;
-  --c-ligne: rgba(16, 24, 32, 0.1);
-  --c-ligne-inverse: rgba(255, 255, 255, 0.16);
-
   /* --- Rôles sémantiques (utilisés par tous les composants) --- */
-  --color-bg: var(--alerions-ice);
-  --color-bg-inverse: var(--alerions-blue);
-  --color-bg-deep: var(--alerions-deep);
-  --color-surface: var(--alerions-white);
-  --color-text: var(--alerions-ink);
-  --color-text-inverse: var(--alerions-white);
-  --color-text-muted: var(--alerions-muted);
+  --color-bg: var(--v-panel);
+  --color-bg-inverse: var(--v-panel);
+  --color-bg-deep: var(--v-bg);
+  --color-surface: var(--v-panel-2);
+  --color-text: var(--v-white);
+  --color-text-inverse: var(--v-white);
+  --color-text-muted: var(--v-text-muted);
   --color-text-muted-inverse: rgba(255, 255, 255, 0.72);
-  --color-accent: var(--alerions-gold);
-  --color-live: var(--alerions-red);
-  --color-border: var(--alerions-line);
-  --color-border-inverse: var(--c-ligne-inverse);
-  --color-focus: var(--alerions-gold);
-
-  /*
-    Alias historiques (V1) conservés pour ne pas réécrire chaque sélecteur :
-    ils pointent désormais vers la nouvelle palette validée.
-  */
-  --c-bleu: var(--alerions-blue);
-  --c-or: var(--alerions-gold);
-  --c-rouge: var(--alerions-red);
-  --c-encre: var(--alerions-ink);
-  --c-blanc: var(--alerions-white);
-  --c-bleu-fonce: var(--alerions-deep);
-  --c-ivoire: var(--alerions-ivory); /* réservé à la page Culture Alérions */
-  --c-ivoire-ombre: #e6dfcf;
+  --color-accent: var(--v-gold);
+  --color-live: var(--v-red);
+  --color-border: var(--v-line);
+  --color-border-inverse: var(--v-line);
+  --color-focus: var(--v-gold);
 
   /* --- Typographie --- */
-  --font-display: "Oswald", "Arial Narrow", sans-serif; /* titres — forte, sportive */
+  --font-display: var(--v-font-title); /* titres — forte, sportive */
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: "Playfair Display", Georgia, serif; /* réservée au chiffre XVI */
 
@@ -103,7 +61,7 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --border-hairline: 1px solid var(--color-border);
-  --border-strong: 2px solid var(--alerions-blue);
+  --border-strong: 2px solid var(--v-panel);
 
   /* --- Ombres (discrètes, jamais décoratives) --- */
   --shadow-card: 0 1px 2px rgba(16, 24, 32, 0.06), 0 4px 16px rgba(16, 24, 32, 0.08);
@@ -123,15 +81,7 @@
   --z-drawer: 200;
   --z-overlay: 300;
 
-  /*
-    --- V2 : direction "ALÉRIONS REFONTE" (maquettes 1536×1024) ---
-    Jetons dédiés à la nouvelle direction visuelle (fond quasi noir, rouge,
-    or, blanc cassé) — utilisés par le Header/Footer (partout) et les pages
-    reconstruites depuis les maquettes approuvées (Accueil, Mon équipe,
-    Calendrier, Le mur, Profil joueur, Détail d'un événement, Défis,
-    Collection, Parents). Les anciennes pages non retouchées continuent
-    d'utiliser les jetons --color-... et --alerions-... ci-dessus, inchangés.
-  */
+  /* Palette utilisée sur toutes les routes. */
   --v-bg: #080808;
   --v-bg-soft: #0c0c0c;
   --v-panel: #101010;
