@@ -3,6 +3,7 @@ import EmptyState from "../components/EmptyState";
 import PhotoGrid from "../components/PhotoGrid";
 import DocumentRow from "../components/DocumentRow";
 import SectionTitle from "../components/SectionTitle";
+import RosterSection from "../components/RosterSection";
 import { trouverSport } from "../data/sports";
 import { trouverEquipe } from "../data/teams";
 import { documentsParSport } from "../data/documents";
@@ -68,6 +69,17 @@ export default function TeamDetailPage() {
           <Link to={`/equipes/${sport.slug}/${equipe.slug}/chat`} className="al-btn-v2 al-btn-v2--red">
             💬 Chat de l'équipe <span aria-hidden="true">→</span>
           </Link>
+        </div>
+      </section>
+
+      <section className="al-section al-section--deep">
+        <div className="container">
+          <RosterSection
+            sport={sport.slug}
+            equipeSlug={equipe.slug}
+            equipeNomAffiche={`${sport.nom} ${equipe.nom}`}
+            construireLienProfil={(idMembre) => `/equipes/${sport.slug}/${equipe.slug}/membres/${idMembre}`}
+          />
         </div>
       </section>
 

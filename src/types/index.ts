@@ -207,3 +207,56 @@ export interface DefiSemaine {
   seancesCibles: number;
   recompense: string;
 }
+
+/**
+ * --- Effectif (Google Sheet) ---
+ * Forme PUBLIQUE renvoyée par /api/roster — reflète api/_lib/types.ts
+ * côté serveur (dupliqué volontairement : c'est un contrat d'API stable,
+ * pas une source de vérité interne, et tsc -b ne type-vérifie que src/).
+ * Ne contient jamais de courriel, auth_user_id, notes ni champ privé.
+ */
+export interface EquipeRoster {
+  idEquipe: string;
+  sport: string;
+  nomEquipe: string;
+  categorie: string;
+  genre: string;
+  division: string;
+  slugSite: string;
+  saison: string;
+}
+
+export interface MembreRoster {
+  idMembre: string;
+  idPersonne: string;
+  idEquipe: string;
+  categorieRole: "joueur" | "entraineur";
+  nomAffiche: string;
+  numero: number | null;
+  poste: string | null;
+  capitaine: boolean;
+  photoUrl: string | null;
+  saison: string;
+}
+
+export interface RosterReponse {
+  equipe: EquipeRoster | null;
+  joueurs: MembreRoster[];
+  entraineurs: MembreRoster[];
+  meta: {
+    fetchedAt: string;
+    cacheAgeSecondes: number;
+    prochaineRevalidationSecondes: number;
+  };
+}
+
+export type RosterCodeErreur =
+  | "methode_non_autorisee"
+  | "parametres_manquants"
+  | "service_non_configure"
+  | "equipe_introuvable"
+  | "google_auth_echouee"
+  | "google_quota_depasse"
+  | "google_indisponible"
+  | "erreur_inattendue"
+  | "reseau";
