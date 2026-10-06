@@ -58,6 +58,12 @@ export default async function handler(req: RequeteMinimale, res: ReponseMinimale
     roster = await obtenirRoster();
   } catch (erreur) {
     if (erreur instanceof ErreurGoogleSheets) {
+      // Le message détaillé (jamais la clé privée elle-même — voir
+      // api/_lib/sheets.ts, qui ne rapporte que le message d'erreur de
+      // google-auth-library / l'API Sheets) va aux journaux serveur
+      // Vercel pour diagnostic ; seul le code générique sort dans la
+      // réponse publique.
+      console.error(`[api/roster] ${erreur.code} : ${erreur.message}`);
       if (erreur.code === "config") {
         envoyerErreur(res, 503, "service_non_configure");
         return;
@@ -73,6 +79,7 @@ export default async function handler(req: RequeteMinimale, res: ReponseMinimale
       envoyerErreur(res, 503, "google_indisponible");
       return;
     }
+    console.error("[api/roster] erreur_inattendue :", erreur);
     envoyerErreur(res, 500, "erreur_inattendue");
     return;
   }
