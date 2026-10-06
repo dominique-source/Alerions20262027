@@ -58,3 +58,10 @@
 .al-team-back {
   margin-top: var(--s-6);
 }
+
+.al-team-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}

@@ -61,9 +61,12 @@ export default function TeamDetailPage() {
       </section>
 
       <section className="al-section al-section--blanc">
-        <div className="container">
+        <div className="container al-team-actions">
           <Link to={`/calendrier?sport=${sport.slug}`} className="al-btn al-btn--primary">
             Calendrier {sport.nom}
+          </Link>
+          <Link to={`/equipes/${sport.slug}/${equipe.slug}/chat`} className="al-btn-v2 al-btn-v2--red">
+            💬 Chat de l'équipe <span aria-hidden="true">→</span>
           </Link>
         </div>
       </section>

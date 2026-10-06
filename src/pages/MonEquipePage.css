@@ -6,10 +6,19 @@
 
 .al-equipe__selecteur-rangee {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-3);
   max-width: var(--v-w-wide);
   margin-inline: auto;
   padding: var(--s-4) var(--v-gutter) 0;
+}
+
+.al-equipe__selecteurs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
 }
 
 .al-equipe__selecteur select {
