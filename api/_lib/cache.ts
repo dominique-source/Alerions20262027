@@ -11,9 +11,9 @@
  * d'évolution (Vercel KV / Edge Config) si un cache partagé devient
  * nécessaire.
  */
-import { mapperLigneEquipe, mapperLigneMembre, indexerEntetes } from "./normaliser";
-import { ErreurGoogleSheets, lireConfigurationGoogle, lireFeuillesEquipesEtMembres } from "./sheets";
-import type { EquipeRow, MembreRow } from "./types";
+import { mapperLigneEquipe, mapperLigneMembre, indexerEntetes } from "./normaliser.js";
+import { ErreurGoogleSheets, lireConfigurationGoogle, lireFeuillesEquipesEtMembres } from "./sheets.js";
+import type { EquipeRow, MembreRow } from "./types.js";
 
 export interface DonneesRoster {
   equipes: EquipeRow[];

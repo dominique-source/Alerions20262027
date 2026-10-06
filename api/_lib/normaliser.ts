@@ -6,7 +6,7 @@
  * réordonnancement involontaire des colonnes existantes (AA/AB exceptées :
  * elles sont ajoutées à droite, jamais insérées).
  */
-import type { EquipeRow, MembreRow } from "./types";
+import type { EquipeRow, MembreRow } from "./types.js";
 
 /** "Prénom", "  Rôle ", "PHOTO_URL" → "prenom", "role", "photo_url". */
 export function normaliserEnTete(entete: string): string {

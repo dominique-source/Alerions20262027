@@ -8,8 +8,8 @@
  * d'identité ni une permission — ces règles ne s'appuient donc jamais sur
  * `accesChat` ni `authUserId` pour décider de ce qui est public.
  */
-import { analyserNumero, composerNomAffiche, normaliserTexte } from "./normaliser";
-import type { CategorieRole, EquipeRow, MembreRow, MembrePublic, EquipePublique } from "./types";
+import { analyserNumero, composerNomAffiche, normaliserTexte } from "./normaliser.js";
+import type { CategorieRole, EquipeRow, MembreRow, MembrePublic, EquipePublique } from "./types.js";
 
 /** Domaines d'hébergement d'image publique autorisés par défaut (https uniquement, toujours). */
 function hoteAutorise(hostname: string): boolean {

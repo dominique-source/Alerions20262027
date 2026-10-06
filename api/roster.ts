@@ -1,8 +1,8 @@
-import { ErreurGoogleSheets } from "./_lib/sheets";
-import { ageCacheSecondes, dureeCacheSecondes, obtenirRoster } from "./_lib/cache";
-import { normaliserTexte } from "./_lib/normaliser";
-import { profilEstPublic, redigerEquipe, redigerMembre } from "./_lib/publication";
-import type { MembrePublic, RosterErreur, RosterReponse } from "./_lib/types";
+import { ErreurGoogleSheets } from "./_lib/sheets.js";
+import { ageCacheSecondes, dureeCacheSecondes, obtenirRoster } from "./_lib/cache.js";
+import { normaliserTexte } from "./_lib/normaliser.js";
+import { profilEstPublic, redigerEquipe, redigerMembre } from "./_lib/publication.js";
+import type { MembrePublic, RosterErreur, RosterReponse } from "./_lib/types.js";
 
 /**
  * GET /api/roster?sport=<slug>&equipe=<slug_site>
